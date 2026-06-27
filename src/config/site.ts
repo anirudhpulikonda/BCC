@@ -9,8 +9,8 @@ export const site = {
   social: [] as string[],
 };
 
-export const leagueMeta: Record<string, { full: string; sport: string; slug: string; sportPath?: string }> = {
-  NFL: { full: 'National Football League', sport: 'American Football', slug: 'nfl-team-color-codes', sportPath: '/sports/football/' },
+export const leagueMeta: Record<string, { full: string; sport: string; slug: string; sportPath?: string; sportLabel?: string }> = {
+  NFL: { full: 'National Football League', sport: 'American Football', slug: 'nfl-team-color-codes', sportPath: '/sports/football/', sportLabel: 'Football' },
   NBA: { full: 'National Basketball Association', sport: 'Basketball', slug: 'nba-team-color-codes' },
   NHL: { full: 'National Hockey League', sport: 'Ice Hockey', slug: 'nhl-team-color-codes' },
   MLB: { full: 'Major League Baseball', sport: 'Baseball', slug: 'mlb-team-color-codes' },
