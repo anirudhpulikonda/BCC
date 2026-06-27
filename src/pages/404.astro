@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Page Not Found — Best Color Codes"
+  description="The page you're looking for doesn't exist."
+>
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="code">404</p>
+      <h1>Page not found</h1>
+      <p class="hero-sub">The page you're looking for doesn't exist or may have moved.</p>
+      <a href="/" class="home-link">Back to home</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding: 6rem 2rem;
+    background: var(--surface-1);
+    min-height: calc(100vh - 56px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-inner {
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .code {
+    font-size: 72px;
+    font-weight: 600;
+    color: var(--text-muted);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+  }
+
+  .home-link {
+    display: inline-block;
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--text-primary);
+    color: var(--surface-2);
+    border-radius: var(--radius);
+    transition: opacity .12s;
+  }
+
+  .home-link:hover { opacity: .8; }
+</style>
