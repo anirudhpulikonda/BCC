@@ -1,0 +1,32 @@
+{
+  "teamName": "Los Angeles Lakers",
+  "league": "NBA",
+  "slug": "los-angeles-lakers-colors",
+  "colors": [
+    {
+      "name": "Purple",
+      "hex": "#552583",
+      "rgb": { "r": 85, "g": 37, "b": 130 },
+      "cmyk": { "c": 79, "m": 100, "y": 0, "k": 12 },
+      "pantone": "PMS 526 C"
+    },
+    {
+      "name": "Gold",
+      "hex": "#FDB927",
+      "rgb": { "r": 253, "g": 185, "b": 39 },
+      "cmyk": { "c": 0, "m": 30, "y": 94, "k": 0 },
+      "pantone": "PMS 123 C"
+    },
+    {
+      "name": "Black",
+      "hex": "#000000",
+      "rgb": { "r": 6, "g": 25, "b": 34 },
+      "cmyk": { "c": 30, "m": 0, "y": 0, "k": 100 },
+      "pantone": "BLACK C"
+    }
+  ],
+  "logoPath": "/teams/nba/los-angeles-lakers/logo.svg",
+  "swatchImagePath": "/teams/nba/los-angeles-lakers/swatch.jpg",
+  "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed by the Los Angeles Lakers Reproduction and Usage Guideline Sheet. Pantone confirmed by logo slick.",
+  "lastUpdated": "2026-06-27"
+}

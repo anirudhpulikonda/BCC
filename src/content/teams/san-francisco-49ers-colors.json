@@ -1,0 +1,25 @@
+{
+  "teamName": "San Francisco 49ers",
+  "league": "NFL",
+  "slug": "san-francisco-49ers-colors",
+  "colors": [
+    {
+      "name": "49ers Red",
+      "hex": "#AA0000",
+      "rgb": { "r": 170, "g": 0, "b": 0 },
+      "cmyk": { "c": 7, "m": 100, "y": 82, "k": 26 },
+      "pantone": "PMS 187 C"
+    },
+    {
+      "name": "49ers Gold",
+      "hex": "#B3995D",
+      "rgb": { "r": 173, "g": 153, "b": 93 },
+      "cmyk": { "c": 0, "m": 25, "y": 56, "k": 51 },
+      "pantone": "PMS 872 C Metallic"
+    }
+  ],
+  "logoPath": "/teams/nfl/san-francisco-49ers/logo.svg",
+  "swatchImagePath": "/teams/nfl/san-francisco-49ers/swatch.jpg",
+  "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed from official NFL guidelines. Pantone confirmed by logo slick.",
+  "lastUpdated": "2026-06-27"
+}

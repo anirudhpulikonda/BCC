@@ -1,0 +1,25 @@
+{
+  "teamName": "Cincinnati Bengals",
+  "league": "NFL",
+  "slug": "cincinnati-bengals-colors",
+  "colors": [
+    {
+      "name": "Orange",
+      "hex": "#FB4F14",
+      "rgb": { "r": 251, "g": 79, "b": 20 },
+      "cmyk": { "c": 0, "m": 85, "y": 100, "k": 0 },
+      "pantone": "PMS 1655 C"
+    },
+    {
+      "name": "Black",
+      "hex": "#000000",
+      "rgb": { "r": 0, "g": 0, "b": 0 },
+      "cmyk": { "c": 70, "m": 50, "y": 50, "k": 100 },
+      "pantone": "PMS Black 6 C"
+    }
+  ],
+  "logoPath": "/teams/nfl/cincinnati-bengals/logo.svg",
+  "swatchImagePath": "/teams/nfl/cincinnati-bengals/swatch.jpg",
+  "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed from official NFL guidelines. Pantone confirmed by logo slick.",
+  "lastUpdated": "2026-06-27"
+}

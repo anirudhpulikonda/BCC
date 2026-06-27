@@ -1,0 +1,25 @@
+{
+  "teamName": "Kansas City Chiefs",
+  "league": "NFL",
+  "slug": "kansas-city-chiefs-colors",
+  "colors": [
+    {
+      "name": "Red",
+      "hex": "#E31837",
+      "rgb": { "r": 227, "g": 24, "b": 55 },
+      "cmyk": { "c": 0, "m": 92, "y": 77, "k": 22 },
+      "pantone": "PMS 186 C"
+    },
+    {
+      "name": "Gold",
+      "hex": "#FFB81C",
+      "rgb": { "r": 255, "g": 184, "b": 28 },
+      "cmyk": { "c": 0, "m": 31, "y": 98, "k": 0 },
+      "pantone": "PMS 1235 C"
+    }
+  ],
+  "logoPath": "/teams/nfl/kansas-city-chiefs/logo.svg",
+  "swatchImagePath": "/teams/nfl/kansas-city-chiefs/swatch.jpg",
+  "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed from official NFL guidelines. Pantone confirmed by logo slick.",
+  "lastUpdated": "2026-06-27"
+}

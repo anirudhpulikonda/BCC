@@ -1,0 +1,32 @@
+{
+  "teamName": "Los Angeles Rams",
+  "league": "NFL",
+  "slug": "los-angeles-rams-colors",
+  "colors": [
+    {
+      "name": "Millennium Blue",
+      "hex": "#002244",
+      "rgb": { "r": 0, "g": 34, "b": 68 },
+      "cmyk": { "c": 100, "m": 90, "y": 13, "k": 68 },
+      "pantone": "PMS 282 C"
+    },
+    {
+      "name": "New Century Gold",
+      "hex": "#866D4B",
+      "rgb": { "r": 134, "g": 109, "b": 75 },
+      "cmyk": { "c": 0, "m": 29, "y": 54, "k": 50 },
+      "pantone": "PMS 873 C"
+    },
+    {
+      "name": "White",
+      "hex": "#FFFFFF",
+      "rgb": { "r": 255, "g": 255, "b": 255 },
+      "cmyk": { "c": 0, "m": 0, "y": 0, "k": 0 },
+      "pantone": "WHITE"
+    }
+  ],
+  "logoPath": "/teams/nfl/los-angeles-rams/logo.svg",
+  "swatchImagePath": "/teams/nfl/los-angeles-rams/swatch.jpg",
+  "sourcingNote": "Hex colors confirmed from official SVG logo. Values verified through Wikipedia and official branding materials.",
+  "lastUpdated": "2026-06-27"
+}

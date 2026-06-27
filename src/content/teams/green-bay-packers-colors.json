@@ -1,0 +1,25 @@
+{
+  "teamName": "Green Bay Packers",
+  "league": "NFL",
+  "slug": "green-bay-packers-colors",
+  "colors": [
+    {
+      "name": "Dark Green",
+      "hex": "#203731",
+      "rgb": { "r": 24, "g": 48, "b": 40 },
+      "cmyk": { "c": 79, "m": 34, "y": 62, "k": 84 },
+      "pantone": "PMS 5535 C"
+    },
+    {
+      "name": "Gold",
+      "hex": "#FFB612",
+      "rgb": { "r": 255, "g": 184, "b": 28 },
+      "cmyk": { "c": 0, "m": 31, "y": 98, "k": 0 },
+      "pantone": "PMS 1235 C"
+    }
+  ],
+  "logoPath": "/teams/nfl/green-bay-packers/logo.svg",
+  "swatchImagePath": "/teams/nfl/green-bay-packers/swatch.jpg",
+  "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed from official NFL Media Guide. Pantone confirmed by logo slick.",
+  "lastUpdated": "2026-06-27"
+}

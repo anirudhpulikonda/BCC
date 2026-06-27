@@ -1,0 +1,32 @@
+{
+  "teamName": "Edmonton Oilers",
+  "league": "NHL",
+  "slug": "edmonton-oilers-colors",
+  "colors": [
+    {
+      "name": "Navy Blue",
+      "hex": "#041E42",
+      "rgb": { "r": 4, "g": 30, "b": 66 },
+      "cmyk": { "c": 100, "m": 90, "y": 13, "k": 68 },
+      "pantone": "PMS 282 C"
+    },
+    {
+      "name": "Orange",
+      "hex": "#FF4C00",
+      "rgb": { "r": 252, "g": 76, "b": 0 },
+      "cmyk": { "c": 0, "m": 73, "y": 98, "k": 0 },
+      "pantone": "PMS 1655 C"
+    },
+    {
+      "name": "White",
+      "hex": "#FFFFFF",
+      "rgb": { "r": 255, "g": 255, "b": 255 },
+      "cmyk": { "c": 0, "m": 0, "y": 0, "k": 0 },
+      "pantone": "WHITE"
+    }
+  ],
+  "logoPath": "/teams/nhl/edmonton-oilers/logo.svg",
+  "swatchImagePath": "/teams/nhl/edmonton-oilers/swatch.jpg",
+  "sourcingNote": "Hex colors confirmed from official SVG logo. Values derived from official team materials and logo specifications.",
+  "lastUpdated": "2026-06-27"
+}

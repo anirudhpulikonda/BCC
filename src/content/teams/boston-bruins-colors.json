@@ -1,0 +1,32 @@
+{
+  "teamName": "Boston Bruins",
+  "league": "NHL",
+  "slug": "boston-bruins-colors",
+  "colors": [
+    {
+      "name": "Gold",
+      "hex": "#FFB81C",
+      "rgb": { "r": 252, "g": 181, "b": 20 },
+      "cmyk": { "c": 0, "m": 31, "y": 98, "k": 0 },
+      "pantone": "PMS 1235 C"
+    },
+    {
+      "name": "Black",
+      "hex": "#000000",
+      "rgb": { "r": 17, "g": 17, "b": 17 },
+      "cmyk": { "c": 0, "m": 0, "y": 0, "k": 100 },
+      "pantone": "BLACK C"
+    },
+    {
+      "name": "White",
+      "hex": "#FFFFFF",
+      "rgb": { "r": 255, "g": 255, "b": 255 },
+      "cmyk": { "c": 0, "m": 0, "y": 0, "k": 0 },
+      "pantone": "WHITE"
+    }
+  ],
+  "logoPath": "/teams/nhl/boston-bruins/logo.svg",
+  "swatchImagePath": "/teams/nhl/boston-bruins/swatch.jpg",
+  "sourcingNote": "Hex colors confirmed from official SVG logo. Values confirmed from official NHL news and team materials.",
+  "lastUpdated": "2026-06-27"
+}
