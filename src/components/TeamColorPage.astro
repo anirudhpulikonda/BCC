@@ -17,6 +17,13 @@ interface RelatedTeam {
   colors: Color[];
 }
 
+const leagueSlugMap: Record<string, string> = {
+  NFL: 'nfl-team-color-codes',
+  NBA: 'nba-team-color-codes',
+  NHL: 'nhl-team-color-codes',
+  MLB: 'mlb-team-color-codes',
+};
+
 interface Props {
   teamName: string;
   league: string;
@@ -72,7 +79,7 @@ const description = `Explore the official ${teamName} color codes including HEX,
         <h1>{teamName} colors</h1>
         <p class="hero-sub">Official brand color codes — HEX, RGB, CMYK, and Pantone</p>
         <div class="hero-meta">
-          <a class="badge" href={`/${league.toLowerCase()}/`}>{league}</a>
+          <a class="badge" href={`/${leagueSlugMap[league] ?? `${league.toLowerCase()}-team-color-codes`}/`}>{league}</a>
           <span class="hero-count">{colors.length} colors</span>
         </div>
         <div class="swatch-strip">
@@ -227,7 +234,7 @@ const description = `Explore the official ${teamName} color codes including HEX,
     {relatedTeams.length > 0 && (
       <>
         <div class="divider"></div>
-        <a class="section-label section-label-link" href={`/${league.toLowerCase()}/`}>Other {league} teams →</a>
+        <a class="section-label section-label-link" href={`/${leagueSlugMap[league] ?? `${league.toLowerCase()}-team-color-codes`}/`}>Other {league} teams →</a>
         <div class="related-grid">
           {relatedTeams.map(t => (
             <a class="related-card" href={`/${t.slug}/`}>
