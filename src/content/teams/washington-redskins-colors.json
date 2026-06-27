@@ -1,0 +1,25 @@
+{
+  "teamName": "Washington Redskins",
+  "league": "NFL",
+  "slug": "washington-redskins-colors",
+  "colors": [
+    {
+      "name": "Burgundy",
+      "hex": "#773141",
+      "rgb": { "r": 63, "g": 16, "b": 16 },
+      "cmyk": { "c": 20, "m": 100, "y": 60, "k": 30 },
+      "pantone": "PMS 195 C"
+    },
+    {
+      "name": "Gold",
+      "hex": "#FFB612",
+      "rgb": { "r": 255, "g": 182, "b": 18 },
+      "cmyk": { "c": 0, "m": 25, "y": 100, "k": 0 },
+      "pantone": "PMS 1235 C"
+    }
+  ],
+  "logoPath": "/teams/nfl/washington-redskins/logo.svg",
+  "swatchImagePath": "/teams/nfl/washington-redskins/swatch.jpg",
+  "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed from official NFL guidelines. Pantone confirmed by logo slick.",
+  "lastUpdated": "2026-06-27"
+}

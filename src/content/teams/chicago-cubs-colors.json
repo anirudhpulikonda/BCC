@@ -1,0 +1,25 @@
+{
+  "teamName": "Chicago Cubs",
+  "league": "MLB",
+  "slug": "chicago-cubs-colors",
+  "colors": [
+    {
+      "name": "Blue",
+      "hex": "#0E3386",
+      "rgb": { "r": 14, "g": 51, "b": 134 },
+      "cmyk": { "c": 100, "m": 56, "y": 0, "k": 18 },
+      "pantone": "PMS 294 C"
+    },
+    {
+      "name": "Red",
+      "hex": "#CC3433",
+      "rgb": { "r": 204, "g": 52, "b": 51 },
+      "cmyk": { "c": 0, "m": 91, "y": 76, "k": 6 },
+      "pantone": "PMS 186 C"
+    }
+  ],
+  "logoPath": "/teams/mlb/chicago-cubs/logo.svg",
+  "swatchImagePath": "/teams/mlb/chicago-cubs/swatch.jpg",
+  "sourcingNote": "Hex colors confirmed from official SVG logo. Pantone confirmed by logo slick.",
+  "lastUpdated": "2026-06-27"
+}
