@@ -62,14 +62,7 @@ const leagueFullName: Record<string, string> = {
           </div>
           <div class="card-body">
             <p class="team-name">{t.data.teamName}</p>
-            <div class="team-meta">
-              <span class="team-count">{t.data.colors.length} colors</span>
-              <span class="team-hexes">
-                {t.data.colors.slice(0,2).map(c => (
-                  <code class="hex">{c.hex}</code>
-                ))}
-              </span>
-            </div>
+            <p class="team-count">{t.data.colors.length} colors</p>
           </div>
         </a>
       ))}
