@@ -1,7 +1,9 @@
 ---
 import Nav from './Nav.astro';
 import Footer from './Footer.astro';
+import JsonLd from './JsonLd.astro';
 import '../styles/global.css';
+import { site, leagueMeta } from '../config/site';
 
 interface Color {
   name: string;
@@ -50,6 +52,75 @@ const logoColors = `The ${teamName} logo uses ${colorList} as its official color
 
 const title = `${teamName} Colors – Hex, RGB, CMYK & Pantone Codes | Best Color Codes`;
 const description = `Explore the official ${teamName} color codes including HEX, RGB, CMYK, and Pantone values. The complete ${teamName} brand color palette for designers and fans.`;
+
+const meta = leagueMeta[league];
+const teamUrl = `${site.url}/${leagueSlugMap[league] ?? league.toLowerCase() + '-team-color-codes'}/`;
+const logoUrl = logoPath.startsWith('http') ? logoPath : `${site.url}${logoPath}`;
+const pageUrl = `${site.url}/${Astro.props.slug}/`;
+
+const sportsTeamSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SportsTeam',
+  name: teamName,
+  sport: meta?.sport ?? 'Sports',
+  url: pageUrl,
+  logo: logoUrl,
+  memberOf: {
+    '@type': 'SportsOrganization',
+    name: meta?.full ?? league,
+    alternateName: league,
+    url: `${site.url}/${leagueSlugMap[league] ?? league.toLowerCase()}-team-color-codes/`,
+  },
+};
+
+const imageObjectSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ImageObject',
+  name: `${teamName} Logo`,
+  contentUrl: logoUrl,
+  encodingFormat: logoPath.endsWith('.png') ? 'image/png' : 'image/svg+xml',
+  description: `Official ${teamName} logo`,
+};
+
+const definedTermSetSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  name: `${teamName} Brand Colors`,
+  url: pageUrl,
+  hasDefinedTerm: colors.map(c => ({
+    '@type': 'DefinedTerm',
+    name: c.name,
+    description: `HEX: ${c.hex} | RGB: ${c.rgb.r}, ${c.rgb.g}, ${c.rgb.b} | CMYK: ${c.cmyk.c}, ${c.cmyk.m}, ${c.cmyk.y}, ${c.cmyk.k} | Pantone: ${c.pantone}`,
+    termCode: c.hex,
+    inDefinedTermSet: pageUrl,
+  })),
+};
+
+const datasetSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: `${teamName} Color Codes`,
+  description: `Official HEX, RGB, CMYK, and Pantone color codes for ${teamName}.`,
+  url: pageUrl,
+  creator: { '@type': 'Organization', name: site.name, url: site.url },
+  variableMeasured: colors.map(c => c.name),
+  distribution: {
+    '@type': 'DataDownload',
+    encodingFormat: 'text/html',
+    contentUrl: pageUrl,
+  },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Best Color Codes', item: site.url },
+    { '@type': 'ListItem', position: 2, name: 'Sports', item: `${site.url}/sports/` },
+    { '@type': 'ListItem', position: 3, name: league, item: teamUrl },
+    { '@type': 'ListItem', position: 4, name: teamName, item: pageUrl },
+  ],
+};
 ---
 
 <!doctype html>
@@ -61,7 +132,12 @@ const description = `Explore the official ${teamName} color codes including HEX,
   <meta name="description" content={description} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet" />
+  <JsonLd schema={sportsTeamSchema} />
+  <JsonLd schema={imageObjectSchema} />
+  <JsonLd schema={definedTermSetSchema} />
+  <JsonLd schema={datasetSchema} />
+  <JsonLd schema={breadcrumbSchema} />
 </head>
 <body>
   <Nav />

@@ -1,11 +1,53 @@
 ---
 import Base from '../layouts/Base.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { site } from '../config/site';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Where does the color data come from?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Colors are sourced from official team brand guidelines, style guides, and SVG logo files. Each entry includes a sourcing note explaining where the values were confirmed.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I report an incorrect color?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Use the contact form with the "Incorrect color data" subject. Please include the team name, the incorrect value, and a link to an official source confirming the correct value.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can you add a team that isn\'t listed?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes — select "Missing team" in the form and include the team name and league. We\'ll add it when we can verify the official color values.',
+      },
+    },
+  ],
+};
+
+const breadcrumbs = [
+  { name: 'Best Color Codes', url: site.url + '/' },
+  { name: 'Contact', url: `${site.url}/contact/` },
+];
 ---
 
 <Base
   title="Contact — Best Color Codes"
   description="Get in touch with the Best Color Codes team to report incorrect color data, suggest a new team, or ask a general question."
+  breadcrumbs={breadcrumbs}
 >
+  <Fragment slot="head">
+    <JsonLd schema={faqSchema} />
+  </Fragment>
   <section class="hero">
     <div class="hero-inner">
       <div class="breadcrumb"><a href="/">Best Color Codes</a> <span>›</span> <span>Contact</span></div>

@@ -1,14 +1,70 @@
 ---
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import JsonLd from '../components/JsonLd.astro';
 import '../styles/global.css';
+import { site } from '../config/site';
+
+interface Breadcrumb {
+  name: string;
+  url: string;
+}
 
 interface Props {
   title: string;
   description: string;
+  breadcrumbs?: Breadcrumb[];
+  canonical?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, breadcrumbs, canonical } = Astro.props;
+const pageUrl = canonical ?? (site.url + Astro.url.pathname);
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  url: site.url,
+  description: site.description,
+};
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  url: site.url,
+  logo: {
+    '@type': 'ImageObject',
+    url: site.logo,
+    contentUrl: site.logo,
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: site.email,
+    contactType: 'customer support',
+  },
+  ...(site.social.length > 0 ? { sameAs: site.social } : {}),
+};
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description,
+  url: pageUrl,
+  isPartOf: { '@type': 'WebSite', url: site.url },
+};
+
+const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumbs.map((crumb, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: crumb.name,
+    item: crumb.url,
+  })),
+} : null;
 ---
 
 <!doctype html>
@@ -18,9 +74,15 @@ const { title, description } = Astro.props;
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {canonical && <link rel="canonical" href={canonical} />}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet" />
+  <JsonLd schema={websiteSchema} />
+  <JsonLd schema={organizationSchema} />
+  <JsonLd schema={webPageSchema} />
+  {breadcrumbSchema && <JsonLd schema={breadcrumbSchema} />}
+  <slot name="head" />
 </head>
 <body>
   <Nav />

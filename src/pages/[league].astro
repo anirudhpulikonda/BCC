@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { site, leagueMeta } from '../config/site';
 
 export async function getStaticPaths() {
   const leagueSlugMap: Record<string, string> = {
@@ -31,12 +33,52 @@ const leagueFullName: Record<string, string> = {
   NHL: 'National Hockey League',
   MLB: 'Major League Baseball',
 };
+
+const meta = leagueMeta[league];
+const leagueSlug = meta?.slug ?? `${league.toLowerCase()}-team-color-codes`;
+const leagueUrl = `${site.url}/${leagueSlug}/`;
+
+const sportsOrgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SportsOrganization',
+  name: leagueFullName[league] ?? league,
+  alternateName: league,
+  sport: meta?.sport ?? 'Sports',
+  url: leagueUrl,
+};
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `${league} Team Colors`,
+  description: `Official color codes for all ${teams.length} ${leagueFullName[league]} teams.`,
+  url: leagueUrl,
+  numberOfItems: teams.length,
+  itemListElement: teams.map((t, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: `${t.data.teamName} Colors`,
+    url: `${site.url}/${t.data.slug}/`,
+  })),
+};
+
+const breadcrumbs = [
+  { name: 'Best Color Codes', url: site.url + '/' },
+  { name: 'Sports', url: `${site.url}/sports/` },
+  { name: 'Football', url: `${site.url}/sports/football/` },
+  { name: league, url: leagueUrl },
+];
 ---
 
 <Base
   title={`${league} Team Colors — Hex, RGB, CMYK & Pantone Codes | Best Color Codes`}
   description={`Official ${league} team color codes for all ${teams.length} teams. Find the exact HEX, RGB, CMYK, and Pantone values for every ${leagueFullName[league] ?? league} team.`}
+  breadcrumbs={breadcrumbs}
 >
+  <Fragment slot="head">
+    <JsonLd schema={sportsOrgSchema} />
+    <JsonLd schema={itemListSchema} />
+  </Fragment>
   <section class="hero">
     <div class="hero-inner">
       <div class="breadcrumb">
