@@ -1,14 +1,18 @@
-# BCC — Brand Color Codes
+# BCC — Best Color Codes
 
 ## Project Overview
 
 A reference site for sports team brand colors across major leagues (NFL, NBA, NHL, MLB, MLS, etc.), providing exact hex, RGB, CMYK, and Pantone values for every team.
 
+**Live URL:** `https://bestcolorcodes.com`
+**Deployment:** Cloudflare Pages (auto-deploys from `main` branch)
+**Stack:** Astro v5 + Tailwind CSS v4 (`@tailwindcss/vite`)
+
 ---
 
 ## Content Schema — Team Color Page
 
-Each team is represented as a structured data entry (e.g. a JSON/TS file in `src/data/teams/`).
+Each team is a JSON file loaded via Astro Content Collections (`glob` loader).
 
 ```ts
 {
@@ -25,7 +29,7 @@ Each team is represented as a structured data entry (e.g. a JSON/TS file in `src
     },
     // ... additional colors
   ];
-  logoPath: string;          // "/teams/nfl/pittsburgh-steelers/logo.svg"
+  logoPath: string;          // "/teams/nfl/arizona-cardinals-logo.svg"
   swatchImagePath: string;   // "/teams/nfl/pittsburgh-steelers/swatch.png"
   sourcingNote: string;      // Free text: where color values were sourced from
   lastUpdated: string;       // ISO date "2026-06-27"
@@ -42,6 +46,7 @@ Each team is represented as a structured data entry (e.g. a JSON/TS file in `src
 
 ## URL Slug Convention
 
+### Team pages
 - Format: `/[team-name-in-kebab-case]-colors/`
 - Always suffix with `-colors`
 - No league prefix in the slug
@@ -54,23 +59,82 @@ Each team is represented as a structured data entry (e.g. a JSON/TS file in `src
 /chicago-blackhawks-colors/
 ```
 
+### League pages
+- Format: `/[league-lowercase]-team-color-codes/`
+
+**Examples:**
+```
+/nfl-team-color-codes/
+/nba-team-color-codes/
+/nhl-team-color-codes/
+/mlb-team-color-codes/
+```
+
+### Trailing slashes
+- `trailingSlash: 'always'` is set in `astro.config.mjs`
+- **All internal `href` links must end with `/`** — e.g. `href="/nfl-team-color-codes/"` not `href="/nfl-team-color-codes"`
+- Production redirects (non-trailing → trailing) are handled by `public/_redirects`
+- The dev server does NOT redirect — this is an Astro 5 limitation; test trailing slash behaviour on the deployed site
+
+---
+
+## Images & Logos
+
+- All team logos live in `public/teams/{league}/{team-name}-logo.svg`
+  - Example: `public/teams/nfl/arizona-cardinals-logo.svg`
+- **Never put team images in `src/assets/`** — Vite hashes those filenames (e.g. `logo.B6wPjyxK.svg`), which breaks SEO crawlers
+- `logoPath` in team JSON should be the public path: `/teams/nfl/arizona-cardinals-logo.svg`
+- Always include descriptive `alt` text on every `<img>` tag
+
 ---
 
 ## SEO — Title & Meta Description Format
 
-> **Note:** These are proposed defaults. Update this section with the final format once a reference page is reviewed.
-
 **Title tag:**
 ```
-[Team Name] Colors – Hex, RGB, CMYK & Pantone Codes | BCC
+[Team Name] Colors — Hex, RGB, CMYK & Pantone Codes | Best Color Codes
 ```
-Example: `Pittsburgh Steelers Colors – Hex, RGB, CMYK & Pantone Codes | BCC`
+Example: `Pittsburgh Steelers Colors — Hex, RGB, CMYK & Pantone Codes | Best Color Codes`
 
 **Meta description:**
 ```
 Explore the official [Team Name] color codes including hex, RGB, CMYK, and Pantone values. The complete [Team Name] brand color palette for designers and fans.
 ```
-Example: `Explore the official Pittsburgh Steelers color codes including hex, RGB, CMYK, and Pantone values. The complete Pittsburgh Steelers brand color palette for designers and fans.`
+
+---
+
+## Schema Markup
+
+All schema.org JSON-LD is injected via `src/components/JsonLd.astro`. The site implements 10 schema types:
+
+| Schema type | Where injected |
+|---|---|
+| `WebSite` | `Base.astro` (every page) |
+| `Organization` | `Base.astro` (every page) |
+| `WebPage` | `Base.astro` (every page) |
+| `BreadcrumbList` | `Base.astro` (when `breadcrumbs` prop passed) and `TeamColorPage.astro` |
+| `SportsOrganization` | `[league].astro` via `<Fragment slot="head">` |
+| `ItemList` | `[league].astro` via `<Fragment slot="head">` |
+| `SportsTeam` | `TeamColorPage.astro` |
+| `ImageObject` | `TeamColorPage.astro` |
+| `DefinedTermSet` | `TeamColorPage.astro` |
+| `Dataset` | `TeamColorPage.astro` |
+| `FAQPage` | `contact.astro` via `<Fragment slot="head">` |
+
+### Central config — `src/config/site.ts`
+This is the **single source of truth** for all schema data. Update here and every schema updates automatically:
+- `site.url` — production domain (`https://bestcolorcodes.com`)
+- `site.name` — site display name
+- `site.logo` — absolute URL to logo/favicon
+- `site.email` — contact email
+- `site.social` — array of social profile URLs (add here to populate `Organization.sameAs`)
+- `leagueMeta` — full name, sport, and slug for each league
+
+### Adding schemas to a new page
+1. Import `JsonLd` from `../components/JsonLd.astro`
+2. Import `site` / `leagueMeta` from `../config/site` if needed
+3. Inject inside `<Fragment slot="head">` when using `Base.astro` layout
+4. Pass `breadcrumbs` prop to `Base.astro` to get a `BreadcrumbList` automatically
 
 ---
 
@@ -115,8 +179,9 @@ All tokens are CSS custom properties defined in `src/styles/tokens.css` and impo
 
 | Token | Value |
 |-------|-------|
-| `--font-sans` | `'Inter', system-ui, sans-serif` |
+| `--font-sans` | `'Raleway', system-ui, sans-serif` |
 | `--font-mono` | `ui-monospace, 'Cascadia Code', monospace` |
+| Body font | Inter Tight (loaded via Google Fonts) |
 | Body | `16px / 1.7` |
 | `h1` | `28px / 500` |
 | Nav logo | `15px / 500` |
@@ -145,25 +210,44 @@ All tokens are CSS custom properties defined in `src/styles/tokens.css` and impo
 
 ---
 
+## Contact Form
+
+The contact form on `/contact/` uses **Web3Forms** (not Netlify Forms, not SMTP).
+- Access key is stored as a hidden field in `src/pages/contact.astro`
+- Submissions go to `bestcolorcodes@gmail.com`
+- Form submits via `fetch` (async, no page reload)
+
+---
+
 ## Development
 
-When starting the dev server, use background mode:
+Start the dev server:
 
 ```
-astro dev --background
+npx astro dev
 ```
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
+Stop it:
+
+```
+npx astro dev stop
+```
+
+> Note: `astro dev --background` does not exist in Astro 5. Use `npx astro dev` normally.
+
+### Dark mode
+Toggled manually via `[data-theme="dark"]` on `<html>`, persisted in `localStorage`.
+
+### Scoped CSS gotcha
+Astro scopes component styles by content hash. If styles don't apply after edits, restart the dev server to clear the stale CID.
+
+---
 
 ## Documentation
 
 Full documentation: https://docs.astro.build
 
-Consult these guides before working on related tasks:
-
 - [Adding pages, dynamic routes, or middleware](https://docs.astro.build/en/guides/routing/)
 - [Working with Astro components](https://docs.astro.build/en/basics/astro-components/)
-- [Using React, Vue, Svelte, or other framework components](https://docs.astro.build/en/guides/framework-components/)
 - [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
 - [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
-- [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
