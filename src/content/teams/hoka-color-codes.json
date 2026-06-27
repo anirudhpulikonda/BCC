@@ -6,20 +6,38 @@
     {
       "name": "Water Raceway Blue",
       "hex": "#0082C7",
-      "rgb": { "r": 0, "g": 130, "b": 199 },
-      "cmyk": { "c": 100, "m": 35, "y": 0, "k": 22 },
+      "rgb": {
+        "r": 0,
+        "g": 130,
+        "b": 199
+      },
+      "cmyk": {
+        "c": 100,
+        "m": 35,
+        "y": 0,
+        "k": 22
+      },
       "pantone": "Process Blue C"
     },
     {
       "name": "White",
       "hex": "#FFFFFF",
-      "rgb": { "r": 255, "g": 255, "b": 255 },
-      "cmyk": { "c": 0, "m": 0, "y": 0, "k": 0 },
+      "rgb": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      },
+      "cmyk": {
+        "c": 0,
+        "m": 0,
+        "y": 0,
+        "k": 0
+      },
       "pantone": "WHITE"
     }
   ],
-  "logoPath": "/teams/brand/hoka/logo.svg",
-  "swatchImagePath": "/teams/brand/hoka/swatch.jpg",
+  "logoPath": "../../assets/teams/brand/hoka/logo.svg",
+  "swatchImagePath": "",
   "sourcingNote": "Hex colors confirmed from official SVG logo as provisioned by the official source/website.",
   "lastUpdated": "2026-06-27"
 }

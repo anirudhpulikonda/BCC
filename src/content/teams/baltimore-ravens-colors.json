@@ -6,34 +6,70 @@
     {
       "name": "Purple",
       "hex": "#241773",
-      "rgb": { "r": 26, "g": 25, "b": 95 },
-      "cmyk": { "c": 100, "m": 100, "y": 0, "k": 5 },
+      "rgb": {
+        "r": 26,
+        "g": 25,
+        "b": 95
+      },
+      "cmyk": {
+        "c": 100,
+        "m": 100,
+        "y": 0,
+        "k": 5
+      },
       "pantone": "PMS 273 C"
     },
     {
       "name": "Black",
       "hex": "#000000",
-      "rgb": { "r": 0, "g": 0, "b": 0 },
-      "cmyk": { "c": 70, "m": 50, "y": 50, "k": 100 },
+      "rgb": {
+        "r": 0,
+        "g": 0,
+        "b": 0
+      },
+      "cmyk": {
+        "c": 70,
+        "m": 50,
+        "y": 50,
+        "k": 100
+      },
       "pantone": "PMS Black 6 C"
     },
     {
       "name": "Metallic Gold",
       "hex": "#9E7C0C",
-      "rgb": { "r": 158, "g": 124, "b": 12 },
-      "cmyk": { "c": 0, "m": 20, "y": 80, "k": 20 },
+      "rgb": {
+        "r": 158,
+        "g": 124,
+        "b": 12
+      },
+      "cmyk": {
+        "c": 0,
+        "m": 20,
+        "y": 80,
+        "k": 20
+      },
       "pantone": "PMS 8660 C"
     },
     {
       "name": "Red",
       "hex": "#C60C30",
-      "rgb": { "r": 198, "g": 12, "b": 14 },
-      "cmyk": { "c": 10, "m": 100, "y": 100, "k": 0 },
+      "rgb": {
+        "r": 198,
+        "g": 12,
+        "b": 14
+      },
+      "cmyk": {
+        "c": 10,
+        "m": 100,
+        "y": 100,
+        "k": 0
+      },
       "pantone": "PMS 186 C"
     }
   ],
-  "logoPath": "/teams/nfl/baltimore-ravens/logo.svg",
-  "swatchImagePath": "/teams/nfl/baltimore-ravens/swatch.jpg",
+  "logoPath": "../../assets/teams/nfl/baltimore-ravens/logo.svg",
+  "swatchImagePath": "../../assets/teams/nfl/baltimore-ravens/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed from official NFL guidelines.",
   "lastUpdated": "2026-06-27"
 }

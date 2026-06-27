@@ -6,34 +6,70 @@
     {
       "name": "Orange",
       "hex": "#FD5A1E",
-      "rgb": { "r": 253, "g": 90, "b": 30 },
-      "cmyk": { "c": 0, "m": 65, "y": 83, "k": 0 },
+      "rgb": {
+        "r": 253,
+        "g": 90,
+        "b": 30
+      },
+      "cmyk": {
+        "c": 0,
+        "m": 65,
+        "y": 83,
+        "k": 0
+      },
       "pantone": "PMS 172 C"
     },
     {
       "name": "Black",
       "hex": "#27251F",
-      "rgb": { "r": 39, "g": 37, "b": 31 },
-      "cmyk": { "c": 0, "m": 0, "y": 0, "k": 100 },
+      "rgb": {
+        "r": 39,
+        "g": 37,
+        "b": 31
+      },
+      "cmyk": {
+        "c": 0,
+        "m": 0,
+        "y": 0,
+        "k": 100
+      },
       "pantone": "Process Black C"
     },
     {
       "name": "Cream",
       "hex": "#EFD19F",
-      "rgb": { "r": 239, "g": 209, "b": 159 },
-      "cmyk": { "c": 4, "m": 10, "y": 18, "k": 5 },
+      "rgb": {
+        "r": 239,
+        "g": 209,
+        "b": 159
+      },
+      "cmyk": {
+        "c": 4,
+        "m": 10,
+        "y": 18,
+        "k": 5
+      },
       "pantone": "PMS 155 C"
     },
     {
       "name": "Gold",
       "hex": "#AE8F6F",
-      "rgb": { "r": 174, "g": 143, "b": 111 },
-      "cmyk": { "c": 11, "m": 30, "y": 55, "k": 15 },
+      "rgb": {
+        "r": 174,
+        "g": 143,
+        "b": 111
+      },
+      "cmyk": {
+        "c": 11,
+        "m": 30,
+        "y": 55,
+        "k": 15
+      },
       "pantone": "PMS 874 Matte C"
     }
   ],
-  "logoPath": "/teams/mlb/san-francisco-giants/logo.svg",
-  "swatchImagePath": "/teams/mlb/san-francisco-giants/swatch.jpg",
+  "logoPath": "../../assets/teams/mlb/san-francisco-giants/logo.svg",
+  "swatchImagePath": "../../assets/teams/mlb/san-francisco-giants/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. Pantone confirmed by logo slick.",
   "lastUpdated": "2026-06-27"
 }

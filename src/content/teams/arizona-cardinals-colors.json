@@ -6,27 +6,54 @@
     {
       "name": "Cardinal Red",
       "hex": "#97233F",
-      "rgb": { "r": 151, "g": 35, "b": 63 },
-      "cmyk": { "c": 0, "m": 100, "y": 60, "k": 30 },
+      "rgb": {
+        "r": 151,
+        "g": 35,
+        "b": 63
+      },
+      "cmyk": {
+        "c": 0,
+        "m": 100,
+        "y": 60,
+        "k": 30
+      },
       "pantone": "PMS 194 C"
     },
     {
       "name": "Black",
       "hex": "#000000",
-      "rgb": { "r": 0, "g": 0, "b": 0 },
-      "cmyk": { "c": 70, "m": 50, "y": 50, "k": 100 },
+      "rgb": {
+        "r": 0,
+        "g": 0,
+        "b": 0
+      },
+      "cmyk": {
+        "c": 70,
+        "m": 50,
+        "y": 50,
+        "k": 100
+      },
       "pantone": "BLACK C"
     },
     {
       "name": "Yellow",
       "hex": "#FFB612",
-      "rgb": { "r": 255, "g": 182, "b": 18 },
-      "cmyk": { "c": 0, "m": 25, "y": 100, "k": 0 },
+      "rgb": {
+        "r": 255,
+        "g": 182,
+        "b": 18
+      },
+      "cmyk": {
+        "c": 0,
+        "m": 25,
+        "y": 100,
+        "k": 0
+      },
       "pantone": "PMS 1235 C"
     }
   ],
-  "logoPath": "/teams/nfl/arizona-cardinals/logo.svg",
-  "swatchImagePath": "/teams/nfl/arizona-cardinals/swatch.jpg",
+  "logoPath": "../../assets/teams/nfl/arizona-cardinals/logo.svg",
+  "swatchImagePath": "../../assets/teams/nfl/arizona-cardinals/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed from official NFL Fact Book. Pantone confirmed by logo slick.",
   "lastUpdated": "2026-06-27"
 }

@@ -6,41 +6,86 @@
     {
       "name": "Steelers Gold",
       "hex": "#FFB612",
-      "rgb": { "r": 255, "g": 182, "b": 18 },
-      "cmyk": { "c": 0, "m": 30, "y": 75, "k": 0 },
+      "rgb": {
+        "r": 255,
+        "g": 182,
+        "b": 18
+      },
+      "cmyk": {
+        "c": 0,
+        "m": 30,
+        "y": 75,
+        "k": 0
+      },
       "pantone": "PMS 1235 C"
     },
     {
       "name": "Black",
       "hex": "#101820",
-      "rgb": { "r": 16, "g": 24, "b": 32 },
-      "cmyk": { "c": 100, "m": 40, "y": 0, "k": 100 },
+      "rgb": {
+        "r": 16,
+        "g": 24,
+        "b": 32
+      },
+      "cmyk": {
+        "c": 100,
+        "m": 40,
+        "y": 0,
+        "k": 100
+      },
       "pantone": "PMS Black 6 C"
     },
     {
       "name": "Blue",
       "hex": "#003087",
-      "rgb": { "r": 0, "g": 48, "b": 135 },
-      "cmyk": { "c": 100, "m": 75, "y": 2, "k": 18 },
+      "rgb": {
+        "r": 0,
+        "g": 48,
+        "b": 135
+      },
+      "cmyk": {
+        "c": 100,
+        "m": 75,
+        "y": 2,
+        "k": 18
+      },
       "pantone": "PMS 287 C"
     },
     {
       "name": "Red",
       "hex": "#C60C30",
-      "rgb": { "r": 198, "g": 12, "b": 48 },
-      "cmyk": { "c": 10, "m": 100, "y": 100, "k": 0 },
+      "rgb": {
+        "r": 198,
+        "g": 12,
+        "b": 48
+      },
+      "cmyk": {
+        "c": 10,
+        "m": 100,
+        "y": 100,
+        "k": 0
+      },
       "pantone": "PMS 186 C"
     },
     {
       "name": "Silver",
       "hex": "#A5ACAF",
-      "rgb": { "r": 165, "g": 172, "b": 175 },
-      "cmyk": { "c": 0, "m": 0, "y": 0, "k": 20 },
+      "rgb": {
+        "r": 165,
+        "g": 172,
+        "b": 175
+      },
+      "cmyk": {
+        "c": 0,
+        "m": 0,
+        "y": 0,
+        "k": 20
+      },
       "pantone": "PMS 429 C"
     }
   ],
-  "logoPath": "/teams/nfl/pittsburgh-steelers/logo.svg",
-  "swatchImagePath": "/teams/nfl/pittsburgh-steelers/swatch.jpg",
+  "logoPath": "../../assets/teams/nfl/pittsburgh-steelers/logo.svg",
+  "swatchImagePath": "../../assets/teams/nfl/pittsburgh-steelers/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed from official NFL Media Guide. Pantone confirmed by logo slick.",
   "lastUpdated": "2026-06-27"
 }

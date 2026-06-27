@@ -17,7 +17,7 @@ const teams = defineCollection({
     slug: z.string(),
     colors: z.array(colorSchema),
     logoPath: z.string(),
-    swatchImagePath: z.string(),
+    swatchImagePath: z.string().optional().default(""),
     sourcingNote: z.string(),
     lastUpdated: z.string(),
   }),

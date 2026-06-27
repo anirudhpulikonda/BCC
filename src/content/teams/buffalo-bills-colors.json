@@ -6,20 +6,38 @@
     {
       "name": "Blue",
       "hex": "#00338D",
-      "rgb": { "r": 0, "g": 51, "b": 141 },
-      "cmyk": { "c": 100, "m": 60, "y": 0, "k": 20 },
+      "rgb": {
+        "r": 0,
+        "g": 51,
+        "b": 141
+      },
+      "cmyk": {
+        "c": 100,
+        "m": 60,
+        "y": 0,
+        "k": 20
+      },
       "pantone": "PMS 287 C"
     },
     {
       "name": "Red",
       "hex": "#C60C30",
-      "rgb": { "r": 198, "g": 12, "b": 48 },
-      "cmyk": { "c": 10, "m": 100, "y": 100, "k": 0 },
+      "rgb": {
+        "r": 198,
+        "g": 12,
+        "b": 48
+      },
+      "cmyk": {
+        "c": 10,
+        "m": 100,
+        "y": 100,
+        "k": 0
+      },
       "pantone": "PMS 186 C"
     }
   ],
-  "logoPath": "/teams/nfl/buffalo-bills/logo.svg",
-  "swatchImagePath": "/teams/nfl/buffalo-bills/swatch.jpg",
+  "logoPath": "../../assets/teams/nfl/buffalo-bills/logo.svg",
+  "swatchImagePath": "../../assets/teams/nfl/buffalo-bills/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed from official NFL Fact Book. Pantone confirmed by logo slick.",
   "lastUpdated": "2026-06-27"
 }

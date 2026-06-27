@@ -6,20 +6,38 @@
     {
       "name": "Midnight Navy Blue",
       "hex": "#0C2340",
-      "rgb": { "r": 12, "g": 35, "b": 64 },
-      "cmyk": { "c": 100, "m": 60, "y": 0, "k": 56 },
+      "rgb": {
+        "r": 12,
+        "g": 35,
+        "b": 64
+      },
+      "cmyk": {
+        "c": 100,
+        "m": 60,
+        "y": 0,
+        "k": 56
+      },
       "pantone": "PMS 289 C"
     },
     {
       "name": "Gray",
       "hex": "#C4CED3",
-      "rgb": { "r": 192, "g": 206, "b": 211 },
-      "cmyk": { "c": 0, "m": 0, "y": 3, "k": 7 },
+      "rgb": {
+        "r": 192,
+        "g": 206,
+        "b": 211
+      },
+      "cmyk": {
+        "c": 0,
+        "m": 0,
+        "y": 3,
+        "k": 7
+      },
       "pantone": "PMS Cool Gray 7 C"
     }
   ],
-  "logoPath": "/teams/mlb/new-york-yankees/logo.svg",
-  "swatchImagePath": "/teams/mlb/new-york-yankees/swatch.jpg",
+  "logoPath": "../../assets/teams/mlb/new-york-yankees/logo.svg",
+  "swatchImagePath": "../../assets/teams/mlb/new-york-yankees/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. Pantone confirmed by logo slick.",
   "lastUpdated": "2026-06-27"
 }

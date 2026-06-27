@@ -6,20 +6,38 @@
     {
       "name": "Purple",
       "hex": "#4F2683",
-      "rgb": { "r": 79, "g": 38, "b": 131 },
-      "cmyk": { "c": 82, "m": 100, "y": 0, "k": 12 },
+      "rgb": {
+        "r": 79,
+        "g": 38,
+        "b": 131
+      },
+      "cmyk": {
+        "c": 82,
+        "m": 100,
+        "y": 0,
+        "k": 12
+      },
       "pantone": "PMS 268 C"
     },
     {
       "name": "Gold",
       "hex": "#FFC62F",
-      "rgb": { "r": 255, "g": 198, "b": 47 },
-      "cmyk": { "c": 0, "m": 23, "y": 91, "k": 0 },
+      "rgb": {
+        "r": 255,
+        "g": 198,
+        "b": 47
+      },
+      "cmyk": {
+        "c": 0,
+        "m": 23,
+        "y": 91,
+        "k": 0
+      },
       "pantone": "PMS 123 C"
     }
   ],
-  "logoPath": "/teams/nfl/minnesota-vikings/logo.svg",
-  "swatchImagePath": "/teams/nfl/minnesota-vikings/swatch.jpg",
+  "logoPath": "../../assets/teams/nfl/minnesota-vikings/logo.svg",
+  "swatchImagePath": "../../assets/teams/nfl/minnesota-vikings/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed from official NFL Media Guide. Pantone confirmed by logo slick.",
   "lastUpdated": "2026-06-27"
 }
