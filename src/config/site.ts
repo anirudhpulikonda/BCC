@@ -1,8 +1,8 @@
 export const site = {
   name: 'Best Color Codes',
-  url: 'https://brandcolorcodes.com',
+  url: 'https://bestcolorcodes.com',
   // Update logo path here and all schemas update automatically
-  logo: 'https://brandcolorcodes.com/favicon.svg',
+  logo: 'https://bestcolorcodes.com/favicon.svg',
   email: 'bestcolorcodes@gmail.com',
   description: 'The definitive reference for sports team brand colors. Official HEX, RGB, CMYK, and Pantone codes for every NFL, NBA, NHL, and MLB team.',
   // Add social profile URLs here as you create them
