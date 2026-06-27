@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://brandcolorcodes.com/sitemap-index.xml
+Sitemap: https://bestcolorcodes.com/sitemap-index.xml
