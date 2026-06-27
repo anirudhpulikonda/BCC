@@ -36,7 +36,7 @@
       "pantone": "WHITE"
     }
   ],
-  "logoPath": "../../assets/teams/brand/hoka/logo.svg",
+  "logoPath": "/teams/brand/hoka-logo.svg",
   "swatchImagePath": "",
   "sourcingNote": "Hex colors confirmed from official SVG logo as provisioned by the official source/website.",
   "lastUpdated": "2026-06-27",

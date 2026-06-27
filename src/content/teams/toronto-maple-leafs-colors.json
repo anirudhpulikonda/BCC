@@ -36,7 +36,7 @@
       "pantone": "WHITE"
     }
   ],
-  "logoPath": "../../assets/teams/nhl/toronto-maple-leafs/logo.svg",
+  "logoPath": "/teams/nhl/toronto-maple-leafs-logo.svg",
   "swatchImagePath": "../../assets/teams/nhl/toronto-maple-leafs/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. Pantone confirmed by logo slick.",
   "lastUpdated": "2026-06-27",

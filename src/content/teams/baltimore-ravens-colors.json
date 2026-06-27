@@ -68,7 +68,7 @@
       "pantone": "PMS 186 C"
     }
   ],
-  "logoPath": "../../assets/teams/nfl/baltimore-ravens/logo.svg",
+  "logoPath": "/teams/nfl/baltimore-ravens-logo.svg",
   "swatchImagePath": "../../assets/teams/nfl/baltimore-ravens/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed from official NFL guidelines.",
   "lastUpdated": "2026-06-27",
