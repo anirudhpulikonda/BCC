@@ -1,6 +1,6 @@
 :root {
-  --surface-0: #f4f4f2;
-  --surface-1: #f9f9f8;
+  --surface-0: #f5f5f0;
+  --surface-1: #fafaf6;
   --surface-2: #ffffff;
 
   --text-primary: #1a1a18;
@@ -16,29 +16,28 @@
 
   --bg-accent: #e6f1fb;
 
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Inter Tight', system-ui, sans-serif;
+  --font-heading: 'Raleway', system-ui, sans-serif;
   --font-mono: ui-monospace, 'Cascadia Code', monospace;
 
   --radius: 8px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --surface-0: #1a1a18;
-    --surface-1: #232320;
-    --surface-2: #2c2c2a;
+[data-theme="dark"] {
+  --surface-0: #111827;
+  --surface-1: #1a2235;
+  --surface-2: #1f2a3e;
 
-    --text-primary: #f0efe8;
-    --text-secondary: #b4b2a9;
-    --text-muted: #888780;
-    --text-accent: #85b7eb;
-    --text-success: #97c459;
+  --text-primary: #f0efe8;
+  --text-secondary: #b4b2a9;
+  --text-muted: #888780;
+  --text-accent: #85b7eb;
+  --text-success: #97c459;
 
-    --border: rgba(255, 255, 255, 0.10);
-    --border-strong: rgba(255, 255, 255, 0.18);
-    --border-accent: #0c447c;
-    --border-success: #3b6d11;
+  --border: rgba(255, 255, 255, 0.10);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --border-accent: #0c447c;
+  --border-success: #3b6d11;
 
-    --bg-accent: #042c53;
-  }
+  --bg-accent: #042c53;
 }

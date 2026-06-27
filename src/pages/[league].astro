@@ -3,13 +3,17 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 
 export async function getStaticPaths() {
-  const all = await getCollection('teams');
-  const leagues = [...new Set(all.map(t => t.data.league))].filter(l =>
-    ['NFL', 'NBA', 'NHL', 'MLB'].includes(l)
-  );
+  const leagueSlugMap: Record<string, string> = {
+    'nfl-team-color-codes': 'NFL',
+    'nba-team-color-codes': 'NBA',
+    'nhl-team-color-codes': 'NHL',
+    'mlb-team-color-codes': 'MLB',
+  };
 
-  return leagues.map(league => ({
-    params: { league: league.toLowerCase() },
+  const all = await getCollection('teams');
+
+  return Object.entries(leagueSlugMap).map(([slug, league]) => ({
+    params: { league: slug },
     props: {
       league,
       teams: all
@@ -31,11 +35,16 @@ const leagueFullName: Record<string, string> = {
 
 <Base
   title={`${league} Team Colors — Hex, RGB, CMYK & Pantone Codes | Best Color Codes`}
-  description={`Official ${league} team color codes for all ${teams.length} teams. Find the exact hex, RGB, CMYK, and Pantone values for every ${leagueFullName[league] ?? league} team.`}
+  description={`Official ${league} team color codes for all ${teams.length} teams. Find the exact HEX, RGB, CMYK, and Pantone values for every ${leagueFullName[league] ?? league} team.`}
 >
   <section class="hero">
     <div class="hero-inner">
-      <div class="breadcrumb"><a href="/">Best Color Codes</a> <span>›</span> <span>{league}</span></div>
+      <div class="breadcrumb">
+        <a href="/">Best Color Codes</a> <span>›</span>
+        <a href="/sports/">Sports</a> <span>›</span>
+        <a href="/sports/football/">Football</a> <span>›</span>
+        <span>{league}</span>
+      </div>
       <h1>{league} team colors</h1>
       <p class="hero-sub">{leagueFullName[league]} — official brand color codes for all {teams.length} teams.</p>
     </div>

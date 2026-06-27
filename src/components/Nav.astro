@@ -3,40 +3,97 @@
 <nav class="nav">
   <a class="nav-logo" href="/">
     <svg class="nav-logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <!-- Vertical bars of the # -->
       <rect x="6" y="2" width="3.5" height="20" rx="1.75" fill="#E63946"/>
       <rect x="14.5" y="2" width="3.5" height="20" rx="1.75" fill="#2DC653"/>
-      <!-- Horizontal bars of the # -->
       <rect x="2" y="7.5" width="20" height="3.5" rx="1.75" fill="#2B9FE3"/>
       <rect x="2" y="13" width="20" height="3.5" rx="1.75" fill="#F4A261"/>
     </svg>
     <span>Best Color Codes</span>
   </a>
+
   <ul class="nav-links">
-    <li><a href="/nfl/">NFL</a></li>
-    <li><a href="/nba/">NBA</a></li>
-    <li><a href="/nhl/">NHL</a></li>
-    <li><a href="/mlb/">MLB</a></li>
+    <li class="nav-item has-dropdown">
+      <a href="/sports/" class="nav-link">Sports <span class="chevron">▾</span></a>
+      <div class="dropdown">
+        <div class="dropdown-section">
+          <a class="dropdown-category" href="/sports/football/">🏈 Football</a>
+          <div class="dropdown-sub">
+            <a href="/nfl-team-color-codes/">NFL</a>
+            <a href="/nba-team-color-codes/">NBA</a>
+            <a href="/nhl-team-color-codes/">NHL</a>
+            <a href="/mlb-team-color-codes/">MLB</a>
+          </div>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-section">
+          <a class="dropdown-category" href="/sports/footwear/">👟 Footwear</a>
+          <div class="dropdown-sub">
+            <a href="/hoka-color-codes/">Hoka</a>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li><a href="/contact/" class="nav-link">Contact</a></li>
   </ul>
-  <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
+
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
 <div class="nav-drawer" aria-hidden="true" hidden>
-  <a href="/nfl/">NFL</a>
-  <a href="/nba/">NBA</a>
-  <a href="/nhl/">NHL</a>
-  <a href="/mlb/">MLB</a>
+  <a href="/sports/">Sports</a>
+  <a href="/sports/football/">↳ Football</a>
+  <a href="/nfl-team-color-codes/">　NFL</a>
+  <a href="/nba-team-color-codes/">　NBA</a>
+  <a href="/nhl-team-color-codes/">　NHL</a>
+  <a href="/mlb-team-color-codes/">　MLB</a>
+  <a href="/sports/footwear/">↳ Footwear</a>
+  <a href="/hoka-color-codes/">　Hoka</a>
   <a href="/contact/">Contact</a>
 </div>
 
 <script>
-  const btn = document.querySelector<HTMLButtonElement>('.nav-hamburger')!;
+  const html = document.documentElement;
+  const themeBtn = document.querySelector<HTMLButtonElement>('#theme-toggle')!;
+  const saved = localStorage.getItem('theme');
+  if (saved === 'dark') html.setAttribute('data-theme', 'dark');
+
+  themeBtn.addEventListener('click', () => {
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      html.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  });
+
+  // Sports dropdown — click to toggle
+  const dropdownItem = document.querySelector<HTMLElement>('.has-dropdown')!;
+  const dropdownEl = dropdownItem.querySelector<HTMLElement>('.dropdown')!;
+  dropdownItem.querySelector('.nav-link')!.addEventListener('click', (e) => {
+    e.preventDefault();
+    dropdownItem.classList.toggle('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (!dropdownItem.contains(e.target as Node)) {
+      dropdownItem.classList.remove('open');
+    }
+  });
+
+  const hamburger = document.querySelector<HTMLButtonElement>('.nav-hamburger')!;
   const drawer = document.querySelector<HTMLElement>('.nav-drawer')!;
-  btn.addEventListener('click', () => {
-    const open = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!open));
+  hamburger.addEventListener('click', () => {
+    const open = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', String(!open));
     drawer.setAttribute('aria-hidden', String(open));
     drawer.hidden = open;
   });
@@ -63,25 +120,123 @@
     font-size: 15px;
     font-weight: 500;
     letter-spacing: -.3px;
-  }
-
-  .nav-logo-icon {
     flex-shrink: 0;
   }
+
+  .nav-logo-icon { flex-shrink: 0; }
 
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0.25rem;
     list-style: none;
   }
 
-  .nav-links a {
-    font-size: 13px;
+  .nav-item { position: relative; }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
     color: var(--text-secondary);
+    padding: 6px 10px;
+    border-radius: var(--radius);
+    transition: color .12s, background .12s;
   }
 
-  .nav-links a:hover { color: var(--text-primary); }
+  .nav-link:hover {
+    color: var(--text-primary);
+    background: var(--surface-1);
+  }
+
+  .chevron {
+    font-size: 10px;
+    opacity: .6;
+    transition: transform .15s;
+  }
+
+  .has-dropdown.open .chevron { transform: rotate(180deg); }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    background: var(--surface-2);
+    border: 0.5px solid var(--border-strong);
+    border-radius: 10px;
+    padding: 8px 0;
+    min-width: 210px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.10);
+    z-index: 200;
+  }
+
+  .has-dropdown.open .dropdown { display: block; }
+
+  .dropdown-section { padding: 2px 0; }
+
+  .dropdown-category {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 6px 16px 4px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .dropdown-sub {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dropdown-sub a {
+    font-size: 13px;
+    color: var(--text-primary);
+    padding: 7px 16px 7px 28px;
+    transition: background .1s, color .1s;
+  }
+
+  .dropdown-sub a:hover {
+    background: var(--surface-1);
+    color: var(--text-accent);
+  }
+
+  .dropdown-divider {
+    height: 0.5px;
+    background: var(--border);
+    margin: 4px 0;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: 0.5px solid var(--border-strong);
+    border-radius: var(--radius);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background .12s, color .12s;
+  }
+
+  .theme-toggle:hover {
+    background: var(--surface-1);
+    color: var(--text-primary);
+  }
+
+  .icon-moon { display: none; }
+  :global([data-theme="dark"]) .icon-sun { display: none; }
+  :global([data-theme="dark"]) .icon-moon { display: block; }
 
   .nav-hamburger {
     display: none;
@@ -112,22 +267,17 @@
   }
 
   @media (max-width: 540px) {
-    .nav-drawer:not([hidden]) {
-      display: flex;
-    }
+    .nav-drawer:not([hidden]) { display: flex; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
   }
 
   .nav-drawer a {
-    padding: 14px 2rem;
+    padding: 12px 2rem;
     font-size: 14px;
     color: var(--text-primary);
     border-bottom: 0.5px solid var(--border);
   }
 
   .nav-drawer a:hover { background: var(--surface-1); }
-
-  @media (max-width: 540px) {
-    .nav-links { display: none; }
-    .nav-hamburger { display: flex; }
-  }
 </style>

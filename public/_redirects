@@ -1,0 +1,2 @@
+# Redirect all URLs without trailing slash to trailing slash (301 permanent)
+/:splat  /:splat/  301

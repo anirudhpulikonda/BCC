@@ -18,7 +18,12 @@ import Base from '../layouts/Base.astro';
     <div class="card">
       <div class="card-section">
         <p class="section-label">Send a message</p>
-        <form class="form" name="contact" method="POST" data-netlify="true">
+        <form class="form" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="2859aacc-23be-4ed5-94a7-489a9fe5a9cc" />
+          <input type="hidden" name="subject" value="New message from Best Color Codes contact form" />
+          <input type="hidden" name="from_name" value="Best Color Codes" />
+          <input type="checkbox" name="botcheck" style="display:none" />
+
           <div class="field">
             <label for="name">Name</label>
             <input id="name" name="name" type="text" placeholder="Your name" required />
@@ -28,20 +33,28 @@ import Base from '../layouts/Base.astro';
             <input id="email" name="email" type="email" placeholder="you@example.com" required />
           </div>
           <div class="field">
-            <label for="subject">Subject</label>
-            <select id="subject" name="subject">
-              <option value="color-correction">Incorrect color data</option>
-              <option value="missing-team">Missing team</option>
-              <option value="general">General question</option>
-              <option value="other">Other</option>
+            <label for="topic">Subject</label>
+            <select id="topic" name="topic">
+              <option value="Incorrect color data">Incorrect color data</option>
+              <option value="Missing team">Missing team</option>
+              <option value="General question">General question</option>
+              <option value="Other">Other</option>
             </select>
           </div>
           <div class="field">
             <label for="message">Message</label>
             <textarea id="message" name="message" rows="5" placeholder="Describe what you'd like to report or ask..." required></textarea>
           </div>
-          <button type="submit" class="submit-btn">Send message</button>
+          <div class="form-footer">
+            <button type="submit" class="submit-btn">Send message</button>
+            <p class="form-result" id="form-result" aria-live="polite"></p>
+          </div>
         </form>
+      </div>
+      <div class="card-divider"></div>
+      <div class="card-section email-section">
+        <p class="section-label">Or email us directly</p>
+        <a class="email-link" href="mailto:bestcolorcodes@gmail.com">bestcolorcodes@gmail.com</a>
       </div>
     </div>
 
@@ -185,6 +198,39 @@ import Base from '../layouts/Base.astro';
 
   .submit-btn:hover { opacity: .8; }
 
+  .form-footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .form-result {
+    font-size: 13px;
+  }
+
+  .form-result.success { color: var(--text-success); }
+  .form-result.error { color: #c0392b; }
+
+  .card-divider {
+    height: 0.5px;
+    background: var(--border);
+  }
+
+  .email-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .email-link {
+    font-size: 14px;
+    color: var(--text-accent);
+    font-weight: 500;
+  }
+
+  .email-link:hover { text-decoration: underline; }
+
   .faq { margin-bottom: 3rem; }
 
   .faq-list {
@@ -222,6 +268,7 @@ import Base from '../layouts/Base.astro';
 
   details[open] summary::after { content: '−'; }
 
+
   .faq-item p {
     padding: 0 16px 14px;
     font-size: 13px;
@@ -231,3 +278,38 @@ import Base from '../layouts/Base.astro';
     padding-top: 12px;
   }
 </style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const result = document.getElementById('form-result')!;
+  const btn = form.querySelector<HTMLButtonElement>('.submit-btn')!;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    result.className = 'form-result';
+    result.textContent = '';
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: new FormData(form),
+      });
+      const data = await res.json();
+      if (data.success) {
+        result.classList.add('success');
+        result.textContent = '✓ Message sent! We\'ll get back to you soon.';
+        form.reset();
+      } else {
+        throw new Error(data.message);
+      }
+    } catch {
+      result.classList.add('error');
+      result.textContent = 'Something went wrong. Please try emailing us directly.';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Send message';
+    }
+  });
+</script>

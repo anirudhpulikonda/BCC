@@ -35,14 +35,14 @@ const colorList = colorNames.length <= 2
   ? colorNames.join(' and ')
   : colorNames.slice(0, -1).join(', ') + ', and ' + colorNames.at(-1);
 
-const intro = `The ${teamName} colors are ${colorList}. The official ${teamName} color codes for all ${colors.length} team color${colors.length !== 1 ? 's' : ''} are listed below in hex, RGB, CMYK, and Pantone so designers and fans can use them in any project.`;
+const intro = `The ${teamName} colors are ${colorList}. The official ${teamName} color codes for all ${colors.length} team color${colors.length !== 1 ? 's' : ''} are listed below in HEX, RGB, CMYK, and Pantone so designers and fans can use them in any project.`;
 
 const about = `The ${teamName} brand palette consists of ${colorList}. These colors appear across the team's jerseys, helmets, wordmark, and official merchandise. Whether you're designing fan art, a website, or any creative project, the exact color values below are sourced directly from official ${league} brand guidelines.`;
 
 const logoColors = `The ${teamName} logo uses ${colorList} as its official colors. Each color in the ${teamName} logo has been verified against the official SVG artwork and brand documentation. The primary color is ${colorNames[0]}, with ${colorNames.slice(1).join(' and ')} as supporting color${colorNames.length > 2 ? 's' : ''}.`;
 
 const title = `${teamName} Colors – Hex, RGB, CMYK & Pantone Codes | Best Color Codes`;
-const description = `Explore the official ${teamName} color codes including hex, RGB, CMYK, and Pantone values. The complete ${teamName} brand color palette for designers and fans.`;
+const description = `Explore the official ${teamName} color codes including HEX, RGB, CMYK, and Pantone values. The complete ${teamName} brand color palette for designers and fans.`;
 ---
 
 <!doctype html>
@@ -70,7 +70,7 @@ const description = `Explore the official ${teamName} color codes including hex,
       />
       <div class="hero-text">
         <h1>{teamName} colors</h1>
-        <p class="hero-sub">Official brand color codes — hex, RGB, CMYK, and Pantone</p>
+        <p class="hero-sub">Official brand color codes — HEX, RGB, CMYK, and Pantone</p>
         <div class="hero-meta">
           <a class="badge" href={`/${league.toLowerCase()}/`}>{league}</a>
           <span class="hero-count">{colors.length} colors</span>
@@ -86,7 +86,6 @@ const description = `Explore the official ${teamName} color codes including hex,
 
   <main class="main">
     <p class="intro">{intro}</p>
-    <p class="section-label">Color codes</p>
     <div class="colors-grid">
       {colors.map(c => (
         <div class="color-card">
@@ -122,8 +121,8 @@ const description = `Explore the official ${teamName} color codes including hex,
       </section>
 
       <section class="prose-section">
-        <h2>{teamName} hex color codes</h2>
-        <p>The {teamName} hex color codes are {colors.map((c, i) => `${c.name} ${c.hex}${i < colors.length - 1 ? ', ' : ''}`).join('')}. Hex codes are used in web design, digital graphics, and anywhere RGB color is specified in six-digit format.</p>
+        <h2>{teamName} HEX color codes</h2>
+        <p>The {teamName} HEX color codes are {colors.map((c, i) => `${c.name} ${c.hex}${i < colors.length - 1 ? ', ' : ''}`).join('')}. Hex codes are used in web design, digital graphics, and anywhere RGB color is specified in six-digit format.</p>
         <div class="prose-table">
           <div class="prose-table-head">
             <span>Color</span><span>Hex code</span><span></span>
@@ -318,7 +317,7 @@ const description = `Explore the official ${teamName} color codes including hex,
   }
 
   .badge {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
     padding: 3px 10px;
     border-radius: 20px;
@@ -381,10 +380,16 @@ const description = `Explore the official ${teamName} color codes including hex,
   }
 
   .colors-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 12px;
     margin-bottom: 3rem;
+  }
+
+  .color-card {
+    flex: 0 0 calc(33% - 8px);
+    max-width: calc(33% - 8px);
   }
 
   .color-card {
@@ -405,7 +410,7 @@ const description = `Explore the official ${teamName} color codes including hex,
   }
 
   .color-name {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     margin-bottom: 12px;
     color: var(--text-primary);
@@ -424,14 +429,14 @@ const description = `Explore the official ${teamName} color codes including hex,
   }
 
   .color-label {
-    font-size: 11px;
+    font-size: 13px;
     color: var(--text-muted);
     font-weight: 500;
-    min-width: 46px;
+    min-width: 52px;
   }
 
   .color-val {
-    font-size: 11px;
+    font-size: 13px;
     color: var(--text-secondary);
     font-family: var(--font-mono);
     flex: 1;
@@ -444,8 +449,8 @@ const description = `Explore the official ${teamName} color codes including hex,
     background: none;
     border: 0.5px solid var(--border);
     border-radius: var(--radius);
-    padding: 2px 7px;
-    font-size: 11px;
+    padding: 2px 8px;
+    font-size: 12px;
     font-family: var(--font-sans);
     color: var(--text-muted);
     cursor: pointer;
@@ -465,12 +470,13 @@ const description = `Explore the official ${teamName} color codes including hex,
   }
 
   .sourcing {
-    font-size: 12px;
-    color: var(--text-muted);
-    padding: 10px 14px;
-    background: var(--surface-1);
+    font-size: 13px;
+    color: var(--text-accent);
+    padding: 12px 16px;
+    background: var(--bg-accent);
     border-radius: var(--radius);
-    border: 0.5px solid var(--border);
+    border: 0.5px solid var(--border-accent);
+    border-left: 3px solid var(--text-accent);
     margin-bottom: 3rem;
     line-height: 1.6;
   }
@@ -503,20 +509,19 @@ const description = `Explore the official ${teamName} color codes including hex,
     border: 0.5px solid var(--border);
     border-radius: var(--radius);
     overflow: hidden;
-    max-width: 480px;
   }
 
   .prose-table-head {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 8px 14px;
-    background: var(--surface-1);
-    border-bottom: 0.5px solid var(--border);
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text-muted);
+    grid-template-columns: 1fr 1fr auto;
+    padding: 10px 14px;
+    background: var(--surface-0);
+    border-bottom: 0.5px solid var(--border-strong);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: .06em;
+    letter-spacing: .08em;
   }
 
   .prose-table-row {
@@ -526,7 +531,7 @@ const description = `Explore the official ${teamName} color codes including hex,
     align-items: center;
     background: var(--surface-2);
     border-bottom: 0.5px solid var(--border);
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .prose-table-row:last-child { border-bottom: none; }
@@ -549,7 +554,7 @@ const description = `Explore the official ${teamName} color codes including hex,
 
   .prose-table-row code {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-secondary);
   }
 
@@ -620,7 +625,7 @@ const description = `Explore the official ${teamName} color codes including hex,
   }
 
   .logo-download-meta {
-    font-size: 11px;
+    font-size: 12px;
     color: var(--text-muted);
     margin: 0 0 8px;
   }
@@ -670,7 +675,7 @@ const description = `Explore the official ${teamName} color codes including hex,
   .related-card-text { flex: 1; min-width: 0; }
 
   .rel-name {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--text-primary);
     white-space: nowrap;

@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Disclaimer | Best Color Codes"
+  description="Read the disclaimer for Best Color Codes. Learn about the nature of color data, accuracy limitations, and third-party affiliations."
+>
+  <section class="hero">
+    <div class="inner">
+      <div class="breadcrumb">
+        <a href="/">Best Color Codes</a> <span>›</span> <span>Disclaimer</span>
+      </div>
+      <h1>Disclaimer</h1>
+      <p class="meta">Last updated: June 28, 2026</p>
+    </div>
+  </section>
+
+  <main class="main">
+    <div class="inner prose">
+
+      <h2>No Affiliation</h2>
+      <p>Best Color Codes is an independent reference website. We are not affiliated with, endorsed by, or connected to any sports league (NFL, NBA, NHL, MLB, or others), team, brand, or governing body. All team names, logos, and trademarks are the property of their respective owners.</p>
+
+      <h2>Color Accuracy</h2>
+      <p>We make every effort to source color values (HEX, RGB, CMYK, and Pantone) from official brand guidelines, style guides, and publicly available assets. However, color reproduction on screens varies depending on display calibration, color profile, and rendering engine. The values provided are for reference purposes only and may not be a perfect match for physical printed materials.</p>
+
+      <h2>No Warranty</h2>
+      <p>The information on this website is provided "as is" without any warranty of completeness, accuracy, timeliness, or fitness for a particular purpose. Best Color Codes makes no representations about the suitability of the information for any purpose.</p>
+
+      <h2>External Links</h2>
+      <p>This site may contain links to third-party websites. These links are provided for convenience only. We have no control over the content of those sites and accept no responsibility for them or for any loss or damage that may arise from your use of them.</p>
+
+      <h2>Changes to This Disclaimer</h2>
+      <p>We reserve the right to update this disclaimer at any time. Changes will be reflected by updating the date at the top of this page.</p>
+
+      <h2>Contact</h2>
+      <p>If you have questions about this disclaimer, please <a href="/contact/">contact us</a>.</p>
+
+    </div>
+  </main>
+</Base>
+
+<style>
+  .hero {
+    padding: 3rem 2rem 2.5rem;
+    background: var(--surface-1);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .breadcrumb {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .breadcrumb a { color: var(--text-accent); }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .meta {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .main {
+    padding: 3rem 2rem 4rem;
+  }
+
+  .prose h2 {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .prose p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+  }
+
+  .prose a { color: var(--text-accent); }
+  .prose a:hover { text-decoration: underline; }
+</style>
