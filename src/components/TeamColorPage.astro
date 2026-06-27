@@ -84,6 +84,7 @@ const imageObjectSchema = {
   '@context': 'https://schema.org',
   '@type': 'ImageObject',
   name: `${teamName} Logo`,
+  url: logoUrl,
   contentUrl: logoUrl,
   encodingFormat: logoPath.endsWith('.png') ? 'image/png' : 'image/svg+xml',
   description: `Official ${teamName} logo`,
@@ -118,15 +119,18 @@ const datasetSchema = {
   },
 };
 
+const breadcrumbItems = [
+  { '@type': 'ListItem', position: 1, name: 'Best Color Codes', item: `${site.url}/` },
+  { '@type': 'ListItem', position: 2, name: 'Sports', item: `${site.url}/sports/` },
+  ...(meta?.sportPath ? [{ '@type': 'ListItem', position: 3, name: meta.sport, item: `${site.url}${meta.sportPath}` }] : []),
+  { '@type': 'ListItem', position: meta?.sportPath ? 4 : 3, name: league, item: teamUrl },
+  { '@type': 'ListItem', position: meta?.sportPath ? 5 : 4, name: teamName, item: pageUrl },
+];
+
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Best Color Codes', item: site.url },
-    { '@type': 'ListItem', position: 2, name: 'Sports', item: `${site.url}/sports/` },
-    { '@type': 'ListItem', position: 3, name: league, item: teamUrl },
-    { '@type': 'ListItem', position: 4, name: teamName, item: pageUrl },
-  ],
+  itemListElement: breadcrumbItems,
 };
 ---
 
