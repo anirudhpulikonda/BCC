@@ -54,7 +54,7 @@ const leagueFullName: Record<string, string> = {
     <p class="section-label">{teams.length} teams</p>
     <div class="team-grid">
       {teams.map(t => (
-        <a class="team-card" href={`/${t.data.slug}`}>
+        <a class="team-card" href={`/${t.data.slug}/`}>
           <div class="color-strip">
             {t.data.colors.map(c => (
               <div class="strip-seg" style={`background:${c.hex}`}></div>
