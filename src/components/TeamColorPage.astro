@@ -111,7 +111,7 @@ const description = `Explore the official ${teamName} color codes including hex,
     {relatedTeams.length > 0 && (
       <>
         <div class="divider"></div>
-        <p class="section-label">Other {league} teams</p>
+        <a class="section-label section-label-link" href={`/${league.toLowerCase()}/`}>Other {league} teams →</a>
         <div class="related-grid">
           {relatedTeams.map(t => (
             <a class="related-card" href={`/${t.slug}/`}>
@@ -238,6 +238,15 @@ const description = `Explore the official ${teamName} color codes including hex,
     line-height: 1.7;
     margin-bottom: 2rem;
     max-width: 680px;
+  }
+
+  .section-label-link {
+    text-decoration: none;
+    color: var(--text-accent);
+  }
+
+  .section-label-link:hover {
+    text-decoration: underline;
   }
 
   .section-label {
