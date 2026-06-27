@@ -72,5 +72,11 @@
   "swatchImagePath": "../../assets/teams/nfl/baltimore-ravens/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed from official NFL guidelines.",
   "lastUpdated": "2026-06-27",
-  "description": "The Baltimore Ravens are an NFL franchise founded in 1996 after the Cleveland Browns relocated to Maryland. Based in Baltimore, they play at M&T Bank Stadium and compete in the AFC North. The Ravens are a two-time Super Bowl champion, winning in 2001 and 2013, and are known for their dominant defensive traditions."
+  "description": "The Baltimore Ravens are an NFL franchise founded in 1996 after the Cleveland Browns relocated to Maryland. Based in Baltimore, they play at M&T Bank Stadium and compete in the AFC North. The Ravens are a two-time Super Bowl champion, winning in 2001 and 2013, and are known for their dominant defensive traditions.",
+  "sources": [
+    {
+      "label": "NFL Fact Book",
+      "url": "https://www.nfl.com/static/content/public/photo/2018/08/09/0ap3000000946101.pdf"
+    }
+  ]
 }

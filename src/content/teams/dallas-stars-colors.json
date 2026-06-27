@@ -56,5 +56,11 @@
   "swatchImagePath": "../../assets/teams/nhl/dallas-stars/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. Values confirmed from official team PDF via NHL website.",
   "lastUpdated": "2026-06-27",
-  "description": "The Dallas Stars are an NHL franchise based in Dallas, Texas, originally founded as the Minnesota North Stars in 1967 before relocating in 1993. They play at American Airlines Center and compete in the Central Division of the Western Conference. The Stars won their only Stanley Cup championship in 1999."
+  "description": "The Dallas Stars are an NHL franchise based in Dallas, Texas, originally founded as the Minnesota North Stars in 1967 before relocating in 1993. They play at American Airlines Center and compete in the Central Division of the Western Conference. The Stars won their only Stanley Cup championship in 1999.",
+  "sources": [
+    {
+      "label": "Dallas Stars Logo Sheet (NHL)",
+      "url": "http://stars.nhl.com/v2/ext/New%20Logo%20Assets/Dallas%20Stars%20Logo%20Sheet.pdf"
+    }
+  ]
 }

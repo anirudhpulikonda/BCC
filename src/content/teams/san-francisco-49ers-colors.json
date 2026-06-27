@@ -40,5 +40,11 @@
   "swatchImagePath": "../../assets/teams/nfl/san-francisco-49ers/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed from official NFL guidelines. Pantone confirmed by logo slick.",
   "lastUpdated": "2026-06-27",
-  "description": "The San Francisco 49ers are an NFL franchise based in Santa Clara, California, founded in 1946. They play at Levi's Stadium and compete in the NFC West. The 49ers are one of the most storied franchises in NFL history, winning five Super Bowl championships in the 1980s and '90s led by Joe Montana and Jerry Rice, with a new era of contention emerging under head coach Kyle Shanahan."
+  "description": "The San Francisco 49ers are an NFL franchise based in Santa Clara, California, founded in 1946. They play at Levi's Stadium and compete in the NFC West. The 49ers are one of the most storied franchises in NFL history, winning five Super Bowl championships in the 1980s and '90s led by Joe Montana and Jerry Rice, with a new era of contention emerging under head coach Kyle Shanahan.",
+  "sources": [
+    {
+      "label": "NFL Fact Book",
+      "url": "https://www.nfl.com/static/content/public/photo/2018/08/09/0ap3000000946101.pdf"
+    }
+  ]
 }
