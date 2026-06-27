@@ -76,7 +76,7 @@ const sportsTeamSchema = {
     '@type': 'SportsOrganization',
     name: meta?.full ?? league,
     alternateName: league,
-    url: `${site.url}/${leagueSlugMap[league] ?? league.toLowerCase()}-team-color-codes/`,
+    url: teamUrl,
   },
 };
 
