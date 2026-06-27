@@ -76,13 +76,72 @@ Example: `Explore the official Pittsburgh Steelers color codes including hex, RG
 
 ## Design Tokens
 
-> **Placeholder — to be filled in after Phase 3.**
+All tokens are CSS custom properties defined in `src/styles/tokens.css` and imported via `src/styles/global.css`.
 
-This section will document the site-wide design tokens derived from the project's own brand (not team colors), including:
-- Typography scale
-- Spacing scale
-- Site accent colors
-- Component-level tokens (card, badge, swatch, etc.)
+### Surfaces (light / dark)
+
+| Token | Light | Dark |
+|-------|-------|------|
+| `--surface-0` | `#f4f4f2` | `#1a1a18` |
+| `--surface-1` | `#f9f9f8` | `#232320` |
+| `--surface-2` | `#ffffff` | `#2c2c2a` |
+
+### Text
+
+| Token | Light | Dark |
+|-------|-------|------|
+| `--text-primary` | `#1a1a18` | `#f0efe8` |
+| `--text-secondary` | `#5f5e5a` | `#b4b2a9` |
+| `--text-muted` | `#888780` | `#888780` |
+| `--text-accent` | `#185fa5` | `#85b7eb` |
+| `--text-success` | `#3b6d11` | `#97c459` |
+
+### Borders
+
+| Token | Light | Dark |
+|-------|-------|------|
+| `--border` | `rgba(0,0,0,.10)` | `rgba(255,255,255,.10)` |
+| `--border-strong` | `rgba(0,0,0,.15)` | `rgba(255,255,255,.18)` |
+| `--border-accent` | `#b5d4f4` | `#0c447c` |
+| `--border-success` | `#c0dd97` | `#3b6d11` |
+
+### Accent fills
+
+| Token | Light | Dark |
+|-------|-------|------|
+| `--bg-accent` | `#e6f1fb` | `#042c53` |
+
+### Typography
+
+| Token | Value |
+|-------|-------|
+| `--font-sans` | `'Inter', system-ui, sans-serif` |
+| `--font-mono` | `ui-monospace, 'Cascadia Code', monospace` |
+| Body | `16px / 1.7` |
+| `h1` | `28px / 500` |
+| Nav logo | `15px / 500` |
+| Nav links | `13px` |
+| Hero subtitle | `14px` |
+| Section label | `12px / 500 / uppercase / 0.08em tracking` |
+| Color card name | `13px / 500` |
+| Color label | `11px / 500 / monospace` |
+| Badge, sourcing, footer | `12px` |
+
+### Spacing & layout
+
+| Token | Value |
+|-------|-------|
+| `--radius` | `8px` |
+| Card radius | `12px` |
+| Nav height | `56px` |
+| Max content width | `900px` |
+| Hero padding | `3rem 2rem 2.5rem` |
+| Main padding | `2.5rem 2rem` |
+| Color swatch height | `100px` |
+| Logo tile size | `110 × 110px` (14px inner padding) |
+| Colors grid gap | `12px` |
+| Related grid gap | `10px` |
+| Section bottom margin | `3rem` |
 
 ---
 

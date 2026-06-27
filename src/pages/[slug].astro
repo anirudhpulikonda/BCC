@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import TeamColorPage from '../components/TeamColorPage.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('teams');
+
+  // Build a lookup: league → array of all teams in that league
+  const byLeague: Record<string, typeof entries> = {};
+  for (const e of entries) {
+    const league = e.data.league;
+    if (!byLeague[league]) byLeague[league] = [];
+    byLeague[league].push(e);
+  }
+
+  return entries.map(entry => ({
+    params: { slug: entry.data.slug },
+    props: {
+      entry,
+      relatedTeams: byLeague[entry.data.league]
+        .filter(e => e.data.slug !== entry.data.slug)
+        .slice(0, 6)
+        .map(e => ({
+          teamName: e.data.teamName,
+          slug: e.data.slug,
+          colors: e.data.colors,
+        })),
+    },
+  }));
+}
+
+// Eagerly import all team assets so Vite can hash and serve them
+const imageModules = import.meta.glob<{ default: string }>(
+  '/src/assets/teams/**/*.{svg,png,jpg,jpeg}',
+  { eager: true, query: '?url' }
+);
+
+function resolveLogoPath(rawPath: string): string {
+  // rawPath is like "../../assets/teams/nfl/pittsburgh-steelers/logo.svg"
+  // Strip the leading "../../" to get "assets/teams/..."
+  const normalized = rawPath.replace(/^(\.\.\/)+/, '');
+  const key = `/src/${normalized}`;
+  return imageModules[key]?.default ?? rawPath;
+}
+
+const { entry, relatedTeams } = Astro.props;
+const { teamName, league, slug, colors, logoPath, sourcingNote } = entry.data;
+---
+
+<TeamColorPage
+  teamName={teamName}
+  league={league}
+  slug={slug}
+  colors={colors}
+  logoPath={resolveLogoPath(logoPath)}
+  sourcingNote={sourcingNote}
+  relatedTeams={relatedTeams}
+/>

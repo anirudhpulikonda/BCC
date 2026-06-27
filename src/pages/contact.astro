@@ -1,0 +1,233 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="Contact — BCC"
+  description="Get in touch with the BCC team to report incorrect color data, suggest a new team, or ask a general question."
+>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="breadcrumb"><a href="/">BCC</a> <span>›</span> <span>Contact</span></div>
+      <h1>Contact</h1>
+      <p class="hero-sub">Report incorrect color data, suggest a missing team, or just say hello.</p>
+    </div>
+  </section>
+
+  <main class="main">
+    <div class="card">
+      <div class="card-section">
+        <p class="section-label">Send a message</p>
+        <form class="form" name="contact" method="POST" data-netlify="true">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          </div>
+          <div class="field">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject">
+              <option value="color-correction">Incorrect color data</option>
+              <option value="missing-team">Missing team</option>
+              <option value="general">General question</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Describe what you'd like to report or ask..." required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send message</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="faq">
+      <p class="section-label">Common questions</p>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Where does the color data come from?</summary>
+          <p>Colors are sourced from official team brand guidelines, style guides, and SVG logo files. Each entry includes a sourcing note explaining where the values were confirmed.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do I report an incorrect color?</summary>
+          <p>Use the form above with the "Incorrect color data" subject. Please include the team name, the incorrect value, and a link to an official source confirming the correct value.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can you add a team that isn't listed?</summary>
+          <p>Yes — select "Missing team" in the form and include the team name and league. We'll add it when we can verify the official color values.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .hero {
+    padding: 3rem 2rem 2.5rem;
+    background: var(--surface-1);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .breadcrumb {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .breadcrumb a { color: var(--text-accent); }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .main {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .card {
+    background: var(--surface-2);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 3rem;
+    overflow: hidden;
+  }
+
+  .card-section {
+    padding: 1.5rem;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  input, select, textarea {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--text-primary);
+    background: var(--surface-1);
+    border: 0.5px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 9px 12px;
+    outline: none;
+    transition: border-color .12s;
+    width: 100%;
+    resize: vertical;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: var(--text-muted);
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--border-accent);
+    box-shadow: 0 0 0 3px var(--bg-accent);
+  }
+
+  .submit-btn {
+    align-self: flex-start;
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font-sans);
+    background: var(--text-primary);
+    color: var(--surface-2);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: opacity .12s;
+  }
+
+  .submit-btn:hover { opacity: .8; }
+
+  .faq { margin-bottom: 3rem; }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .faq-item {
+    background: var(--surface-2);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  summary {
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  summary::-webkit-details-marker { display: none; }
+
+  summary::after {
+    content: '+';
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  details[open] summary::after { content: '−'; }
+
+  .faq-item p {
+    padding: 0 16px 14px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    border-top: 0.5px solid var(--border);
+    padding-top: 12px;
+  }
+</style>

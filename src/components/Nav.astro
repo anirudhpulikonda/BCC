@@ -1,0 +1,116 @@
+---
+---
+<nav class="nav">
+  <a class="nav-logo" href="/">BCC</a>
+  <ul class="nav-links">
+    <li><a href="/nfl/">NFL</a></li>
+    <li><a href="/nba/">NBA</a></li>
+    <li><a href="/nhl/">NHL</a></li>
+    <li><a href="/mlb/">MLB</a></li>
+  </ul>
+  <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-drawer" aria-hidden="true" hidden>
+  <a href="/nfl/">NFL</a>
+  <a href="/nba/">NBA</a>
+  <a href="/nhl/">NHL</a>
+  <a href="/mlb/">MLB</a>
+  <a href="/contact/">Contact</a>
+</div>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.nav-hamburger')!;
+  const drawer = document.querySelector<HTMLElement>('.nav-drawer')!;
+  btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    drawer.setAttribute('aria-hidden', String(open));
+    drawer.hidden = open;
+  });
+</script>
+
+<style>
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 56px;
+    background: var(--surface-2);
+    border-bottom: 0.5px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -.3px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .nav-links a:hover { color: var(--text-primary); }
+
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .nav-hamburger span {
+    display: block;
+    width: 20px;
+    height: 1.5px;
+    background: var(--text-secondary);
+    border-radius: 2px;
+  }
+
+  .nav-drawer {
+    display: none;
+    flex-direction: column;
+    background: var(--surface-2);
+    border-bottom: 0.5px solid var(--border);
+    position: sticky;
+    top: 56px;
+    z-index: 99;
+  }
+
+  @media (max-width: 540px) {
+    .nav-drawer:not([hidden]) {
+      display: flex;
+    }
+  }
+
+  .nav-drawer a {
+    padding: 14px 2rem;
+    font-size: 14px;
+    color: var(--text-primary);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-drawer a:hover { background: var(--surface-1); }
+
+  @media (max-width: 540px) {
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+  }
+</style>

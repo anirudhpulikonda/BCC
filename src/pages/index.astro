@@ -1,17 +1,278 @@
 ---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
 
+const all = await getCollection('teams');
+
+const leagues = ['NFL', 'NBA', 'NHL', 'MLB'] as const;
+const leagueMap = Object.fromEntries(
+  leagues.map(l => [l, all.filter(t => t.data.league === l)])
+);
+
+const featured = [
+  'pittsburgh-steelers-colors',
+  'los-angeles-lakers-colors',
+  'boston-bruins-colors',
+  'new-york-yankees-colors',
+].map(slug => all.find(t => t.data.slug === slug)).filter(Boolean);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base
+  title="Brand Color Codes — Sports Team Hex, RGB, CMYK & Pantone | BCC"
+  description="The definitive reference for sports team brand colors. Find official hex, RGB, CMYK, and Pantone codes for every NFL, NBA, NHL, and MLB team."
+>
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Sports team<br/>color codes</h1>
+      <p class="hero-sub">Official hex, RGB, CMYK, and Pantone values for every team — confirmed from brand guidelines and official assets.</p>
+      <div class="hero-leagues">
+        {leagues.map(l => (
+          <a class="league-pill" href={`/${l.toLowerCase()}`}>{l}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <main class="main">
+    {featured.length > 0 && (
+      <>
+        <p class="section-label">Featured teams</p>
+        <div class="featured-grid">
+          {featured.map(t => (
+            <a class="featured-card" href={`/${t!.data.slug}`}>
+              <div class="featured-swatches">
+                {t!.data.colors.slice(0, 3).map(c => (
+                  <div class="featured-swatch" style={`background:${c.hex}`}></div>
+                ))}
+              </div>
+              <div class="featured-info">
+                <p class="featured-name">{t!.data.teamName}</p>
+                <p class="featured-league">{t!.data.league}</p>
+              </div>
+              <span class="card-arrow">›</span>
+            </a>
+          ))}
+        </div>
+      </>
+    )}
+
+    {leagues.map(league => (
+      <>
+        <div class="league-section-header">
+          <p class="section-label">{league}</p>
+          <a class="see-all" href={`/${league.toLowerCase()}`}>See all {league} teams →</a>
+        </div>
+        <div class="team-grid">
+          {leagueMap[league].slice(0, 4).map(t => (
+            <a class="team-card" href={`/${t.data.slug}`}>
+              <div class="team-dots">
+                {t.data.colors.slice(0, 2).map(c => (
+                  <div class="team-dot" style={`background:${c.hex}`}></div>
+                ))}
+              </div>
+              <div class="team-info">
+                <p class="team-name">{t.data.teamName}</p>
+                <p class="team-count">{t.data.colors.length} colors</p>
+              </div>
+              <span class="card-arrow">›</span>
+            </a>
+          ))}
+        </div>
+      </>
+    ))}
+  </main>
+</Base>
+
+<style>
+  .hero {
+    padding: 4rem 2rem 3rem;
+    background: var(--surface-1);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .hero-inner h1 {
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 520px;
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+  }
+
+  .hero-leagues {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .league-pill {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--surface-2);
+    border: 0.5px solid var(--border-strong);
+    color: var(--text-primary);
+    transition: background .12s, border-color .12s;
+  }
+
+  .league-pill:hover {
+    background: var(--bg-accent);
+    border-color: var(--border-accent);
+    color: var(--text-accent);
+  }
+
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 3rem;
+  }
+
+  .featured-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: var(--surface-2);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    transition: background .12s, border-color .12s;
+  }
+
+  .featured-card:hover {
+    background: var(--surface-1);
+    border-color: var(--border-strong);
+  }
+
+  .featured-swatches {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .featured-swatch {
+    width: 18px;
+    height: 36px;
+    border-radius: 4px;
+    border: 0.5px solid var(--border);
+  }
+
+  .featured-info { flex: 1; min-width: 0; }
+
+  .featured-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .featured-league {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .league-section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .league-section-header .section-label { margin-bottom: 0; }
+
+  .see-all {
+    font-size: 12px;
+    color: var(--text-accent);
+  }
+
+  .see-all:hover { text-decoration: underline; }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 3rem;
+  }
+
+  .team-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--surface-2);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    transition: background .12s, border-color .12s;
+  }
+
+  .team-card:hover {
+    background: var(--surface-1);
+    border-color: var(--border-strong);
+  }
+
+  .team-dots {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .team-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 0.5px solid var(--border);
+  }
+
+  .team-info { flex: 1; min-width: 0; }
+
+  .team-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .team-count {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .card-arrow {
+    font-size: 16px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+</style>

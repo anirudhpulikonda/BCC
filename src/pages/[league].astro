@@ -1,0 +1,185 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const all = await getCollection('teams');
+  const leagues = [...new Set(all.map(t => t.data.league))].filter(l =>
+    ['NFL', 'NBA', 'NHL', 'MLB'].includes(l)
+  );
+
+  return leagues.map(league => ({
+    params: { league: league.toLowerCase() },
+    props: {
+      league,
+      teams: all
+        .filter(t => t.data.league === league)
+        .sort((a, b) => a.data.teamName.localeCompare(b.data.teamName)),
+    },
+  }));
+}
+
+const { league, teams } = Astro.props;
+
+const leagueFullName: Record<string, string> = {
+  NFL: 'National Football League',
+  NBA: 'National Basketball Association',
+  NHL: 'National Hockey League',
+  MLB: 'Major League Baseball',
+};
+---
+
+<Base
+  title={`${league} Team Colors — Hex, RGB, CMYK & Pantone Codes | BCC`}
+  description={`Official ${league} team color codes for all ${teams.length} teams. Find the exact hex, RGB, CMYK, and Pantone values for every ${leagueFullName[league] ?? league} team.`}
+>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="breadcrumb"><a href="/">BCC</a> <span>›</span> <span>{league}</span></div>
+      <h1>{league} team colors</h1>
+      <p class="hero-sub">{leagueFullName[league]} — official brand color codes for all {teams.length} teams.</p>
+    </div>
+  </section>
+
+  <main class="main">
+    <p class="section-label">{teams.length} teams</p>
+    <div class="team-grid">
+      {teams.map(t => (
+        <a class="team-card" href={`/${t.data.slug}`}>
+          <div class="color-strip">
+            {t.data.colors.map(c => (
+              <div class="strip-seg" style={`background:${c.hex}`}></div>
+            ))}
+          </div>
+          <div class="card-body">
+            <p class="team-name">{t.data.teamName}</p>
+            <div class="team-meta">
+              <span class="team-count">{t.data.colors.length} colors</span>
+              <span class="team-hexes">
+                {t.data.colors.slice(0,2).map(c => (
+                  <code class="hex">{c.hex}</code>
+                ))}
+              </span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </main>
+</Base>
+
+<style>
+  .hero {
+    padding: 3rem 2rem 2.5rem;
+    background: var(--surface-1);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .breadcrumb {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .breadcrumb a { color: var(--text-accent); }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+  }
+
+  .team-card {
+    background: var(--surface-2);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color .12s;
+  }
+
+  .team-card:hover {
+    border-color: var(--border-strong);
+  }
+
+  .color-strip {
+    display: flex;
+    height: 6px;
+  }
+
+  .strip-seg {
+    flex: 1;
+  }
+
+  .card-body {
+    padding: 14px 16px;
+  }
+
+  .team-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  .team-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .team-count {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .team-hexes {
+    display: flex;
+    gap: 6px;
+  }
+
+  .hex {
+    font-size: 10px;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    background: var(--surface-1);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
+</style>
