@@ -83,6 +83,14 @@ const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 0 ? {
   <JsonLd schema={webPageSchema} />
   {breadcrumbSchema && <JsonLd schema={breadcrumbSchema} />}
   <slot name="head" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ER60BM3253"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ER60BM3253');
+  </script>
 </head>
 <body>
   <Nav />
