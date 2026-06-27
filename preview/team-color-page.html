@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pittsburgh Steelers Colors – Hex, RGB, CMYK & Pantone Codes | BCC</title>
+  <meta name="description" content="Explore the official Pittsburgh Steelers color codes including hex, RGB, CMYK, and Pantone values. The complete Pittsburgh Steelers brand color palette for designers and fans.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --surface-0: #f4f4f2;
+      --surface-1: #f9f9f8;
+      --surface-2: #ffffff;
+      --text-primary: #1a1a18;
+      --text-secondary: #5f5e5a;
+      --text-muted: #888780;
+      --border: rgba(0,0,0,.1);
+      --border-strong: rgba(0,0,0,.15);
+      --radius: 8px;
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-mono: ui-monospace, 'Cascadia Code', monospace;
+      --bg-accent: #e6f1fb;
+      --text-accent: #185fa5;
+      --border-accent: #b5d4f4;
+      --text-success: #3b6d11;
+      --border-success: #c0dd97;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --surface-0: #1a1a18;
+        --surface-1: #232320;
+        --surface-2: #2c2c2a;
+        --text-primary: #f0efe8;
+        --text-secondary: #b4b2a9;
+        --text-muted: #888780;
+        --border: rgba(255,255,255,.1);
+        --border-strong: rgba(255,255,255,.18);
+        --bg-accent: #042c53;
+        --text-accent: #85b7eb;
+        --border-accent: #0c447c;
+        --text-success: #97c459;
+        --border-success: #3b6d11;
+      }
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      background: var(--surface-0);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 56px;
+      background: var(--surface-2);
+      border-bottom: 0.5px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -.3px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .nav-links a:hover { color: var(--text-primary); }
+
+    .nav-search {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 3rem 2rem 2.5rem;
+      border-bottom: 0.5px solid var(--border);
+      background: var(--surface-1);
+    }
+
+    .hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .hero-logo {
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
+      flex-shrink: 0;
+      border-radius: 12px;
+      background: var(--surface-2);
+      padding: 14px;
+      border: 0.5px solid var(--border);
+    }
+
+    .hero-text h1 {
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .badge {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bg-accent);
+      color: var(--text-accent);
+      border: 0.5px solid var(--border-accent);
+    }
+
+    .hero-count {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .swatch-strip {
+      display: flex;
+      gap: 6px;
+      margin-top: 16px;
+    }
+
+    .swatch-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 0.5px solid var(--border-strong);
+    }
+
+    /* MAIN */
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    /* COLOR CARDS */
+    .colors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 3rem;
+    }
+
+    .color-card {
+      background: var(--surface-2);
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .color-swatch {
+      height: 100px;
+      width: 100%;
+      display: block;
+    }
+
+    .color-card-body {
+      padding: 14px;
+    }
+
+    .color-name {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .color-values {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .color-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .color-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+      min-width: 46px;
+    }
+
+    .color-val {
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .copy-btn {
+      background: none;
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2px 7px;
+      font-size: 11px;
+      font-family: var(--font-sans);
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .12s, color .12s;
+    }
+
+    .copy-btn:hover {
+      background: var(--surface-1);
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+    }
+
+    .copy-btn.copied {
+      color: var(--text-success);
+      border-color: var(--border-success);
+    }
+
+    .sourcing {
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 10px 14px;
+      background: var(--surface-1);
+      border-radius: var(--radius);
+      border: 0.5px solid var(--border);
+      margin-bottom: 3rem;
+      line-height: 1.6;
+    }
+
+    .divider {
+      height: 0.5px;
+      background: var(--border);
+      margin: 2rem 0;
+    }
+
+    /* RELATED */
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+      margin-bottom: 3rem;
+    }
+
+    .related-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: var(--surface-2);
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background .12s, border-color .12s;
+    }
+
+    .related-card:hover {
+      background: var(--surface-1);
+      border-color: var(--border-strong);
+    }
+
+    .rel-dots {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .rel-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 0.5px solid var(--border);
+    }
+
+    .related-card-text { flex: 1; min-width: 0; }
+
+    .rel-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .rel-league {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .rel-arrow {
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      background: var(--surface-1);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: .75rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .footer-links a:hover { color: var(--text-primary); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="#">BCC</a>
+  <ul class="nav-links">
+    <li><a href="#">NFL</a></li>
+    <li><a href="#">NBA</a></li>
+    <li><a href="#">NHL</a></li>
+    <li><a href="#">MLB</a></li>
+    <li class="nav-search">
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      Search
+    </li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <img
+      class="hero-logo"
+      src="https://bestcolorcodes.com/wp-content/uploads/2020/01/Pittsburgh-Steelers-Logo.svg"
+      alt="Pittsburgh Steelers logo"
+      onerror="this.style.visibility='hidden'"
+    >
+    <div class="hero-text">
+      <h1>Pittsburgh Steelers colors</h1>
+      <p class="hero-sub">Official brand color codes — hex, RGB, CMYK, and Pantone</p>
+      <div class="hero-meta">
+        <span class="badge">NFL</span>
+        <span class="hero-count">5 colors</span>
+      </div>
+      <div class="swatch-strip">
+        <div class="swatch-dot" style="background:#FFB612" title="Steelers Gold"></div>
+        <div class="swatch-dot" style="background:#101820" title="Black"></div>
+        <div class="swatch-dot" style="background:#003087" title="Blue"></div>
+        <div class="swatch-dot" style="background:#C60C30" title="Red"></div>
+        <div class="swatch-dot" style="background:#A5ACAF" title="Silver"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="main">
+
+  <p class="section-label">Color codes</p>
+  <div class="colors-grid" id="colors-grid"></div>
+
+  <p class="sourcing">
+    Hex colors confirmed from the official SVG logo. RGB and CMYK confirmed from the official NFL Media Guide. Pantone confirmed by logo slick.
+  </p>
+
+  <div class="divider"></div>
+
+  <p class="section-label">Other NFL teams</p>
+  <div class="related-grid">
+    <a class="related-card" href="/kansas-city-chiefs-colors/">
+      <div class="rel-dots">
+        <div class="rel-dot" style="background:#E31837"></div>
+        <div class="rel-dot" style="background:#FFB81C"></div>
+      </div>
+      <div class="related-card-text">
+        <p class="rel-name">Kansas City Chiefs</p>
+        <p class="rel-league">NFL</p>
+      </div>
+      <span class="rel-arrow">›</span>
+    </a>
+    <a class="related-card" href="/san-francisco-49ers-colors/">
+      <div class="rel-dots">
+        <div class="rel-dot" style="background:#AA0000"></div>
+        <div class="rel-dot" style="background:#B3995D"></div>
+      </div>
+      <div class="related-card-text">
+        <p class="rel-name">San Francisco 49ers</p>
+        <p class="rel-league">NFL</p>
+      </div>
+      <span class="rel-arrow">›</span>
+    </a>
+    <a class="related-card" href="/baltimore-ravens-colors/">
+      <div class="rel-dots">
+        <div class="rel-dot" style="background:#241773"></div>
+        <div class="rel-dot" style="background:#9E7C0C"></div>
+      </div>
+      <div class="related-card-text">
+        <p class="rel-name">Baltimore Ravens</p>
+        <p class="rel-league">NFL</p>
+      </div>
+      <span class="rel-arrow">›</span>
+    </a>
+    <a class="related-card" href="/green-bay-packers-colors/">
+      <div class="rel-dots">
+        <div class="rel-dot" style="background:#203731"></div>
+        <div class="rel-dot" style="background:#FFB612"></div>
+      </div>
+      <div class="related-card-text">
+        <p class="rel-name">Green Bay Packers</p>
+        <p class="rel-league">NFL</p>
+      </div>
+      <span class="rel-arrow">›</span>
+    </a>
+    <a class="related-card" href="/minnesota-vikings-colors/">
+      <div class="rel-dots">
+        <div class="rel-dot" style="background:#4F2683"></div>
+        <div class="rel-dot" style="background:#FFC62F"></div>
+      </div>
+      <div class="related-card-text">
+        <p class="rel-name">Minnesota Vikings</p>
+        <p class="rel-league">NFL</p>
+      </div>
+      <span class="rel-arrow">›</span>
+    </a>
+    <a class="related-card" href="/buffalo-bills-colors/">
+      <div class="rel-dots">
+        <div class="rel-dot" style="background:#00338D"></div>
+        <div class="rel-dot" style="background:#C60C30"></div>
+      </div>
+      <div class="related-card-text">
+        <p class="rel-name">Buffalo Bills</p>
+        <p class="rel-league">NFL</p>
+      </div>
+      <span class="rel-arrow">›</span>
+    </a>
+  </div>
+
+</main>
+
+<footer>
+  <ul class="footer-links">
+    <li><a href="#">About</a></li>
+    <li><a href="#">NFL</a></li>
+    <li><a href="#">NBA</a></li>
+    <li><a href="#">NHL</a></li>
+    <li><a href="#">MLB</a></li>
+  </ul>
+  <p class="footer-copy">Brand color data sourced from official team guidelines. Not affiliated with any league or team.</p>
+</footer>
+
+<script>
+const COLORS = [
+  { name: "Steelers Gold", hex: "#FFB612", rgb: "255, 182, 18",  cmyk: "0, 30, 75, 0",   pantone: "PMS 1235 C" },
+  { name: "Black",         hex: "#101820", rgb: "16, 24, 32",    cmyk: "100, 40, 0, 100", pantone: "PMS Black 6 C" },
+  { name: "Blue",          hex: "#003087", rgb: "0, 48, 135",    cmyk: "100, 75, 2, 18",  pantone: "PMS 287 C" },
+  { name: "Red",           hex: "#C60C30", rgb: "198, 12, 48",   cmyk: "10, 100, 100, 0", pantone: "PMS 186 C" },
+  { name: "Silver",        hex: "#A5ACAF", rgb: "165, 172, 175", cmyk: "0, 0, 0, 20",     pantone: "PMS 429 C" },
+];
+
+function copyValue(btn, value) {
+  navigator.clipboard.writeText(value).then(() => {
+    btn.classList.add('copied');
+    btn.textContent = 'Copied';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = 'Copy';
+    }, 1500);
+  });
+}
+
+const grid = document.getElementById('colors-grid');
+
+COLORS.forEach(c => {
+  const card = document.createElement('div');
+  card.className = 'color-card';
+
+  const rows = [
+    ['HEX', c.hex],
+    ['RGB', c.rgb],
+    ['CMYK', c.cmyk],
+    ['Pantone', c.pantone],
+  ].map(([label, val]) => `
+    <div class="color-row">
+      <span class="color-label">${label}</span>
+      <span class="color-val" title="${val}">${val}</span>
+      <button class="copy-btn" onclick="copyValue(this, '${val.replace(/'/g,"\\'")}')">Copy</button>
+    </div>
+  `).join('');
+
+  card.innerHTML = `
+    <div class="color-swatch" style="background:${c.hex}"></div>
+    <div class="color-card-body">
+      <p class="color-name">${c.name}</p>
+      <div class="color-values">${rows}</div>
+    </div>
+  `;
+
+  grid.appendChild(card);
+});
+</script>
+
+</body>
+</html>
