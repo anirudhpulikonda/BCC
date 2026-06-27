@@ -55,5 +55,6 @@
   "logoPath": "../../assets/teams/nba/golden-state-warriors/logo.svg",
   "swatchImagePath": "../../assets/teams/nba/golden-state-warriors/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed by the Golden State Warriors Reproduction and Usage Guideline Sheet. Pantone confirmed by logo slick.",
-  "lastUpdated": "2026-06-27"
+  "lastUpdated": "2026-06-27",
+  "description": "The Golden State Warriors are an NBA franchise based in San Francisco, California, founded in 1946. They play at Chase Center and compete in the Pacific Division of the Western Conference. The Warriors are one of the most successful franchises in recent NBA history, winning four championships in 2015, 2017, 2018, and 2022 in a dynasty led by Stephen Curry."
 }

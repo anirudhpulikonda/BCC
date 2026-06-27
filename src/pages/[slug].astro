@@ -44,7 +44,7 @@ function resolveLogoPath(rawPath: string): string {
 }
 
 const { entry, relatedTeams } = Astro.props;
-const { teamName, league, slug, colors, logoPath, sourcingNote } = entry.data;
+const { teamName, league, slug, colors, logoPath, sourcingNote, description } = entry.data;
 ---
 
 <TeamColorPage
@@ -54,5 +54,6 @@ const { teamName, league, slug, colors, logoPath, sourcingNote } = entry.data;
   colors={colors}
   logoPath={resolveLogoPath(logoPath)}
   sourcingNote={sourcingNote}
+  teamDescription={description}
   relatedTeams={relatedTeams}
 />

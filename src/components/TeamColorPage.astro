@@ -24,18 +24,24 @@ interface Props {
   colors: Color[];
   logoPath: string;
   sourcingNote: string;
+  teamDescription?: string;
   relatedTeams?: RelatedTeam[];
 }
 
-const { teamName, league, colors, logoPath, sourcingNote, relatedTeams = [] } = Astro.props;
+const { teamName, league, colors, logoPath, sourcingNote, teamDescription = '', relatedTeams = [] } = Astro.props;
 
 const colorNames = colors.map(c => c.name);
 const colorList = colorNames.length <= 2
   ? colorNames.join(' and ')
   : colorNames.slice(0, -1).join(', ') + ', and ' + colorNames.at(-1);
+
 const intro = `The ${teamName} colors are ${colorList}. The official ${teamName} color codes for all ${colors.length} team color${colors.length !== 1 ? 's' : ''} are listed below in hex, RGB, CMYK, and Pantone so designers and fans can use them in any project.`;
 
-const title = `${teamName} Colors – Hex, RGB, CMYK & Pantone Codes | BCC`;
+const about = `The ${teamName} brand palette consists of ${colorList}. These colors appear across the team's jerseys, helmets, wordmark, and official merchandise. Whether you're designing fan art, a website, or any creative project, the exact color values below are sourced directly from official ${league} brand guidelines.`;
+
+const logoColors = `The ${teamName} logo uses ${colorList} as its official colors. Each color in the ${teamName} logo has been verified against the official SVG artwork and brand documentation. The primary color is ${colorNames[0]}, with ${colorNames.slice(1).join(' and ')} as supporting color${colorNames.length > 2 ? 's' : ''}.`;
+
+const title = `${teamName} Colors – Hex, RGB, CMYK & Pantone Codes | Best Color Codes`;
 const description = `Explore the official ${teamName} color codes including hex, RGB, CMYK, and Pantone values. The complete ${teamName} brand color palette for designers and fans.`;
 ---
 
@@ -66,7 +72,7 @@ const description = `Explore the official ${teamName} color codes including hex,
         <h1>{teamName} colors</h1>
         <p class="hero-sub">Official brand color codes — hex, RGB, CMYK, and Pantone</p>
         <div class="hero-meta">
-          <span class="badge">{league}</span>
+          <a class="badge" href={`/${league.toLowerCase()}/`}>{league}</a>
           <span class="hero-count">{colors.length} colors</span>
         </div>
         <div class="swatch-strip">
@@ -107,6 +113,117 @@ const description = `Explore the official ${teamName} color codes including hex,
     </div>
 
     <p class="sourcing">{sourcingNote}</p>
+
+    <div class="prose-sections">
+
+      <section class="prose-section">
+        <h2>About {teamName}</h2>
+        <p>{teamDescription || about}</p>
+      </section>
+
+      <section class="prose-section">
+        <h2>{teamName} hex color codes</h2>
+        <p>The {teamName} hex color codes are {colors.map((c, i) => `${c.name} ${c.hex}${i < colors.length - 1 ? ', ' : ''}`).join('')}. Hex codes are used in web design, digital graphics, and anywhere RGB color is specified in six-digit format.</p>
+        <div class="prose-table">
+          <div class="prose-table-head">
+            <span>Color</span><span>Hex code</span><span></span>
+          </div>
+          {colors.map(c => (
+            <div class="prose-table-row">
+              <span class="prose-color-cell">
+                <span class="prose-dot" style={`background:${c.hex}`}></span>
+                {c.name}
+              </span>
+              <code>{c.hex}</code>
+              <button class="copy-btn" data-copy={c.hex} aria-label={`Copy ${c.hex}`}>Copy</button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="prose-section">
+        <h2>{teamName} RGB color codes</h2>
+        <p>The {teamName} RGB values are {colors.map(c => `${c.name} (${c.rgb.r}, ${c.rgb.g}, ${c.rgb.b})`).join(', ')}. RGB is used in digital displays, video production, and on-screen design tools.</p>
+        <div class="prose-table">
+          <div class="prose-table-head">
+            <span>Color</span><span>RGB</span><span></span>
+          </div>
+          {colors.map(c => (
+            <div class="prose-table-row">
+              <span class="prose-color-cell">
+                <span class="prose-dot" style={`background:${c.hex}`}></span>
+                {c.name}
+              </span>
+              <code>rgb({c.rgb.r}, {c.rgb.g}, {c.rgb.b})</code>
+              <button class="copy-btn" data-copy={`rgb(${c.rgb.r}, ${c.rgb.g}, ${c.rgb.b})`} aria-label={`Copy RGB`}>Copy</button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="prose-section">
+        <h2>{teamName} CMYK color codes</h2>
+        <p>The {teamName} CMYK values are {colors.map(c => `${c.name} (${c.cmyk.c}, ${c.cmyk.m}, ${c.cmyk.y}, ${c.cmyk.k})`).join(', ')}. CMYK is the standard color model for print — use these values when ordering jerseys, merchandise, or printed materials.</p>
+        <div class="prose-table">
+          <div class="prose-table-head">
+            <span>Color</span><span>CMYK</span><span></span>
+          </div>
+          {colors.map(c => (
+            <div class="prose-table-row">
+              <span class="prose-color-cell">
+                <span class="prose-dot" style={`background:${c.hex}`}></span>
+                {c.name}
+              </span>
+              <code>{c.cmyk.c}, {c.cmyk.m}, {c.cmyk.y}, {c.cmyk.k}</code>
+              <button class="copy-btn" data-copy={`${c.cmyk.c}, ${c.cmyk.m}, ${c.cmyk.y}, ${c.cmyk.k}`} aria-label={`Copy CMYK`}>Copy</button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="prose-section">
+        <h2>{teamName} Pantone color codes</h2>
+        <p>The {teamName} Pantone colors are {colors.map(c => `${c.name} (${c.pantone})`).join(', ')}. Pantone (PMS) is the industry standard for brand color consistency across manufacturers and print suppliers.</p>
+        <div class="prose-table">
+          <div class="prose-table-head">
+            <span>Color</span><span>Pantone</span><span></span>
+          </div>
+          {colors.map(c => (
+            <div class="prose-table-row">
+              <span class="prose-color-cell">
+                <span class="prose-dot" style={`background:${c.hex}`}></span>
+                {c.name}
+              </span>
+              <code>{c.pantone}</code>
+              <button class="copy-btn" data-copy={c.pantone} aria-label={`Copy Pantone`}>Copy</button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="prose-section">
+        <h2>{teamName} logo colors</h2>
+        <p>{logoColors}</p>
+      </section>
+
+      <section class="prose-section">
+        <h2>Download the {teamName} logo</h2>
+        <p>Download the official {teamName} logo in SVG format. SVG files are vector-based and scale to any size without quality loss — ideal for design projects, presentations, and print.</p>
+        <div class="logo-download-card">
+          <div class="logo-preview">
+            <img src={logoPath} alt={`${teamName} logo`} width="120" height="120" />
+          </div>
+          <div class="logo-download-info">
+            <p class="logo-download-name">{teamName} logo</p>
+            <p class="logo-download-meta">SVG · Vector · Free</p>
+            <a class="download-btn" href={logoPath} download={`${teamName.toLowerCase().replace(/\s+/g, '-')}-logo.svg`}>
+              Download SVG
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
 
     {relatedTeams.length > 0 && (
       <>
@@ -353,6 +470,154 @@ const description = `Explore the official ${teamName} color codes including hex,
     border: 0.5px solid var(--border);
     margin-bottom: 3rem;
     line-height: 1.6;
+  }
+
+  .prose-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .prose-section h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: .75rem;
+    color: var(--text-primary);
+  }
+
+  .prose-section p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    max-width: 680px;
+    margin-bottom: 1rem;
+  }
+
+  .prose-table {
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    max-width: 480px;
+  }
+
+  .prose-table-head {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 8px 14px;
+    background: var(--surface-1);
+    border-bottom: 0.5px solid var(--border);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  .prose-table-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 10px 14px;
+    align-items: center;
+    background: var(--surface-2);
+    border-bottom: 0.5px solid var(--border);
+    font-size: 13px;
+  }
+
+  .prose-table-row:last-child { border-bottom: none; }
+
+  .prose-color-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .prose-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 0.5px solid var(--border-strong);
+    flex-shrink: 0;
+  }
+
+  .prose-table-row code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .prose-table-row {
+    grid-template-columns: 1fr 1fr auto;
+  }
+
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font-sans);
+    color: var(--text-accent);
+    background: var(--bg-accent);
+    border: 0.5px solid var(--border-accent);
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: opacity .12s;
+  }
+
+  .download-btn:hover { opacity: .8; }
+
+  .logo-download-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.25rem;
+    background: var(--surface-2);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .logo-preview {
+    width: 88px;
+    height: 88px;
+    flex-shrink: 0;
+    background: var(--surface-1);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .logo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .logo-download-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .logo-download-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .logo-download-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin: 0 0 8px;
   }
 
   .divider {

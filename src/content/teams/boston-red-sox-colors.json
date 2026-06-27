@@ -39,5 +39,6 @@
   "logoPath": "../../assets/teams/mlb/boston-red-sox/logo.svg",
   "swatchImagePath": "../../assets/teams/mlb/boston-red-sox/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. Values confirmed from official mascot page. Pantone confirmed by logo slick.",
-  "lastUpdated": "2026-06-27"
+  "lastUpdated": "2026-06-27",
+  "description": "The Boston Red Sox are one of the most storied franchises in Major League Baseball, founded in 1901 and based in Boston, Massachusetts. They play at Fenway Park, the oldest active MLB ballpark, and compete in the AL East. The Red Sox have won nine World Series titles, including championships in 2004, 2007, 2013, and 2018."
 }

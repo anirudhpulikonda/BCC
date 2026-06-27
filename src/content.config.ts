@@ -19,6 +19,7 @@ const teams = defineCollection({
     logoPath: z.string(),
     swatchImagePath: z.string().optional().default(""),
     sourcingNote: z.string(),
+    description: z.string().optional().default(""),
     lastUpdated: z.string(),
   }),
 });

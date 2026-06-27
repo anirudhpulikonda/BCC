@@ -55,5 +55,6 @@
   "logoPath": "../../assets/teams/nfl/los-angeles-rams/logo.svg",
   "swatchImagePath": "../../assets/teams/nfl/los-angeles-rams/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. Values verified through Wikipedia and official branding materials.",
-  "lastUpdated": "2026-06-27"
+  "lastUpdated": "2026-06-27",
+  "description": "The Los Angeles Rams are an NFL franchise with roots dating to 1936, currently based in Inglewood, California. They play at SoFi Stadium and compete in the NFC West. The Rams won Super Bowl LVI in 2022 on their home field, adding to their championship in 1999, and are known for their dynamic offensive schemes and distinctive blue and gold uniform identity."
 }
