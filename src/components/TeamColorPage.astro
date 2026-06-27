@@ -29,6 +29,12 @@ interface Props {
 
 const { teamName, league, colors, logoPath, sourcingNote, relatedTeams = [] } = Astro.props;
 
+const colorNames = colors.map(c => c.name);
+const colorList = colorNames.length <= 2
+  ? colorNames.join(' and ')
+  : colorNames.slice(0, -1).join(', ') + ', and ' + colorNames.at(-1);
+const intro = `The ${teamName} colors are ${colorList}. The official ${teamName} color codes for all ${colors.length} team color${colors.length !== 1 ? 's' : ''} are listed below in hex, RGB, CMYK, and Pantone so designers and fans can use them in any project.`;
+
 const title = `${teamName} Colors – Hex, RGB, CMYK & Pantone Codes | BCC`;
 const description = `Explore the official ${teamName} color codes including hex, RGB, CMYK, and Pantone values. The complete ${teamName} brand color palette for designers and fans.`;
 ---
@@ -73,6 +79,7 @@ const description = `Explore the official ${teamName} color codes including hex,
   </section>
 
   <main class="main">
+    <p class="intro">{intro}</p>
     <p class="section-label">Color codes</p>
     <div class="colors-grid">
       {colors.map(c => (
@@ -223,6 +230,14 @@ const description = `Explore the official ${teamName} color codes including hex,
     max-width: 900px;
     margin: 0 auto;
     padding: 2.5rem 2rem;
+  }
+
+  .intro {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    max-width: 680px;
   }
 
   .section-label {
