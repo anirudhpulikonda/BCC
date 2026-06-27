@@ -1,2 +1,9 @@
-# Redirect all URLs without trailing slash to trailing slash (301 permanent)
+# Exclude static files from the trailing slash redirect
+/sitemap.xml  /sitemap.xml  200
+/sitemap-*.xml  /sitemap-:splat.xml  200
+/favicon.svg  /favicon.svg  200
+/favicon.ico  /favicon.ico  200
+/robots.txt  /robots.txt  200
+
+# Redirect all other URLs without trailing slash to trailing slash
 /:splat  /:splat/  301
