@@ -74,7 +74,7 @@ const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 0 ? {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
-  {canonical && <link rel="canonical" href={canonical} />}
+  <link rel="canonical" href={pageUrl} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet" />
