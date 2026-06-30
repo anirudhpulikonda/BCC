@@ -5,7 +5,7 @@
 A reference site for sports team brand colors across major leagues (NFL, NBA, NHL, MLB, MLS, etc.), providing exact hex, RGB, CMYK, and Pantone values for every team.
 
 **Live URL:** `https://bestcolorcodes.com`
-**Deployment:** Cloudflare Pages - `main` branch → preview deploys, `production` branch → live domain
+**Deployment:** Cloudflare Pages - `main` is the Production branch (configured in Cloudflare Settings → Builds & deployments) and deploys directly to `https://bestcolorcodes.com`. There is no separate `production` branch - pushing only to `main` is correct and sufficient.
 **Stack:** Astro v5 + Tailwind CSS v4 (`@tailwindcss/vite`)
 
 ---
