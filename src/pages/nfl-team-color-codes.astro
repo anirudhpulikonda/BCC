@@ -1,0 +1,603 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { site } from '../config/site';
+
+const all = await getCollection('teams');
+const teams = all
+  .filter(t => t.data.league === 'NFL')
+  .sort((a, b) => a.data.teamName.localeCompare(b.data.teamName));
+
+const leagueUrl = `${site.url}/nfl-team-color-codes/`;
+
+// Color popularity analysis - derived from actual team data
+const colorTeams: Record<string, Set<string>> = {};
+for (const t of teams) {
+  for (const c of t.data.colors) {
+    const name = c.name.toLowerCase();
+    let bucket: string;
+    if (name.includes('gold') || name.includes('yellow')) bucket = 'Gold / Yellow';
+    else if (name.includes('red') || name.includes('burgundy') || name.includes('cardinal')) bucket = 'Red / Burgundy';
+    else if (name.includes('black')) bucket = 'Black';
+    else if (name.includes('blue')) bucket = 'Blue';
+    else if (name.includes('green')) bucket = 'Green';
+    else if (name.includes('purple')) bucket = 'Purple';
+    else if (name.includes('orange')) bucket = 'Orange';
+    else if (name.includes('silver') || name.includes('white')) bucket = 'Silver / White';
+    else bucket = 'Other';
+    if (!colorTeams[bucket]) colorTeams[bucket] = new Set();
+    colorTeams[bucket].add(t.data.teamName);
+  }
+}
+const colorRanking = Object.entries(colorTeams)
+  .map(([color, teamSet]) => ({ color, teams: [...teamSet] }))
+  .sort((a, b) => b.teams.length - a.teams.length);
+
+const breadcrumbs = [
+  { name: 'Best Color Codes', url: `${site.url}/` },
+  { name: 'Sports', url: `${site.url}/sports/` },
+  { name: 'Football', url: `${site.url}/sports/football/` },
+  { name: 'NFL', url: leagueUrl },
+];
+
+const sportsOrgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SportsOrganization',
+  name: 'National Football League',
+  alternateName: 'NFL',
+  sport: 'American Football',
+  url: leagueUrl,
+};
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'NFL Team Colors',
+  description: `Official color codes for all ${teams.length} NFL teams on Best Color Codes.`,
+  url: leagueUrl,
+  numberOfItems: teams.length,
+  itemListElement: teams.map((t, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: `${t.data.teamName} Colors`,
+    url: `${site.url}/${t.data.slug}/`,
+  })),
+};
+
+const colorMeanings = [
+  { team: 'Arizona Cardinals', meaning: 'Cardinal red is the color of the northern cardinal bird, the team\'s namesake. Black and yellow were added to give the palette a bolder, more modern contrast.' },
+  { team: 'Baltimore Ravens', meaning: 'Purple and black honor the raven, inspired by Edgar Allan Poe\'s famous poem - Poe is buried in Baltimore. The gold reflects the Maryland state flag.' },
+  { team: 'Buffalo Bills', meaning: 'Royal blue and red mirror the patriotic colors of Buffalo Bill Cody, the legendary frontiersman the team is named after. The palette has been a franchise staple since the 1960s.' },
+  { team: 'Cincinnati Bengals', meaning: 'Black and orange reflect the Bengal tiger, chosen to give Cincinnati a fierce, wild identity. The combination became iconic with the team\'s tiger-stripe uniform pattern.' },
+  { team: 'Green Bay Packers', meaning: 'Dark green and gold (originally "Indian yellow") were chosen in 1919 and have remained unchanged for over a century. The colors reflect the team\'s roots in the meat-packing industry.' },
+  { team: 'Kansas City Chiefs', meaning: 'Red and gold honor the team\'s original Kansas City connection - the civic colors - and pay tribute to Lamar Hunt\'s desire for a bold, aggressive look inspired by Native American culture.' },
+  { team: 'Los Angeles Rams', meaning: 'Millennium Blue and New Century Gold were reintroduced in 2020 when the Rams relocated to LA, designed to reflect the California sun, sky, and the franchise\'s storied history.' },
+  { team: 'Minnesota Vikings', meaning: 'Purple and gold reflect Scandinavian heritage - honoring the Minnesota\'s large Norwegian and Swedish population. The colors were chosen in 1961 to be distinctive from every other NFL team.' },
+  { team: 'Pittsburgh Steelers', meaning: 'Black and gold directly represent the steel industry that built Pittsburgh. The colors match the Pittsburgh city flag and remain one of the most recognizable palettes in all of sports.' },
+  { team: 'San Francisco 49ers', meaning: 'Red and gold honor the gold rush miners of 1849 - the "49ers" - who came to California seeking fortune. The colors have been with the franchise since its founding in 1946.' },
+  { team: 'Washington Redskins', meaning: 'Burgundy and gold have been the team\'s colors since 1937. The dark burgundy was chosen to convey strength and tradition, with gold as the accent representing prestige.' },
+];
+
+const logoMeanings = [
+  { team: 'Arizona Cardinals', symbol: 'The cardinal bird in profile, shown as a fierce, angular head with an aggressive beak - representing speed and ferocity.' },
+  { team: 'Baltimore Ravens', symbol: 'A stylized raven in flight, paying homage to Edgar Allan Poe. The logo includes a "B" in the wing design, tying it to Baltimore.' },
+  { team: 'Buffalo Bills', symbol: 'A charging buffalo in mid-stride with a red lightning bolt - representing power, determination, and the untamed spirit of the American frontier.' },
+  { team: 'Cincinnati Bengals', symbol: 'A bold "B" rendered in tiger stripes - the Bengals are one of the few NFL teams without an actual animal depicted in the logo, letting the pattern do the talking.' },
+  { team: 'Green Bay Packers', symbol: 'A simple "G" in oval - one of the most minimalist logos in sports. The clean design has remained essentially unchanged since 1961 and is instantly recognizable worldwide.' },
+  { team: 'Kansas City Chiefs', symbol: 'An arrowhead shape in red and gold - representing strength, direction, and the Native American heritage the team\'s name honors.' },
+  { team: 'Los Angeles Rams', symbol: 'A ram\'s horn in profile, stylized to feel dynamic and modern. The curving horn doubled as an iconic helmet stripe before becoming the primary logo.' },
+  { team: 'Minnesota Vikings', symbol: 'A fierce Viking warrior in profile wearing a horned helmet - representing the Norse heritage of Minnesota\'s Scandinavian settlers.' },
+  { team: 'Pittsburgh Steelers', symbol: 'The Steelmark - originally the logo of the American Iron and Steel Institute - adapted with the team name. The three diamonds represent the materials used to make steel: yellow for coal, orange for iron ore, blue for scrap steel.' },
+  { team: 'San Francisco 49ers', symbol: 'An oval "SF" monogram in red and gold - clean and iconic. The logo reflects the team\'s deep roots in San Francisco and their storied dynasty of the 1980s.' },
+  { team: 'Washington Redskins', symbol: 'A Native American profile in burgundy and gold - one of the most debated logos in sports history. The franchise has faced ongoing controversy over the name and imagery.' },
+];
+
+const crossLeague = [
+  { nfl: 'Minnesota Vikings', similar: 'Los Angeles Lakers (NBA) - both use purple and gold, making them two of the most iconic purple-and-gold franchises in American sports.' },
+  { nfl: 'Pittsburgh Steelers', similar: 'Boston Bruins (NHL) - both use black and gold, giving them a similar industrial, working-class aesthetic.' },
+  { nfl: 'San Francisco 49ers', similar: 'Kansas City Chiefs (NFL sibling) and San Francisco Giants (MLB) - all share red and gold, making Bay Area sports unusually color-consistent.' },
+  { nfl: 'Green Bay Packers', similar: 'Green Bay shares its green and gold palette with the Oakland Athletics (MLB) and Seattle SuperSonics (NBA, defunct).' },
+  { nfl: 'Baltimore Ravens', similar: 'Sacramento Kings (NBA) - both use purple and gold (with black accents), giving them a regal, distinctive look.' },
+  { nfl: 'Cincinnati Bengals', similar: 'San Francisco Giants (MLB) and Houston Dynamo (MLS) - all rock black and orange, a Halloween-adjacent palette that stands out in every arena.' },
+  { nfl: 'Buffalo Bills', similar: 'New York Rangers (NHL) and New England Patriots (NFL) - all use red, white, and blue in a patriotic color scheme.' },
+  { nfl: 'Kansas City Chiefs', similar: 'San Francisco 49ers (NFL) and Atlanta Hawks (NBA) - share red and gold, though each with a distinct shade.' },
+];
+
+const historicalTeams = [
+  { name: 'Houston Oilers', era: '1960–1996', notes: 'Relocated to Tennessee and became the Tennessee Titans. The Oilers wore a distinctive Columbia blue, red, and white - colors now retired from the NFL entirely.' },
+  { name: 'Oakland Raiders', era: '1960–2019 (Oakland)', notes: 'Moved to Las Vegas in 2020 and became the Las Vegas Raiders. The silver and black identity remained unchanged - one of the most consistent brand identities in sports history.' },
+  { name: 'San Diego Chargers', era: '1960–2016 (San Diego)', notes: 'Relocated to Los Angeles in 2017. Their iconic powder blue alternates became one of the most beloved throwback looks in the NFL.' },
+  { name: 'Cleveland Browns (original)', era: '1946–1995', notes: 'Relocated to Baltimore and became the Baltimore Ravens. Cleveland received an expansion team (also called the Browns) in 1999, keeping the name, colors, and records.' },
+  { name: 'Baltimore Colts', era: '1953–1983', notes: 'Relocated overnight to Indianapolis in 1984 and became the Indianapolis Colts. The royal blue and white identity carried over to the new city.' },
+  { name: 'St. Louis Rams', era: '1995–2015 (St. Louis)', notes: 'Originally the Los Angeles Rams, moved to St. Louis in 1995 and returned to LA in 2016. Rebranded with new colors (Millennium Blue and New Century Gold) upon return.' },
+];
+---
+
+<Base
+  title="NFL Team Colors - Hex, RGB, CMYK & Pantone Codes | Best Color Codes"
+  description={`Official NFL team color codes for all ${teams.length} teams. Find the exact HEX, RGB, CMYK, and Pantone values for every National Football League team.`}
+  breadcrumbs={breadcrumbs}
+>
+  <Fragment slot="head">
+    <JsonLd schema={sportsOrgSchema} />
+    <JsonLd schema={itemListSchema} />
+  </Fragment>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="breadcrumb">
+        <a href="/">Best Color Codes</a> <span>›</span>
+        <a href="/sports/">Sports</a> <span>›</span>
+        <a href="/sports/football/">Football</a> <span>›</span>
+        <span>NFL</span>
+      </div>
+      <h1>NFL team colors</h1>
+      <p class="hero-sub">National Football League - official brand color codes for all {teams.length} teams.</p>
+    </div>
+  </section>
+
+  <main class="main">
+
+    <!-- Intro -->
+    <section class="prose-block">
+      <p>The <strong>National Football League (NFL)</strong> is divided into two conferences - the AFC (American Football Conference) and the NFC (National Football Conference) - each with 16 teams. The reigning Super Bowl champions are the <strong>Kansas City Chiefs</strong>. Best Color Codes currently covers {teams.length} NFL teams, with new team pages being added regularly. Every entry includes official HEX, RGB, CMYK, and Pantone values sourced from team brand guidelines and verified SVG artwork.</p>
+    </section>
+
+    <!-- Team Grid -->
+    <section class="team-section">
+      <p class="section-label">{teams.length} teams</p>
+      <div class="team-grid">
+        {teams.map(t => (
+          <a class="team-card" href={`/${t.data.slug}/`}>
+            <div class="color-strip">
+              {t.data.colors.map(c => (
+                <div class="strip-seg" style={`background:${c.hex}`}></div>
+              ))}
+            </div>
+            <div class="card-body">
+              <h2 class="team-name">{t.data.teamName}</h2>
+              <p class="team-count">{t.data.colors.length} colors</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Color Popularity -->
+    <section class="prose-block">
+      <h2>Most common NFL team colors</h2>
+      <p>Across the {teams.length} NFL teams on Best Color Codes, certain colors appear far more often than others. Gold and yellow dominate - reflecting the sport's association with prestige and championship - followed by red/burgundy and black.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Color family</th><th>Teams</th></tr>
+          </thead>
+          <tbody>
+            {colorRanking.map(({ color, teams: t }) => (
+              <tr>
+                <td>{color}</td>
+                <td>{t.join(', ')}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">Note: colors are grouped into families (e.g. "49ers Gold" and "Steelers Gold" both count under Gold / Yellow).</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- HEX Table -->
+    <section class="prose-block">
+      <h2>NFL team HEX color codes</h2>
+      <p>HEX codes are the standard for web and digital design. Every value below is the official HEX code confirmed from team brand materials.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Team</th><th>Color</th><th>HEX</th></tr>
+          </thead>
+          <tbody>
+            {teams.map(t => t.data.colors.map((c, i) => (
+              <tr>
+                {i === 0 && <td rowspan={t.data.colors.length} class="team-cell">{t.data.teamName}</td>}
+                <td>{c.name}</td>
+                <td><span class="swatch-inline" style={`background:${c.hex}`}></span><code>{c.hex}</code></td>
+              </tr>
+            )))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- RGB Table -->
+    <section class="prose-block">
+      <h2>NFL team RGB color codes</h2>
+      <p>RGB values are used in digital displays, video production, and on-screen design tools. Each value represents Red, Green, and Blue channels on a 0–255 scale.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Team</th><th>Color</th><th>RGB</th></tr>
+          </thead>
+          <tbody>
+            {teams.map(t => t.data.colors.map((c, i) => (
+              <tr>
+                {i === 0 && <td rowspan={t.data.colors.length} class="team-cell">{t.data.teamName}</td>}
+                <td>{c.name}</td>
+                <td><code>{c.rgb.r}, {c.rgb.g}, {c.rgb.b}</code></td>
+              </tr>
+            )))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CMYK Table -->
+    <section class="prose-block">
+      <h2>NFL team CMYK color codes</h2>
+      <p>CMYK values are used in print design and physical merchandise. The four channels - Cyan, Magenta, Yellow, and Key (Black) - represent how ink is mixed for printing.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Team</th><th>Color</th><th>CMYK</th></tr>
+          </thead>
+          <tbody>
+            {teams.map(t => t.data.colors.map((c, i) => (
+              <tr>
+                {i === 0 && <td rowspan={t.data.colors.length} class="team-cell">{t.data.teamName}</td>}
+                <td>{c.name}</td>
+                <td><code>{c.cmyk.c}, {c.cmyk.m}, {c.cmyk.y}, {c.cmyk.k}</code></td>
+              </tr>
+            )))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Pantone Table -->
+    <section class="prose-block">
+      <h2>NFL team Pantone color codes</h2>
+      <p>Pantone (PMS) codes are the industry standard for brand color consistency across physical products - from jerseys to stadium signage to merchandise.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Team</th><th>Color</th><th>Pantone</th></tr>
+          </thead>
+          <tbody>
+            {teams.map(t => t.data.colors.map((c, i) => (
+              <tr>
+                {i === 0 && <td rowspan={t.data.colors.length} class="team-cell">{t.data.teamName}</td>}
+                <td>{c.name}</td>
+                <td><code>{c.pantone}</code></td>
+              </tr>
+            )))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Color Meanings -->
+    <section class="prose-block">
+      <h2>What do NFL team colors mean?</h2>
+      <p>Every NFL team's color palette has a story - rooted in city pride, history, or the symbolism of the team's name. Here's the meaning behind each team's colors.</p>
+      <div class="meaning-list">
+        {colorMeanings.map(m => (
+          <div class="meaning-item">
+            <p class="meaning-team">{m.team}</p>
+            <p class="meaning-text">{m.meaning}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Logo Meanings -->
+    <section class="prose-block">
+      <h2>NFL team logo meanings</h2>
+      <p>NFL logos are among the most recognizable in sports. Each one carries specific symbolism tied to the team's name, city, or history.</p>
+      <div class="meaning-list">
+        {logoMeanings.map(m => (
+          <div class="meaning-item">
+            <p class="meaning-team">{m.team}</p>
+            <p class="meaning-text">{m.symbol}</p>
+          </div>
+        ))}
+      </div>
+      <h3>How to recreate an NFL logo</h3>
+      <p>If you're designing fan art or a creative project using NFL team colors, here's a general workflow:</p>
+      <ol class="steps-list">
+        <li><strong>Get the official colors</strong> - use the HEX, RGB, and Pantone values from this page or the team's individual color page.</li>
+        <li><strong>Source the logo SVG</strong> - official SVG logos are available through the NFL's press kit or Wikimedia Commons for reference use.</li>
+        <li><strong>Open in a vector tool</strong> - Adobe Illustrator, Figma, or Affinity Designer all work well for SVG editing.</li>
+        <li><strong>Apply official colors</strong> - replace any approximate colors with the exact values from team brand guidelines.</li>
+        <li><strong>Respect usage rights</strong> - NFL team logos are trademarked. Fan art is generally tolerated but commercial use requires licensing.</li>
+      </ol>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Cross-league comparison -->
+    <section class="prose-block">
+      <h2>NFL teams with similar colors to other leagues</h2>
+      <p>Several NFL teams share their color palette with franchises across the NBA, NHL, and MLB - sometimes creating unexpected cross-sport color siblings.</p>
+      <div class="meaning-list">
+        {crossLeague.map(m => (
+          <div class="meaning-item">
+            <p class="meaning-team">{m.nfl}</p>
+            <p class="meaning-text">{m.similar}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Historical Teams -->
+    <section class="prose-block">
+      <h2>Historical NFL teams and their colors</h2>
+      <p>Several NFL franchises have relocated or rebranded over the decades, leaving behind color legacies. Here are the most notable historical teams.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Team</th><th>Era</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            {historicalTeams.map(t => (
+              <tr>
+                <td class="team-cell">{t.name}</td>
+                <td><code>{t.era}</code></td>
+                <td>{t.notes}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</Base>
+
+<style>
+  .hero {
+    padding: 3rem 2rem 2.5rem;
+    background: var(--surface-1);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .breadcrumb {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .breadcrumb a { color: var(--text-accent); }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  /* Team grid */
+  .team-section { margin-bottom: 3rem; }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+  }
+
+  .team-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color .12s;
+  }
+
+  .team-card:hover { border-color: var(--border-strong); }
+
+  .color-strip { display: flex; height: 6px; }
+  .strip-seg { flex: 1; }
+
+  .card-body { padding: 14px 16px; }
+
+  .team-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .team-count {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* Prose sections */
+  .prose-block {
+    margin-bottom: 3rem;
+  }
+
+  .prose-block h2 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+  }
+
+  .prose-block h3 {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 1.5rem 0 10px;
+    color: var(--text-primary);
+  }
+
+  .prose-block p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .prose-block strong { color: var(--text-primary); font-weight: 500; }
+
+  /* Tables */
+  .color-table-wrap {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+  }
+
+  .color-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+
+  .color-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+    border-bottom: 0.5px solid var(--border);
+    background: var(--surface-1);
+  }
+
+  .color-table td {
+    padding: 10px 14px;
+    border-bottom: 0.5px solid var(--border);
+    color: var(--text-primary);
+    vertical-align: middle;
+  }
+
+  .color-table tr:last-child td { border-bottom: none; }
+
+  .color-table code {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-primary);
+  }
+
+  .team-cell {
+    color: var(--text-primary);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .swatch-inline {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    margin-right: 8px;
+    vertical-align: middle;
+    border: 1px solid var(--border-strong);
+  }
+
+  .table-note {
+    font-size: 12px !important;
+    color: var(--text-muted) !important;
+  }
+
+  /* Meanings */
+  .meaning-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .meaning-item {
+    padding: 14px 16px;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .meaning-item:last-child { border-bottom: none; }
+
+  .meaning-team {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px !important;
+  }
+
+  .meaning-text {
+    font-size: 16px !important;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0 !important;
+  }
+
+  /* Steps */
+  .steps-list {
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .steps-list li {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .steps-list strong { color: var(--text-primary); font-weight: 500; }
+
+  /* Divider */
+  .divider {
+    height: 0.5px;
+    background: var(--border);
+    margin-bottom: 3rem;
+  }
+</style>

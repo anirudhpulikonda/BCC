@@ -1,0 +1,566 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { site } from '../config/site';
+
+const all = await getCollection('teams');
+const teams = all
+  .filter(t => t.data.league === 'MLB')
+  .sort((a, b) => a.data.teamName.localeCompare(b.data.teamName));
+
+const leagueUrl = `${site.url}/mlb-team-color-codes/`;
+
+const colorTeams: Record<string, Set<string>> = {};
+for (const t of teams) {
+  for (const c of t.data.colors) {
+    const name = c.name.toLowerCase();
+    let bucket: string;
+    if (name.includes('gold') || name.includes('yellow')) bucket = 'Gold / Yellow';
+    else if (name.includes('red') || name.includes('scarlet') || name.includes('cardinal')) bucket = 'Red';
+    else if (name.includes('black')) bucket = 'Black';
+    else if (name.includes('blue') || name.includes('navy') || name.includes('royal')) bucket = 'Blue';
+    else if (name.includes('green')) bucket = 'Green';
+    else if (name.includes('silver') || name.includes('white') || name.includes('grey') || name.includes('gray')) bucket = 'Silver / White';
+    else if (name.includes('orange')) bucket = 'Orange';
+    else bucket = 'Other';
+    if (!colorTeams[bucket]) colorTeams[bucket] = new Set();
+    colorTeams[bucket].add(t.data.teamName);
+  }
+}
+const colorRanking = Object.entries(colorTeams)
+  .map(([color, teamSet]) => ({ color, teams: [...teamSet] }))
+  .sort((a, b) => b.teams.length - a.teams.length);
+
+const breadcrumbs = [
+  { name: 'Best Color Codes', url: `${site.url}/` },
+  { name: 'Sports', url: `${site.url}/sports/` },
+  { name: 'Baseball', url: `${site.url}/sports/baseball/` },
+  { name: 'MLB', url: leagueUrl },
+];
+
+const sportsOrgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SportsOrganization',
+  name: 'Major League Baseball',
+  alternateName: 'MLB',
+  sport: 'Baseball',
+  url: leagueUrl,
+};
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'MLB Team Colors',
+  description: `Official color codes for all ${teams.length} MLB teams on Best Color Codes.`,
+  url: leagueUrl,
+  numberOfItems: teams.length,
+  itemListElement: teams.map((t, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: `${t.data.teamName} Colors`,
+    url: `${site.url}/${t.data.slug}/`,
+  })),
+};
+
+const colorMeanings = [
+  { team: 'Boston Red Sox', meaning: 'Navy blue and red have been Boston\'s colors since 1908. The combination is deeply patriotic and mirrors the Boston city flag. The "red" in Red Sox refers directly to the red stockings the team wore when the franchise was founded.' },
+  { team: 'Chicago Cubs', meaning: 'Royal blue and red reflect the colors of the original Chicago baseball clubs in the 1800s. The ivy-covered walls of Wrigley Field and the blue-and-red palette are inseparable from Cubs identity.' },
+  { team: 'New York Yankees', meaning: 'Navy blue and white - the most minimalist palette in baseball. The Yankees have worn essentially the same colors since 1915, making their pinstripe uniform one of the most iconic in all of sports.' },
+  { team: 'San Francisco Giants', meaning: 'Black, orange, and cream reflect the colors adopted when the franchise moved from New York to San Francisco in 1958. Orange honors the Golden Gate Bridge, making the palette uniquely tied to the Bay Area.' },
+  { team: 'St. Louis Cardinals', meaning: 'Red and navy blue have been the Cardinals\' colors since 1900. Cardinal red is named after the northern cardinal bird - the same inspiration as the NFL\'s Arizona Cardinals - and has become one of baseball\'s most recognizable palettes.' },
+];
+
+const logoMeanings = [
+  { team: 'Boston Red Sox', symbol: 'Interlocking "B" or the red sock - two of the most recognizable marks in baseball. The sock logo references the franchise\'s original name and is used as an alternate identity that\'s become equally iconic to the primary wordmark.' },
+  { team: 'Chicago Cubs', symbol: 'A "C" encircling a bear cub - the design has evolved over a century but always centers on the cub and the "C" for Chicago. The 2016 update refreshed the colors and sharpened the lines while honoring the classic heritage.' },
+  { team: 'New York Yankees', symbol: 'The interlocking "NY" - originally designed by Louis Tiffany in 1877 as a medal for a police officer, it was adapted by the Yankees and became the most recognized logo in baseball. No additional imagery needed.' },
+  { team: 'San Francisco Giants', symbol: 'An interlocking "SF" or a Giant in orange and black. The bridge imagery and bay connection are woven into the franchise\'s visual identity through color rather than literal iconography.' },
+  { team: 'St. Louis Cardinals', symbol: 'Two cardinals perched on a bat - introduced in 1922, this remains one of the most distinctive logos in baseball. The birds represent the team name literally while the bat grounds the design firmly in the sport.' },
+];
+
+const crossLeague = [
+  { mlb: 'New York Yankees', similar: 'Dallas Cowboys (NFL) and Toronto Maple Leafs (NHL) - all use navy and white as a clean, classic palette that reads as confident and traditional.' },
+  { mlb: 'San Francisco Giants', similar: 'San Francisco 49ers (NFL) - both Bay Area franchises share black and gold/orange, creating a unified city sports identity.' },
+  { mlb: 'Boston Red Sox', similar: 'New England Patriots (NFL) and Boston Celtics (NBA) - Boston\'s sports teams share navy and red across franchises, giving the city one of the most cohesive multi-sport color identities.' },
+  { mlb: 'Chicago Cubs', similar: 'Chicago Bears (NFL) - both use navy blue and orange-red, reflecting the historic Chicago sports color tradition.' },
+  { mlb: 'St. Louis Cardinals', similar: 'Arizona Cardinals (NFL) - both use cardinal red as their primary color, sharing the same namesake bird as the inspiration.' },
+];
+
+const historicalTeams = [
+  { name: 'Montreal Expos', era: '1969-2004', notes: 'Relocated to Washington DC and became the Nationals. The Expos\' tricolor red, white, and blue with the distinctive "eM" logo is considered one of the most creative designs in baseball history.' },
+  { name: 'Brooklyn Dodgers', era: '1883-1957 (Brooklyn)', notes: 'Relocated to Los Angeles in 1958. The Dodgers kept their name and blue-and-white identity but left behind a Brooklyn fan base that never fully forgave the move.' },
+  { name: 'Seattle Pilots', era: '1969 only', notes: 'Relocated to Milwaukee after just one season and became the Brewers. Their navy and gold uniform is a footnote in baseball history - worn for only 162 games.' },
+  { name: 'Washington Senators', era: '1901-1971', notes: 'The original Senators relocated to Texas in 1972 and became the Texas Rangers. Washington received a second Senators expansion team in 1961, which later became the Minnesota Twins.' },
+];
+---
+
+<Base
+  title="MLB Team Colors - Hex, RGB, CMYK & Pantone Codes | Best Color Codes"
+  description={`Official MLB team color codes for all ${teams.length} teams. Find the exact HEX, RGB, CMYK, and Pantone values for every Major League Baseball team.`}
+  breadcrumbs={breadcrumbs}
+>
+  <Fragment slot="head">
+    <JsonLd schema={sportsOrgSchema} />
+    <JsonLd schema={itemListSchema} />
+  </Fragment>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="breadcrumb">
+        <a href="/">Best Color Codes</a> <span>›</span>
+        <a href="/sports/">Sports</a> <span>›</span>
+        <a href="/sports/baseball/">Baseball</a> <span>›</span>
+        <span>MLB</span>
+      </div>
+      <h1>MLB team colors</h1>
+      <p class="hero-sub">Major League Baseball - official brand color codes for all {teams.length} teams.</p>
+    </div>
+  </section>
+
+  <main class="main">
+
+    <section class="prose-block">
+      <p><strong>Major League Baseball (MLB)</strong> is divided into two leagues - the American League and the National League - each with 15 teams. The reigning World Series champions are the <strong>Los Angeles Dodgers</strong>. Best Color Codes currently covers {teams.length} MLB teams, with new team pages being added regularly. Every entry includes official HEX, RGB, CMYK, and Pantone values sourced from team brand guidelines and verified SVG artwork.</p>
+    </section>
+
+    <section class="team-section">
+      <p class="section-label">{teams.length} teams</p>
+      <div class="team-grid">
+        {teams.map(t => (
+          <a class="team-card" href={`/${t.data.slug}/`}>
+            <div class="color-strip">
+              {t.data.colors.map(c => (
+                <div class="strip-seg" style={`background:${c.hex}`}></div>
+              ))}
+            </div>
+            <div class="card-body">
+              <h2 class="team-name">{t.data.teamName}</h2>
+              <p class="team-count">{t.data.colors.length} colors</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>Most common MLB team colors</h2>
+      <p>Across the {teams.length} MLB teams on Best Color Codes, navy blue and red appear most frequently - reflecting baseball's long tradition of patriotic, classic color choices.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Color family</th><th>Teams</th></tr>
+          </thead>
+          <tbody>
+            {colorRanking.map(({ color, teams: t }) => (
+              <tr>
+                <td>{color}</td>
+                <td>{t.join(', ')}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">Note: colors are grouped into families (e.g. "Yankees Navy" and "Cubs Blue" both count under Blue).</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>MLB team HEX color codes</h2>
+      <p>HEX codes are the standard for web and digital design. Every value below is the official HEX code confirmed from team brand materials.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Team</th><th>Color</th><th>HEX</th></tr>
+          </thead>
+          <tbody>
+            {teams.map(t => t.data.colors.map((c, i) => (
+              <tr>
+                {i === 0 && <td rowspan={t.data.colors.length} class="team-cell">{t.data.teamName}</td>}
+                <td>{c.name}</td>
+                <td><span class="swatch-inline" style={`background:${c.hex}`}></span><code>{c.hex}</code></td>
+              </tr>
+            )))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>MLB team RGB color codes</h2>
+      <p>RGB values are used in digital displays, video production, and on-screen design tools. Each value represents Red, Green, and Blue channels on a 0-255 scale.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Team</th><th>Color</th><th>RGB</th></tr>
+          </thead>
+          <tbody>
+            {teams.map(t => t.data.colors.map((c, i) => (
+              <tr>
+                {i === 0 && <td rowspan={t.data.colors.length} class="team-cell">{t.data.teamName}</td>}
+                <td>{c.name}</td>
+                <td><code>{c.rgb.r}, {c.rgb.g}, {c.rgb.b}</code></td>
+              </tr>
+            )))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>MLB team CMYK color codes</h2>
+      <p>CMYK values are used in print design and physical merchandise. The four channels - Cyan, Magenta, Yellow, and Key (Black) - represent how ink is mixed for printing.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Team</th><th>Color</th><th>CMYK</th></tr>
+          </thead>
+          <tbody>
+            {teams.map(t => t.data.colors.map((c, i) => (
+              <tr>
+                {i === 0 && <td rowspan={t.data.colors.length} class="team-cell">{t.data.teamName}</td>}
+                <td>{c.name}</td>
+                <td><code>{c.cmyk.c}, {c.cmyk.m}, {c.cmyk.y}, {c.cmyk.k}</code></td>
+              </tr>
+            )))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>MLB team Pantone color codes</h2>
+      <p>Pantone (PMS) codes are the industry standard for brand color consistency across physical products - from uniforms to stadium signage to merchandise.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Team</th><th>Color</th><th>Pantone</th></tr>
+          </thead>
+          <tbody>
+            {teams.map(t => t.data.colors.map((c, i) => (
+              <tr>
+                {i === 0 && <td rowspan={t.data.colors.length} class="team-cell">{t.data.teamName}</td>}
+                <td>{c.name}</td>
+                <td><code>{c.pantone}</code></td>
+              </tr>
+            )))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>What do MLB team colors mean?</h2>
+      <p>Baseball has the longest color history of any American major sport - some franchises have used the same palette for over a century. Here's the story behind each team's colors.</p>
+      <div class="meaning-list">
+        {colorMeanings.map(m => (
+          <div class="meaning-item">
+            <p class="meaning-team">{m.team}</p>
+            <p class="meaning-text">{m.meaning}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>MLB team logo meanings</h2>
+      <p>Baseball logos are among the most classic in American sports, often unchanged for decades. Each design reflects the team's heritage, city, or the literal meaning of the team name.</p>
+      <div class="meaning-list">
+        {logoMeanings.map(m => (
+          <div class="meaning-item">
+            <p class="meaning-team">{m.team}</p>
+            <p class="meaning-text">{m.symbol}</p>
+          </div>
+        ))}
+      </div>
+      <h3>How to recreate an MLB logo</h3>
+      <p>If you're designing fan art or a creative project using MLB team colors, here's a general workflow:</p>
+      <ol class="steps-list">
+        <li><strong>Get the official colors</strong> - use the HEX, RGB, and Pantone values from this page or the team's individual color page.</li>
+        <li><strong>Source the logo SVG</strong> - official SVG logos are available through MLB's press kit or Wikimedia Commons for reference use.</li>
+        <li><strong>Open in a vector tool</strong> - Adobe Illustrator, Figma, or Affinity Designer all work well for SVG editing.</li>
+        <li><strong>Apply official colors</strong> - replace any approximate colors with the exact values from team brand guidelines.</li>
+        <li><strong>Respect usage rights</strong> - MLB team logos are trademarked. Fan art is generally tolerated but commercial use requires licensing.</li>
+      </ol>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>MLB teams with similar colors to other leagues</h2>
+      <p>Several MLB teams share their color palette with franchises across the NFL, NBA, and NHL - creating cross-sport color connections, particularly in cities with multiple major sports teams.</p>
+      <div class="meaning-list">
+        {crossLeague.map(m => (
+          <div class="meaning-item">
+            <p class="meaning-team">{m.mlb}</p>
+            <p class="meaning-text">{m.similar}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>Historical MLB teams and their colors</h2>
+      <p>Baseball has the richest relocation history in American sports. Several franchises moved cities over the decades, leaving behind color legacies tied to the cities they left.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Team</th><th>Era</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            {historicalTeams.map(t => (
+              <tr>
+                <td class="team-cell">{t.name}</td>
+                <td><code>{t.era}</code></td>
+                <td>{t.notes}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</Base>
+
+<style>
+  .hero {
+    padding: 3rem 2rem 2.5rem;
+    background: var(--surface-1);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .breadcrumb {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .breadcrumb a { color: var(--text-accent); }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .team-section { margin-bottom: 3rem; }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+  }
+
+  .team-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color .12s;
+    text-decoration: none;
+  }
+
+  .team-card:hover { border-color: var(--border-strong); }
+
+  .color-strip { display: flex; height: 6px; }
+  .strip-seg { flex: 1; }
+
+  .card-body { padding: 14px 16px; }
+
+  .team-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .team-count {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .prose-block { margin-bottom: 3rem; }
+
+  .prose-block h2 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+  }
+
+  .prose-block h3 {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 1.5rem 0 10px;
+    color: var(--text-primary);
+  }
+
+  .prose-block p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .prose-block strong { color: var(--text-primary); font-weight: 500; }
+
+  .color-table-wrap {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+  }
+
+  .color-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+
+  .color-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+    border-bottom: 0.5px solid var(--border);
+    background: var(--surface-1);
+  }
+
+  .color-table td {
+    padding: 10px 14px;
+    border-bottom: 0.5px solid var(--border);
+    color: var(--text-primary);
+    vertical-align: middle;
+  }
+
+  .color-table tr:last-child td { border-bottom: none; }
+
+  .color-table code {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-primary);
+  }
+
+  .team-cell {
+    color: var(--text-primary);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .swatch-inline {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    margin-right: 8px;
+    vertical-align: middle;
+    border: 1px solid var(--border-strong);
+  }
+
+  .table-note {
+    font-size: 12px !important;
+    color: var(--text-muted) !important;
+  }
+
+  .meaning-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .meaning-item {
+    padding: 14px 16px;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .meaning-item:last-child { border-bottom: none; }
+
+  .meaning-team {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px !important;
+  }
+
+  .meaning-text {
+    font-size: 16px !important;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0 !important;
+  }
+
+  .steps-list {
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .steps-list li {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .steps-list strong { color: var(--text-primary); font-weight: 500; }
+
+  .divider {
+    height: 0.5px;
+    background: var(--border);
+    margin-bottom: 3rem;
+  }
+</style>

@@ -1,0 +1,566 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { site } from '../config/site';
+
+const all = await getCollection('teams');
+const teams = all
+  .filter(t => t.data.league === 'NBA')
+  .sort((a, b) => a.data.teamName.localeCompare(b.data.teamName));
+
+const leagueUrl = `${site.url}/nba-team-color-codes/`;
+
+const colorTeams: Record<string, Set<string>> = {};
+for (const t of teams) {
+  for (const c of t.data.colors) {
+    const name = c.name.toLowerCase();
+    let bucket: string;
+    if (name.includes('gold') || name.includes('yellow')) bucket = 'Gold / Yellow';
+    else if (name.includes('red') || name.includes('wine') || name.includes('scarlet')) bucket = 'Red / Wine';
+    else if (name.includes('black')) bucket = 'Black';
+    else if (name.includes('blue') || name.includes('royal')) bucket = 'Blue';
+    else if (name.includes('green')) bucket = 'Green';
+    else if (name.includes('purple')) bucket = 'Purple';
+    else if (name.includes('silver') || name.includes('white')) bucket = 'Silver / White';
+    else bucket = 'Other';
+    if (!colorTeams[bucket]) colorTeams[bucket] = new Set();
+    colorTeams[bucket].add(t.data.teamName);
+  }
+}
+const colorRanking = Object.entries(colorTeams)
+  .map(([color, teamSet]) => ({ color, teams: [...teamSet] }))
+  .sort((a, b) => b.teams.length - a.teams.length);
+
+const breadcrumbs = [
+  { name: 'Best Color Codes', url: `${site.url}/` },
+  { name: 'Sports', url: `${site.url}/sports/` },
+  { name: 'Basketball', url: `${site.url}/sports/basketball/` },
+  { name: 'NBA', url: leagueUrl },
+];
+
+const sportsOrgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SportsOrganization',
+  name: 'National Basketball Association',
+  alternateName: 'NBA',
+  sport: 'Basketball',
+  url: leagueUrl,
+};
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'NBA Team Colors',
+  description: `Official color codes for all ${teams.length} NBA teams on Best Color Codes.`,
+  url: leagueUrl,
+  numberOfItems: teams.length,
+  itemListElement: teams.map((t, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: `${t.data.teamName} Colors`,
+    url: `${site.url}/${t.data.slug}/`,
+  })),
+};
+
+const colorMeanings = [
+  { team: 'Golden State Warriors', meaning: 'Royal blue and gold reflect the California Gold Rush and the San Francisco Bay\'s ocean waters. The colors were adopted in 1971 and have become synonymous with the team\'s dynasty era.' },
+  { team: 'Los Angeles Lakers', meaning: 'Purple and gold were inherited from the Minneapolis Lakers when the franchise relocated to LA in 1960. The colors mirror the Minnesota state colors and have never changed in over 60 years.' },
+  { team: 'Miami Heat', meaning: 'Red, black, and yellow-gold evoke the heat of Miami - fire, intensity, and the South Florida sun. The palette was designed to feel bold and aggressive when the franchise launched in 1988.' },
+  { team: 'Milwaukee Bucks', meaning: 'Forest green, cream, and "fear the deer" gold reflect Wisconsin\'s natural landscape - the forests and fields of the Midwest. The 2015 rebrand leaned into the outdoors heritage of the state.' },
+  { team: 'Toronto Raptors', meaning: 'Red, black, and silver were chosen in 1995 to reflect the Jurassic Park dinosaur craze. The 2015 rebrand refined the palette to a deeper red and gold, giving the franchise a more mature identity.' },
+];
+
+const logoMeanings = [
+  { team: 'Golden State Warriors', symbol: 'A bridge spanning the San Francisco Bay - introduced in 2010, the Golden Gate Bridge silhouette in blue and gold ties the franchise to its Bay Area home rather than any single city.' },
+  { team: 'Los Angeles Lakers', symbol: 'A clean "Lakers" wordmark in purple and gold with a basketball. The simplicity reflects the franchise\'s confidence - one of the most storied brands in sports needs no elaborate imagery.' },
+  { team: 'Miami Heat', symbol: 'A flaming basketball in red and yellow - pure intensity. The logo captures the team\'s brand promise: high energy, fast-paced, and burning hot.' },
+  { team: 'Milwaukee Bucks', symbol: 'A white-tailed buck in profile, rendered with angular lines to feel fierce and modern. The 2015 redesign gave the deer more attitude - wider stance, more aggressive posture.' },
+  { team: 'Toronto Raptors', symbol: 'A raptor claw gripping a basketball - updated in 2015 to be cleaner and more athletic. The OG 1995 logo featured a full dinosaur dunking, which was eventually retired in favor of the more timeless claw mark.' },
+];
+
+const crossLeague = [
+  { nba: 'Los Angeles Lakers', similar: 'Minnesota Vikings (NFL) - both use purple and gold, tying them together as two of the most iconic purple-and-gold franchises in all of American sports.' },
+  { nba: 'Golden State Warriors', similar: 'Pittsburgh Steelers (NFL) and Boston Bruins (NHL) - all use blue and gold as core palette colors, though each with a distinct shade.' },
+  { nba: 'Miami Heat', similar: 'Chicago Blackhawks (NHL) and Atlanta Falcons (NFL) - red and black combinations that feel powerful and aggressive across every sport.' },
+  { nba: 'Milwaukee Bucks', similar: 'Green Bay Packers (NFL) - both Wisconsin franchises share green and gold, making Wisconsin one of the most color-consistent sports states in the country.' },
+  { nba: 'Toronto Raptors', similar: 'Toronto Maple Leafs (NHL) - the two Toronto major franchises both use red as a primary color, giving the city a unified sports identity.' },
+];
+
+const historicalTeams = [
+  { name: 'Seattle SuperSonics', era: '1967-2008', notes: 'Relocated to Oklahoma City and became the Thunder. The Sonics wore green and gold - colors that reflected the Pacific Northwest\'s forests and remained beloved by Seattle fans long after the team left.' },
+  { name: 'New Jersey Nets', era: '1977-2012 (New Jersey)', notes: 'Relocated to Brooklyn in 2012. The Nets rebranded from blue and white to a stark black and white identity - one of the boldest color decisions in NBA history.' },
+  { name: 'Vancouver Grizzlies', era: '1995-2001', notes: 'Relocated to Memphis in 2001. Their teal, copper, and purple palette reflected the Pacific Northwest coastal identity - colors that never made the move south.' },
+  { name: 'New Orleans Hornets', era: '2002-2013 (New Orleans)', notes: 'Became the New Orleans Pelicans in 2013. The teal and purple Hornets colors then moved to Charlotte with the expansion Charlotte Hornets, reviving the original 1988 franchise colors.' },
+];
+---
+
+<Base
+  title="NBA Team Colors - Hex, RGB, CMYK & Pantone Codes | Best Color Codes"
+  description={`Official NBA team color codes for all ${teams.length} teams. Find the exact HEX, RGB, CMYK, and Pantone values for every National Basketball Association team.`}
+  breadcrumbs={breadcrumbs}
+>
+  <Fragment slot="head">
+    <JsonLd schema={sportsOrgSchema} />
+    <JsonLd schema={itemListSchema} />
+  </Fragment>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="breadcrumb">
+        <a href="/">Best Color Codes</a> <span>›</span>
+        <a href="/sports/">Sports</a> <span>›</span>
+        <a href="/sports/basketball/">Basketball</a> <span>›</span>
+        <span>NBA</span>
+      </div>
+      <h1>NBA team colors</h1>
+      <p class="hero-sub">National Basketball Association - official brand color codes for all {teams.length} teams.</p>
+    </div>
+  </section>
+
+  <main class="main">
+
+    <section class="prose-block">
+      <p>The <strong>National Basketball Association (NBA)</strong> is divided into two conferences - the Eastern Conference and the Western Conference - each with 15 teams. The reigning NBA champions are the <strong>Boston Celtics</strong>. Best Color Codes currently covers {teams.length} NBA teams, with new team pages being added regularly. Every entry includes official HEX, RGB, CMYK, and Pantone values sourced from team brand guidelines and verified SVG artwork.</p>
+    </section>
+
+    <section class="team-section">
+      <p class="section-label">{teams.length} teams</p>
+      <div class="team-grid">
+        {teams.map(t => (
+          <a class="team-card" href={`/${t.data.slug}/`}>
+            <div class="color-strip">
+              {t.data.colors.map(c => (
+                <div class="strip-seg" style={`background:${c.hex}`}></div>
+              ))}
+            </div>
+            <div class="card-body">
+              <h2 class="team-name">{t.data.teamName}</h2>
+              <p class="team-count">{t.data.colors.length} colors</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>Most common NBA team colors</h2>
+      <p>Across the {teams.length} NBA teams on Best Color Codes, certain colors dominate the league's visual identity. Blue and red appear most frequently, reflecting the patriotic and competitive spirit of the sport.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Color family</th><th>Teams</th></tr>
+          </thead>
+          <tbody>
+            {colorRanking.map(({ color, teams: t }) => (
+              <tr>
+                <td>{color}</td>
+                <td>{t.join(', ')}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">Note: colors are grouped into families (e.g. "Lakers Gold" and "Warriors Gold" both count under Gold / Yellow).</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>NBA team HEX color codes</h2>
+      <p>HEX codes are the standard for web and digital design. Every value below is the official HEX code confirmed from team brand materials.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Team</th><th>Color</th><th>HEX</th></tr>
+          </thead>
+          <tbody>
+            {teams.map(t => t.data.colors.map((c, i) => (
+              <tr>
+                {i === 0 && <td rowspan={t.data.colors.length} class="team-cell">{t.data.teamName}</td>}
+                <td>{c.name}</td>
+                <td><span class="swatch-inline" style={`background:${c.hex}`}></span><code>{c.hex}</code></td>
+              </tr>
+            )))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>NBA team RGB color codes</h2>
+      <p>RGB values are used in digital displays, video production, and on-screen design tools. Each value represents Red, Green, and Blue channels on a 0-255 scale.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Team</th><th>Color</th><th>RGB</th></tr>
+          </thead>
+          <tbody>
+            {teams.map(t => t.data.colors.map((c, i) => (
+              <tr>
+                {i === 0 && <td rowspan={t.data.colors.length} class="team-cell">{t.data.teamName}</td>}
+                <td>{c.name}</td>
+                <td><code>{c.rgb.r}, {c.rgb.g}, {c.rgb.b}</code></td>
+              </tr>
+            )))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>NBA team CMYK color codes</h2>
+      <p>CMYK values are used in print design and physical merchandise. The four channels - Cyan, Magenta, Yellow, and Key (Black) - represent how ink is mixed for printing.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Team</th><th>Color</th><th>CMYK</th></tr>
+          </thead>
+          <tbody>
+            {teams.map(t => t.data.colors.map((c, i) => (
+              <tr>
+                {i === 0 && <td rowspan={t.data.colors.length} class="team-cell">{t.data.teamName}</td>}
+                <td>{c.name}</td>
+                <td><code>{c.cmyk.c}, {c.cmyk.m}, {c.cmyk.y}, {c.cmyk.k}</code></td>
+              </tr>
+            )))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>NBA team Pantone color codes</h2>
+      <p>Pantone (PMS) codes are the industry standard for brand color consistency across physical products - from jerseys to arena signage to merchandise.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Team</th><th>Color</th><th>Pantone</th></tr>
+          </thead>
+          <tbody>
+            {teams.map(t => t.data.colors.map((c, i) => (
+              <tr>
+                {i === 0 && <td rowspan={t.data.colors.length} class="team-cell">{t.data.teamName}</td>}
+                <td>{c.name}</td>
+                <td><code>{c.pantone}</code></td>
+              </tr>
+            )))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>What do NBA team colors mean?</h2>
+      <p>Every NBA team's color palette tells a story - rooted in city identity, history, or the symbolism behind the team's name.</p>
+      <div class="meaning-list">
+        {colorMeanings.map(m => (
+          <div class="meaning-item">
+            <p class="meaning-team">{m.team}</p>
+            <p class="meaning-text">{m.meaning}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>NBA team logo meanings</h2>
+      <p>NBA logos are among the most globally recognized in sports. Each design reflects the team's character, city, or founding story.</p>
+      <div class="meaning-list">
+        {logoMeanings.map(m => (
+          <div class="meaning-item">
+            <p class="meaning-team">{m.team}</p>
+            <p class="meaning-text">{m.symbol}</p>
+          </div>
+        ))}
+      </div>
+      <h3>How to recreate an NBA logo</h3>
+      <p>If you're designing fan art or a creative project using NBA team colors, here's a general workflow:</p>
+      <ol class="steps-list">
+        <li><strong>Get the official colors</strong> - use the HEX, RGB, and Pantone values from this page or the team's individual color page.</li>
+        <li><strong>Source the logo SVG</strong> - official SVG logos are available through the NBA's press kit or Wikimedia Commons for reference use.</li>
+        <li><strong>Open in a vector tool</strong> - Adobe Illustrator, Figma, or Affinity Designer all work well for SVG editing.</li>
+        <li><strong>Apply official colors</strong> - replace any approximate colors with the exact values from team brand guidelines.</li>
+        <li><strong>Respect usage rights</strong> - NBA team logos are trademarked. Fan art is generally tolerated but commercial use requires licensing.</li>
+      </ol>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>NBA teams with similar colors to other leagues</h2>
+      <p>Several NBA teams share their color palette with franchises across the NFL, NHL, and MLB - creating cross-sport color connections.</p>
+      <div class="meaning-list">
+        {crossLeague.map(m => (
+          <div class="meaning-item">
+            <p class="meaning-team">{m.nba}</p>
+            <p class="meaning-text">{m.similar}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="prose-block">
+      <h2>Historical NBA teams and their colors</h2>
+      <p>Several NBA franchises have relocated or rebranded over the decades, leaving behind distinctive color legacies.</p>
+      <div class="color-table-wrap">
+        <table class="color-table">
+          <thead>
+            <tr><th>Team</th><th>Era</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            {historicalTeams.map(t => (
+              <tr>
+                <td class="team-cell">{t.name}</td>
+                <td><code>{t.era}</code></td>
+                <td>{t.notes}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</Base>
+
+<style>
+  .hero {
+    padding: 3rem 2rem 2.5rem;
+    background: var(--surface-1);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .breadcrumb {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .breadcrumb a { color: var(--text-accent); }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  .team-section { margin-bottom: 3rem; }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+  }
+
+  .team-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color .12s;
+    text-decoration: none;
+  }
+
+  .team-card:hover { border-color: var(--border-strong); }
+
+  .color-strip { display: flex; height: 6px; }
+  .strip-seg { flex: 1; }
+
+  .card-body { padding: 14px 16px; }
+
+  .team-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .team-count {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .prose-block { margin-bottom: 3rem; }
+
+  .prose-block h2 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+  }
+
+  .prose-block h3 {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 1.5rem 0 10px;
+    color: var(--text-primary);
+  }
+
+  .prose-block p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .prose-block strong { color: var(--text-primary); font-weight: 500; }
+
+  .color-table-wrap {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+  }
+
+  .color-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+
+  .color-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+    border-bottom: 0.5px solid var(--border);
+    background: var(--surface-1);
+  }
+
+  .color-table td {
+    padding: 10px 14px;
+    border-bottom: 0.5px solid var(--border);
+    color: var(--text-primary);
+    vertical-align: middle;
+  }
+
+  .color-table tr:last-child td { border-bottom: none; }
+
+  .color-table code {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-primary);
+  }
+
+  .team-cell {
+    color: var(--text-primary);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .swatch-inline {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    margin-right: 8px;
+    vertical-align: middle;
+    border: 1px solid var(--border-strong);
+  }
+
+  .table-note {
+    font-size: 12px !important;
+    color: var(--text-muted) !important;
+  }
+
+  .meaning-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .meaning-item {
+    padding: 14px 16px;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .meaning-item:last-child { border-bottom: none; }
+
+  .meaning-team {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px !important;
+  }
+
+  .meaning-text {
+    font-size: 16px !important;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0 !important;
+  }
+
+  .steps-list {
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .steps-list li {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .steps-list strong { color: var(--text-primary); font-weight: 500; }
+
+  .divider {
+    height: 0.5px;
+    background: var(--border);
+    margin-bottom: 3rem;
+  }
+</style>
