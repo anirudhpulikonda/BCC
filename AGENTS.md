@@ -5,7 +5,7 @@
 A reference site for sports team brand colors across major leagues (NFL, NBA, NHL, MLB, MLS, etc.), providing exact hex, RGB, CMYK, and Pantone values for every team.
 
 **Live URL:** `https://bestcolorcodes.com`
-**Deployment:** Cloudflare Pages (auto-deploys from `main` branch)
+**Deployment:** Cloudflare Pages — `main` branch → preview deploys, `production` branch → live domain
 **Stack:** Astro v5 + Tailwind CSS v4 (`@tailwindcss/vite`)
 
 ---
@@ -32,6 +32,9 @@ Each team is a JSON file loaded via Astro Content Collections (`glob` loader).
   logoPath: string;          // "/teams/nfl/arizona-cardinals-logo.svg"
   swatchImagePath: string;   // "/teams/nfl/pittsburgh-steelers/swatch.png"
   sourcingNote: string;      // Free text: where color values were sourced from
+  sources?: { label: string; url: string }[];  // optional source links shown on team page
+  description?: string;      // optional team description paragraph
+  ogImage?: string;          // "/og/pittsburgh-steelers-colors.png" — path to OG image in public/og/
   lastUpdated: string;       // ISO date "2026-06-27"
 }
 ```
@@ -41,6 +44,7 @@ Each team is a JSON file loaded via Astro Content Collections (`glob` loader).
 - `logoPath` and `swatchImagePath` are paths relative to `public/` — local files in the repo.
 - `league` should be a consistent uppercase abbreviation (NFL, NBA, NHL, MLB, MLS, NCAAF, etc.).
 - `lastUpdated` must be updated whenever color values are changed.
+- `ogImage` must be set for the team page to show a rich social preview — see OG Images section below.
 
 ---
 
@@ -88,18 +92,75 @@ Each team is a JSON file loaded via Astro Content Collections (`glob` loader).
 
 ---
 
-## SEO — Title & Meta Description Format
+## SEO — Meta Tags
+
+### Title & Meta Description Format
 
 **Title tag:**
 ```
-[Team Name] Colors — Hex, RGB, CMYK & Pantone Codes | Best Color Codes
+[Team Name] Colors - Hex, RGB, CMYK & Pantone Codes | Best Color Codes
 ```
-Example: `Pittsburgh Steelers Colors — Hex, RGB, CMYK & Pantone Codes | Best Color Codes`
+Example: `Pittsburgh Steelers Colors - Hex, RGB, CMYK & Pantone Codes | Best Color Codes`
 
 **Meta description:**
 ```
 Explore the official [Team Name] color codes including hex, RGB, CMYK, and Pantone values. The complete [Team Name] brand color palette for designers and fans.
 ```
+
+### Open Graph & Twitter — All pages (via `Base.astro`)
+
+Every page automatically gets:
+- `og:site_name` — "Best Color Codes"
+- `og:type` — "website"
+- `og:url` — canonical page URL
+- `og:title` — page title
+- `og:description` — page meta description
+- `og:image` — falls back to `site.logo`
+- `twitter:card` — "summary"
+- `twitter:title`, `twitter:description`, `twitter:image`
+
+> To update the fallback image across the entire site, change `site.logo` in `src/config/site.ts`.
+
+### Open Graph & Twitter — Team pages (via `TeamColorPage.astro`)
+
+Team pages additionally get when `ogImage` is set in the JSON:
+- `og:image` — absolute URL to the generated OG image
+- `og:image:width` — 2400
+- `og:image:height` — 1260
+- `og:image:alt` — "{Team Name} official brand colors"
+- `twitter:card` — upgraded to "summary_large_image"
+- `twitter:title`, `twitter:description`, `twitter:image`
+
+Falls back to `site.logo` + `summary` card if `ogImage` is not set.
+
+---
+
+## OG Images
+
+Generated OG images (2400×1260 PNG) live in `public/og/{slug}.png`.
+
+- Generated via a local app running at `http://localhost:3456`
+- The generator must be running locally when generating images
+- Set `"ogImage": "/og/{slug}.png"` in the team JSON to activate the `og:image` tag
+
+### Adding OG image for a new team
+
+1. Make sure the generator app is running at `http://localhost:3456`
+2. Run:
+   ```
+   curl "http://localhost:3456/generate?url=https://bestcolorcodes.com/{slug}/" -o public/og/{slug}.png
+   ```
+3. Add `"ogImage": "/og/{slug}.png"` to the team's JSON file
+4. Commit both the PNG and the updated JSON
+
+### Workflow when adding a new team page
+
+When the user provides an SVG logo + team details and asks for the OG image in the same prompt:
+1. Create the JSON file in `src/content/teams/`
+2. Save the SVG to `public/teams/{league}/{slug}-logo.svg`
+3. Call the generator and save the PNG to `public/og/{slug}.png`
+4. Set `ogImage` in the JSON
+5. Commit and push everything in one go
 
 ---
 
@@ -125,10 +186,10 @@ All schema.org JSON-LD is injected via `src/components/JsonLd.astro`. The site i
 This is the **single source of truth** for all schema data. Update here and every schema updates automatically:
 - `site.url` — production domain (`https://bestcolorcodes.com`)
 - `site.name` — site display name
-- `site.logo` — absolute URL to logo/favicon
+- `site.logo` — absolute URL to logo/favicon (also used as OG image fallback site-wide)
 - `site.email` — contact email
 - `site.social` — array of social profile URLs (add here to populate `Organization.sameAs`)
-- `leagueMeta` — full name, sport, and slug for each league
+- `leagueMeta` — full name, sport, slug, sportPath, and sportLabel for each league
 
 ### Adding schemas to a new page
 1. Import `JsonLd` from `../components/JsonLd.astro`
