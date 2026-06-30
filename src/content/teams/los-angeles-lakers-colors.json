@@ -56,5 +56,6 @@
   "swatchImagePath": "../../assets/teams/nba/los-angeles-lakers/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed by the Los Angeles Lakers Reproduction and Usage Guideline Sheet. Pantone confirmed by logo slick.",
   "lastUpdated": "2026-06-27",
-  "description": "The Los Angeles Lakers are one of the most iconic franchises in NBA history, founded in 1947 in Minneapolis before relocating to Los Angeles in 1960. They play at Crypto.com Arena and compete in the Pacific Division of the Western Conference. The Lakers have won 17 NBA championships, the most in Western Conference history, with legends like Magic Johnson, Kareem Abdul-Jabbar, Shaquille O'Neal, and Kobe Bryant."
+  "description": "The Los Angeles Lakers are one of the most iconic franchises in NBA history, founded in 1947 in Minneapolis before relocating to Los Angeles in 1960. They play at Crypto.com Arena and compete in the Pacific Division of the Western Conference. The Lakers have won 17 NBA championships, the most in Western Conference history, with legends like Magic Johnson, Kareem Abdul-Jabbar, Shaquille O'Neal, and Kobe Bryant.",
+  "ogImage": "/og/los-angeles-lakers-colors.png"
 }

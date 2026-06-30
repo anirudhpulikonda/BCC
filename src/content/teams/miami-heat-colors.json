@@ -56,5 +56,6 @@
   "swatchImagePath": "../../assets/teams/nba/miami-heat/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. Values confirmed by the Miami Heat Reproduction and Usage Guideline Sheet. Pantone confirmed by logo slick.",
   "lastUpdated": "2026-06-27",
-  "description": "The Miami Heat are an NBA franchise based in Miami, Florida, founded in 1988. They play at Kaseya Center and compete in the Southeast Division of the Eastern Conference. The Heat have won three NBA championships in 2006, 2012, and 2013, and are known for their intense team culture, strong drafting, and building championship rosters around stars like Dwyane Wade, LeBron James, and Jimmy Butler."
+  "description": "The Miami Heat are an NBA franchise based in Miami, Florida, founded in 1988. They play at Kaseya Center and compete in the Southeast Division of the Eastern Conference. The Heat have won three NBA championships in 2006, 2012, and 2013, and are known for their intense team culture, strong drafting, and building championship rosters around stars like Dwyane Wade, LeBron James, and Jimmy Butler.",
+  "ogImage": "/og/miami-heat-colors.png"
 }

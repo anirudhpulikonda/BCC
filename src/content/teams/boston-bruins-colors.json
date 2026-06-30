@@ -56,5 +56,6 @@
   "swatchImagePath": "../../assets/teams/nhl/boston-bruins/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. Values confirmed from official NHL news and team materials.",
   "lastUpdated": "2026-06-27",
-  "description": "The Boston Bruins are one of the Original Six NHL franchises, founded in 1924 and based in Boston, Massachusetts. They play at TD Garden and compete in the Atlantic Division of the Eastern Conference. The Bruins have won six Stanley Cup championships, with their most recent title coming in 2011."
+  "description": "The Boston Bruins are one of the Original Six NHL franchises, founded in 1924 and based in Boston, Massachusetts. They play at TD Garden and compete in the Atlantic Division of the Eastern Conference. The Bruins have won six Stanley Cup championships, with their most recent title coming in 2011.",
+  "ogImage": "/og/boston-bruins-colors.png"
 }
