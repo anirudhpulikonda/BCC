@@ -3,7 +3,7 @@
 /sitemap-*.xml  /sitemap-:splat.xml  200
 /favicon.svg  /favicon.svg  200
 /robots.txt  /robots.txt  200
-/404  /404  200
+/404/  /404/  200
 
 # Legacy WordPress category URLs
 /category/sports/football/  /sports/football/  301
