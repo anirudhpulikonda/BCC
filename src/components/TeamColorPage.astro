@@ -195,7 +195,7 @@ const breadcrumbSchema = {
           <span>{teamName}</span>
         </div>
         <h1>{teamName} colors</h1>
-        <p class="hero-sub">Official brand color codes — HEX, RGB, CMYK, and Pantone</p>
+        <p class="hero-sub">Official brand color codes - HEX, RGB, CMYK, and Pantone</p>
         <div class="hero-meta">
           <a class="badge" href={`/${leagueSlugMap[league] ?? `${league.toLowerCase()}-team-color-codes`}/`}>{league}</a>
           <span class="hero-count">{colors.length} colors</span>
@@ -294,7 +294,7 @@ const breadcrumbSchema = {
 
       <section class="prose-section">
         <h2>{teamName} CMYK color codes</h2>
-        <p>The {teamName} CMYK values are {colors.map(c => `${c.name} (${c.cmyk.c}, ${c.cmyk.m}, ${c.cmyk.y}, ${c.cmyk.k})`).join(', ')}. CMYK is the standard color model for print — use these values when ordering jerseys, merchandise, or printed materials.</p>
+        <p>The {teamName} CMYK values are {colors.map(c => `${c.name} (${c.cmyk.c}, ${c.cmyk.m}, ${c.cmyk.y}, ${c.cmyk.k})`).join(', ')}. CMYK is the standard color model for print - use these values when ordering jerseys, merchandise, or printed materials.</p>
         <div class="prose-table">
           <div class="prose-table-head">
             <span>Color</span><span>CMYK</span><span></span>
@@ -339,7 +339,7 @@ const breadcrumbSchema = {
 
       <section class="prose-section">
         <h2>Download the {teamName} logo</h2>
-        <p>Download the official {teamName} logo in SVG format. SVG files are vector-based and scale to any size without quality loss — ideal for design projects, presentations, and print.</p>
+        <p>Download the official {teamName} logo in SVG format. SVG files are vector-based and scale to any size without quality loss - ideal for design projects, presentations, and print.</p>
         <div class="logo-download-card">
           <div class="logo-preview">
             <img src={logoPath} alt={`${teamName} logo`} width="120" height="120" />
