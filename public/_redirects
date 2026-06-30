@@ -4,5 +4,9 @@
 /favicon.svg  /favicon.svg  200
 /robots.txt  /robots.txt  200
 
+# Legacy WordPress category URLs
+/category/sports/football/  /sports/football/  301
+/category/sports/football  /sports/football/  301
+
 # Redirect all other URLs without trailing slash to trailing slash
 /:splat  /:splat/  301
