@@ -1,8 +1,9 @@
-# Exclude static files from the trailing slash redirect
+# Exclude static files and special pages from the trailing slash redirect
 /sitemap.xml  /sitemap.xml  200
 /sitemap-*.xml  /sitemap-:splat.xml  200
 /favicon.svg  /favicon.svg  200
 /robots.txt  /robots.txt  200
+/404  /404  200
 
 # Legacy WordPress category URLs
 /category/sports/football/  /sports/football/  301
