@@ -563,4 +563,16 @@ const historicalTeams = [
     background: var(--border);
     margin-bottom: 3rem;
   }
+
+  @media (max-width: 600px) {
+    .color-table th:first-child { display: none; }
+    .color-table .team-cell { display: none; }
+    .color-table tbody tr:has(> .team-cell) {
+      border-top: 2px solid var(--border-strong);
+    }
+    .color-table tbody tr:has(> .team-cell) > td:nth-child(2) {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+  }
 </style>
