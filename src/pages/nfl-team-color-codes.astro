@@ -489,6 +489,19 @@ const historicalTeams = [
     margin-bottom: 1rem;
     border: 1px solid var(--border-strong);
     border-radius: 10px;
+    position: relative;
+  }
+  .color-table-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 48px;
+    background: linear-gradient(to right, transparent, var(--surface-1));
+    pointer-events: none;
+    border-radius: 0 10px 10px 0;
+  }
+  @media (min-width: 601px) {
+    .color-table-wrap::after { display: none; }
   }
 
   .color-table {
@@ -601,15 +614,4 @@ const historicalTeams = [
     margin-bottom: 3rem;
   }
 
-  @media (max-width: 600px) {
-    .color-table th:first-child { display: none; }
-    .color-table .team-cell { display: none; }
-    .color-table tbody tr:has(> .team-cell) {
-      border-top: 2px solid var(--border-strong);
-    }
-    .color-table tbody tr:has(> .team-cell) > td:nth-child(2) {
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-  }
 </style>
