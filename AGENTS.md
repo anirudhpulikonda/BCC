@@ -63,15 +63,22 @@ Each team is a JSON file loaded via Astro Content Collections (`glob` loader).
 /chicago-blackhawks-colors/
 ```
 
+### Sport category pages
+- Format: `/sports/[sport]/`
+- Each sport category page lists only the leagues that belong to that sport
+- Live pages: `/sports/football/` (NFL), `/sports/basketball/` (NBA), `/sports/hockey/` (NHL), `/sports/baseball/` (MLB), `/sports/footwear/`
+- When adding a new sport, also add its category pill to `/src/pages/index.astro` and the card to `/src/pages/sports/index.astro`
+
 ### League pages
 - Format: `/[league-lowercase]-team-color-codes/`
+- Breadcrumb: `Best Color Codes › Sports › [Sport] › [League]` — the sport link must point to the correct `/sports/[sport]/` page
 
 **Examples:**
 ```
-/nfl-team-color-codes/
-/nba-team-color-codes/
-/nhl-team-color-codes/
-/mlb-team-color-codes/
+/nfl-team-color-codes/   (breadcrumb sport: /sports/football/)
+/nba-team-color-codes/   (breadcrumb sport: /sports/basketball/)
+/nhl-team-color-codes/   (breadcrumb sport: /sports/hockey/)
+/mlb-team-color-codes/   (breadcrumb sport: /sports/baseball/)
 ```
 
 ### Trailing slashes
