@@ -65,7 +65,7 @@
   </div>
 </nav>
 
-<div class="nav-drawer" aria-hidden="true" hidden>
+<div class="nav-drawer">
   <a href="/sports/">Sports</a>
   <a href="/sports/football/">↳ Football</a>
   <a href="/nfl-team-color-codes/">　NFL</a>
@@ -115,8 +115,7 @@
   hamburger.addEventListener('click', () => {
     const open = hamburger.getAttribute('aria-expanded') === 'true';
     hamburger.setAttribute('aria-expanded', String(!open));
-    drawer.setAttribute('aria-hidden', String(open));
-    drawer.hidden = open;
+    drawer.classList.toggle('open', !open);
   });
 </script>
 
@@ -180,7 +179,9 @@
   .has-dropdown.open .chevron { transform: rotate(180deg); }
 
   .dropdown {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
     position: absolute;
     top: calc(100% + 6px);
     left: 0;
@@ -191,9 +192,14 @@
     min-width: 210px;
     box-shadow: 0 4px 20px rgba(0,0,0,.10);
     z-index: 200;
+    transition: opacity .15s, visibility .15s;
   }
 
-  .has-dropdown.open .dropdown { display: block; }
+  .has-dropdown.open .dropdown {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
 
   .dropdown-section { padding: 2px 0; }
 
@@ -278,17 +284,19 @@
   }
 
   .nav-drawer {
-    display: none;
     flex-direction: column;
     background: var(--surface-2);
     border-bottom: 0.5px solid var(--border);
     position: sticky;
     top: 56px;
     z-index: 99;
+    max-height: 0;
+    overflow: hidden;
   }
 
   @media (max-width: 540px) {
-    .nav-drawer:not([hidden]) { display: flex; }
+    .nav-drawer { display: flex; }
+    .nav-drawer.open { max-height: 800px; }
     .nav-links { display: none; }
     .nav-hamburger { display: flex; }
   }
