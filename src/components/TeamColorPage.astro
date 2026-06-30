@@ -40,11 +40,12 @@ interface Props {
   logoPath: string;
   sourcingNote: string;
   sources?: Source[];
+  ogImage?: string;
   teamDescription?: string;
   relatedTeams?: RelatedTeam[];
 }
 
-const { teamName, league, colors, logoPath, sourcingNote, sources = [], teamDescription = '', relatedTeams = [] } = Astro.props;
+const { teamName, league, colors, logoPath, sourcingNote, sources = [], ogImage = '', teamDescription = '', relatedTeams = [] } = Astro.props;
 
 const colorNames = colors.map(c => c.name);
 const colorList = colorNames.length <= 2
@@ -143,6 +144,13 @@ const breadcrumbSchema = {
   <meta name="description" content={description} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="canonical" href={pageUrl} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={pageUrl} />
+  <meta property="og:type" content="website" />
+  {ogImage && <meta property="og:image" content={`${site.url}${ogImage}`} />}
+  {ogImage && <meta name="twitter:card" content="summary_large_image" />}
+  {ogImage && <meta name="twitter:image" content={`${site.url}${ogImage}`} />}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet" />

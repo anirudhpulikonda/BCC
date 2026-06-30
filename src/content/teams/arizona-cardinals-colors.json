@@ -55,6 +55,7 @@
   "logoPath": "/teams/nfl/arizona-cardinals-logo.svg",
   "swatchImagePath": "../../assets/teams/nfl/arizona-cardinals/swatch.jpg",
   "sourcingNote": "Hex colors confirmed from official SVG logo. RGB and CMYK confirmed from official NFL Fact Book. Pantone confirmed by logo slick.",
+  "ogImage": "/og/arizona-cardinals-colors.png",
   "lastUpdated": "2026-06-27",
   "description": "The Arizona Cardinals are one of the oldest franchises in the NFL, founded in 1898 and based in Glendale, Arizona. They play their home games at State Farm Stadium and are members of the NFC West division. The Cardinals have a storied history as a charter member of the NFL and won their only championship in 1947.",
   "sources": [

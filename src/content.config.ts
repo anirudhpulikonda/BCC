@@ -21,6 +21,7 @@ const teams = defineCollection({
     sourcingNote: z.string(),
     sources: z.array(z.object({ label: z.string(), url: z.string() })).optional().default([]),
     description: z.string().optional().default(""),
+    ogImage: z.string().optional().default(""),
     lastUpdated: z.string(),
   }),
 });
