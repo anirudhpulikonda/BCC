@@ -1,0 +1,67 @@
+{
+  "teamName": "Cleveland Browns",
+  "league": "NFL",
+  "slug": "cleveland-browns-colors",
+  "colors": [
+    {
+      "name": "Browns Orange",
+      "hex": "#FF3C00",
+      "rgb": {
+        "r": 255,
+        "g": 60,
+        "b": 0
+      },
+      "cmyk": {
+        "c": 2,
+        "m": 93,
+        "y": 100,
+        "k": 0
+      },
+      "pantone": "PMS 2028 C"
+    },
+    {
+      "name": "Dark Brown",
+      "hex": "#311D00",
+      "rgb": {
+        "r": 49,
+        "g": 29,
+        "b": 0
+      },
+      "cmyk": {
+        "c": 1,
+        "m": 33,
+        "y": 85,
+        "k": 94
+      },
+      "pantone": "PMS Black 4 C"
+    },
+    {
+      "name": "White",
+      "hex": "#FFFFFF",
+      "rgb": {
+        "r": 255,
+        "g": 255,
+        "b": 255
+      },
+      "cmyk": {
+        "c": 0,
+        "m": 0,
+        "y": 0,
+        "k": 0
+      },
+      "pantone": "White"
+    }
+  ],
+  "logoPath": "/teams/nfl/cleveland-browns-logo.svg",
+  "swatchImagePath": "",
+  "sourcingNote": "Color values sourced from official Cleveland Browns brand guidelines.",
+  "ogImage": "/og/cleveland-browns-colors.png",
+  "lastUpdated": "2026-07-01",
+  "description": "The Cleveland Browns are a professional American football team based in Cleveland, Ohio. Founded in 1946, they are members of the AFC North division and play their home games at Cleveland Browns Stadium. The Browns are known for their passionate fan base, the Dawg Pound, and their distinctive orange and brown color scheme - one of the most recognizable in the NFL.",
+  "sources": [
+    {
+      "label": "Team Color Codes",
+      "url": "https://teamcolorcodes.com/cleveland-browns-color-codes/"
+    }
+  ]
+}
