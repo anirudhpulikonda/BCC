@@ -122,6 +122,15 @@ const historicalTeams = [
   <Fragment slot="head">
     <JsonLd schema={sportsOrgSchema} />
     <JsonLd schema={itemListSchema} />
+    <JsonLd schema={{
+      '@context': 'https://schema.org',
+      '@type': 'TechArticle',
+      headline: 'NFL Team Color Codes - HEX, RGB, CMYK & Pantone',
+      description: `Official NFL team color codes for all ${teams.length} teams. Find the exact HEX, RGB, CMYK, and Pantone values for every National Football League team.`,
+      url: leagueUrl,
+      publisher: { '@type': 'Organization', name: site.name, url: site.url },
+      dateModified: new Date().toISOString().split('T')[0],
+    }} />
   </Fragment>
 
   <section class="hero">

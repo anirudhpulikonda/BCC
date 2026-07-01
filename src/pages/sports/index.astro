@@ -1,11 +1,41 @@
 ---
 import Base from '../../layouts/Base.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import { site } from '../../config/site';
+
+const pageUrl = `${site.url}/sports/`;
+
+const collectionPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Sports Brand Color Codes',
+  description: 'Official color codes for sports teams and brands. Browse by category - football, basketball, hockey, baseball, footwear, and more.',
+  url: pageUrl,
+};
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Sports Categories',
+  url: pageUrl,
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Football', url: `${site.url}/sports/football/` },
+    { '@type': 'ListItem', position: 2, name: 'Basketball', url: `${site.url}/sports/basketball/` },
+    { '@type': 'ListItem', position: 3, name: 'Hockey', url: `${site.url}/sports/hockey/` },
+    { '@type': 'ListItem', position: 4, name: 'Baseball', url: `${site.url}/sports/baseball/` },
+    { '@type': 'ListItem', position: 5, name: 'Footwear', url: `${site.url}/sports/footwear/` },
+  ],
+};
 ---
 
 <Base
   title="Sports Brand Color Codes - HEX, RGB, CMYK & Pantone | Best Color Codes"
   description="Official color codes for sports teams and brands. Browse by category - football, basketball, hockey, baseball, footwear, and more."
 >
+  <Fragment slot="head">
+    <JsonLd schema={collectionPageSchema} />
+    <JsonLd schema={itemListSchema} />
+  </Fragment>
   <section class="hero">
     <div class="hero-inner">
       <div class="breadcrumb"><a href="/">Best Color Codes</a> <span>›</span> <span>Sports</span></div>

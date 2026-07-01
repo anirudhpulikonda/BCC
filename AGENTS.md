@@ -181,8 +181,11 @@ All schema.org JSON-LD is injected via `src/components/JsonLd.astro`. The site i
 | `Organization` | `Base.astro` (every page) |
 | `WebPage` | `Base.astro` (every page) |
 | `BreadcrumbList` | `Base.astro` (when `breadcrumbs` prop passed) and `TeamColorPage.astro` |
-| `SportsOrganization` | `[league].astro` via `<Fragment slot="head">` |
-| `ItemList` | `[league].astro` via `<Fragment slot="head">` |
+| `SportsOrganization` | `[league].astro` and static league pages via `<Fragment slot="head">` |
+| `ItemList` | `[league].astro`, static league pages, and sport category pages via `<Fragment slot="head">` |
+| `CollectionPage` | `/sports/` index and sport category pages (`/sports/football/` etc.) |
+| `TechArticle` | Static league pages (nfl-, nba-, nhl-, mlb-team-color-codes.astro) |
+| `SiteLinksSearchBox` | `Base.astro` via `potentialAction` on the `WebSite` schema (every page) |
 | `SportsTeam` | `TeamColorPage.astro` |
 | `ImageObject` | `TeamColorPage.astro` |
 | `DefinedTermSet` | `TeamColorPage.astro` |

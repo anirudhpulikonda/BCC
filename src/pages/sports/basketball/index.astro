@@ -1,15 +1,44 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import JsonLd from '../../../components/JsonLd.astro';
+import { site } from '../../../config/site';
 
 const leagues = [
   { name: 'NBA', full: 'National Basketball Association', slug: 'nba-team-color-codes' },
 ];
+
+const pageUrl = `${site.url}/sports/basketball/`;
+
+const collectionPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Basketball Team Color Codes',
+  description: 'Official color codes for NBA basketball teams.',
+  url: pageUrl,
+};
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Basketball Leagues',
+  url: pageUrl,
+  itemListElement: leagues.map((l, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: `${l.name} Team Colors`,
+    url: `${site.url}/${l.slug}/`,
+  })),
+};
 ---
 
 <Base
   title="Basketball Team Color Codes - NBA | Best Color Codes"
   description="Official color codes for NBA basketball teams. Find HEX, RGB, CMYK, and Pantone values for every National Basketball Association team."
 >
+  <Fragment slot="head">
+    <JsonLd schema={collectionPageSchema} />
+    <JsonLd schema={itemListSchema} />
+  </Fragment>
   <section class="hero">
     <div class="hero-inner">
       <div class="breadcrumb">

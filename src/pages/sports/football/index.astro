@@ -1,15 +1,44 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import JsonLd from '../../../components/JsonLd.astro';
+import { site } from '../../../config/site';
 
 const leagues = [
   { name: 'NFL', full: 'National Football League', slug: 'nfl-team-color-codes' },
 ];
+
+const pageUrl = `${site.url}/sports/football/`;
+
+const collectionPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Football Team Color Codes',
+  description: 'Official color codes for NFL football teams.',
+  url: pageUrl,
+};
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Football Leagues',
+  url: pageUrl,
+  itemListElement: leagues.map((l, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: `${l.name} Team Colors`,
+    url: `${site.url}/${l.slug}/`,
+  })),
+};
 ---
 
 <Base
   title="Football Team Color Codes - NFL | Best Color Codes"
   description="Official color codes for NFL football teams. Find HEX, RGB, CMYK, and Pantone values for every National Football League team."
 >
+  <Fragment slot="head">
+    <JsonLd schema={collectionPageSchema} />
+    <JsonLd schema={itemListSchema} />
+  </Fragment>
   <section class="hero">
     <div class="hero-inner">
       <div class="breadcrumb">
