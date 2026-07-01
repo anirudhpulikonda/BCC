@@ -43,9 +43,11 @@ interface Props {
   ogImage?: string;
   teamDescription?: string;
   relatedTeams?: RelatedTeam[];
+  lastUpdated?: string;
+  publishedAt?: string;
 }
 
-const { teamName, league, colors, logoPath, sourcingNote, sources = [], ogImage = '', teamDescription = '', relatedTeams = [] } = Astro.props;
+const { teamName, league, colors, logoPath, sourcingNote, sources = [], ogImage = '', teamDescription = '', relatedTeams = [], lastUpdated = '', publishedAt = '' } = Astro.props;
 
 const colorNames = colors.map(c => c.name);
 const colorList = colorNames.length <= 2
@@ -118,6 +120,8 @@ const datasetSchema = {
     encodingFormat: 'text/html',
     contentUrl: pageUrl,
   },
+  ...(publishedAt ? { datePublished: publishedAt } : {}),
+  ...(lastUpdated ? { dateModified: lastUpdated } : {}),
 };
 
 const breadcrumbItems = [

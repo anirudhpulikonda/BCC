@@ -23,6 +23,7 @@ const teams = defineCollection({
     description: z.string().optional().default(""),
     ogImage: z.string().optional().default(""),
     lastUpdated: z.string(),
+    publishedAt: z.string().optional().default(""),
   }),
 });
 

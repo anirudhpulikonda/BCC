@@ -35,7 +35,8 @@ Each team is a JSON file loaded via Astro Content Collections (`glob` loader).
   sources?: { label: string; url: string }[];  // optional source links shown on team page
   description?: string;      // optional team description paragraph
   ogImage?: string;          // "/og/pittsburgh-steelers-colors.png" - path to OG image in public/og/
-  lastUpdated: string;       // ISO date "2026-06-27"
+  lastUpdated: string;       // ISO date "2026-06-27" - maps to dateModified in Dataset schema; update whenever color values change
+  publishedAt?: string;      // ISO date "2019-12-02" - maps to datePublished in Dataset schema; set to creation date, never changes
 }
 ```
 
